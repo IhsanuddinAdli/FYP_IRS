@@ -79,9 +79,9 @@
                 <p id="passwordError" style="color: red; text-align: center;"></p>
 
                 <!-- <button class="signup-btn">SIGN UP</button> -->
-                <input type="submit" class="signup-btn" id="submit" value="SIGN UP">
+                <input type="submit" class="signup-btn" id="submit" value="Sign Up">
                 <div class="login">
-                    <a href="#">Already have an account? Log in here!</a>
+                    <a href="login.jsp">Already have an account? Log in here!</a>
                 </div>
             </form>
         </div>

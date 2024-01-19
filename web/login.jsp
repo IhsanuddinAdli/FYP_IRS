@@ -60,7 +60,7 @@
                 </div>
 
                 <!-- <button class="signin-btn">LOGIN</button> -->
-                <input type="submit" class="signin-btn" id="submit" value="LOGIN">
+                <input type="submit" class="signin-btn" id="submit" value="Login">
                 <div class="sign-up">
                     <a href="register.jsp">New to IRS? Sign up here!</a>
                 </div>

@@ -1,0 +1,75 @@
+/* enterOtp.css */
+
+.form-gap {
+    padding-top: 170px;
+}
+
+body {
+    background-image: url('background2.png');
+    background-size: cover;
+    background-position: center;
+    height: 95vh;
+    width: 98%;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.card-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.card-logo img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.card-title {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 35px;
+    color: #505050;
+}
+
+.card-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #505050;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.panel-body {
+    margin-top: 20px;
+}
+
+.btn-reset {
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    font-size: 18px;
+    border-radius: 30px;
+    background-color: green;
+    color: #fff;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-reset:hover {
+    background-color: darkgreen;
+}
+
+.text-danger {
+    color: red;
+    text-align: center;
+    margin: 20px 0px 0px 0px;
+}

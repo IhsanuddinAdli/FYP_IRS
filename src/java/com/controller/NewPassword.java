@@ -25,10 +25,10 @@ public class NewPassword extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String newPassword = request.getParameter("password");
-        String confPassword = request.getParameter("confPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
         RequestDispatcher dispatcher = null;
-        if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
+        if (newPassword != null && confirmPassword != null && newPassword.equals(confirmPassword)) {
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");

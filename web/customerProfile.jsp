@@ -58,24 +58,18 @@
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
         <link rel="stylesheet" href="CSS/profile.css">
-
-
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
 
     <body>
-
         <div class="wrapper">
-
             <div class="body-overlay"></div>
-
+            
             <!-------sidebar--design------------>
 
             <div id="sidebar">
@@ -86,23 +80,12 @@
                     <li class="">
                         <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
                     </li>
-
                     <li class="active">
-                        <a href="profile.html" class=""><i class="material-icons">account_circle</i>Profile</a>
+                        <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-
-                    <li class="dropdown">
-                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i>Quotation
-                        </a>
-                        <ul class="collapse list-unstyled menu" id="homeSubmenu1">
-                            <li><a href="#">layout 1</a></li>
-                            <li><a href="#">layout 2</a></li>
-                            <li><a href="#">layout 3</a></li>
-                        </ul>
+                    <li class="">
+                        <a href="#" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
-
-
                     <li class="dropdown">
                         <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="material-icons">library_books</i>Feedback
@@ -112,22 +95,14 @@
                             <li><a href="#">Feedback for show</a></li>
                         </ul>
                     </li>
-
                     <li class="">
                         <a href="#" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
-
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
+                        <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
-
-                    <!-- <li class="">
-                            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-                        </li> -->
-
                 </ul>
             </div>
-
             <!-------sidebar--design- close----------->
 
             <!-------page-content start----------->
@@ -145,26 +120,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                                <!-- <div class="xp-searchbar">
-                                    <form>
-                                        <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn" type="submit" id="button-addon2">Go
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> -->
-                            </div>
-
+                            <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
 
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
-                                            <li class="dropdown nav-item active">
+                                            <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
                                                     <span class="notification">4</span>
@@ -184,23 +146,11 @@
                                             </li>
 
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                <a class="nav-link" href="customerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
-                                                <ul class="dropdown-menu small-menu">
-                                                    <li><a href="#">
-                                                            <span class="material-icons">person_outline</span>
-                                                            Profile
-                                                        </a></li>
-                                                    <li><a href="#">
-                                                            <span class="material-icons">logout</span>
-                                                            Logout
-                                                        </a></li>
-
-                                                </ul>
                                             </li>
-
 
                                         </ul>
                                     </nav>
@@ -308,7 +258,7 @@
                                 <form id="updateProfileForm" action="updateCustomerProfile.jsp" method="post">
                                     <div class="form-group">
                                         <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
-                                        
+
                                         <label for="firstname">Firstname</label>
                                         <input type="text" class="form-control" id="firstname" name="firstname" required value="<%= firstname%>">
                                     </div>
