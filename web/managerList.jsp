@@ -89,25 +89,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                                <!-- <div class="xp-searchbar">
-                                    <form>
-                                        <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn" type="submit" id="button-addon2">Go
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> -->
-                            </div>
+                            <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
 
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
-                                            <li class="dropdown nav-item active">
+                                            <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
                                                     <span class="notification">4</span>
@@ -127,21 +115,12 @@
                                             </li>
 
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                <a class="nav-link" href="adminProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
-                                                <ul class="dropdown-menu small-menu">
-                                                    <li><a href="#">
-                                                            <span class="material-icons">person_outline</span>
-                                                            Profile
-                                                        </a></li>
-                                                    <li><a href="#">
-                                                            <span class="material-icons">logout</span>
-                                                            Logout
-                                                        </a></li>
-                                                </ul>
                                             </li>
+
                                         </ul>
                                     </nav>
                                 </div>
@@ -150,7 +129,7 @@
                         </div>
 
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Manage Staff</h4>
+                            <h4 class="page-title">Manage Manager</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
@@ -168,13 +147,13 @@
                     <div class="container-fluid">
                         <!-- Add Staff Button (Moved to the top right corner) -->
                         <div class="text-right mb-4">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Staff</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Manager</button>
                         </div>
 
-                        <!-- Staff Table -->
+                        <!-- Manager Table -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title">List of Staff</h5>
+                                <h5 class="card-title">List of Manager</h5>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -195,7 +174,7 @@
                                                 String query = "SELECT * FROM manager";
 
                                                 if (searchManagerID != null && !searchManagerID.isEmpty()) {
-                                                    query = "SELECT * FROM staff WHERE userID = " + searchManagerID;
+                                                    query = "SELECT * FROM manager WHERE userID = " + searchManagerID;
                                                 }
 
                                                 try {
@@ -211,19 +190,19 @@
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
-
-                                                        // Output staff details in table rows
-                                                        out.println("<tr>");
-                                                        out.println("<td>" + userID + "</td>");
-                                                        out.println("<td>" + firstname + "</td>");
-                                                        out.println("<td>" + email + "</td>");
-                                                        out.println("<td>" + phone + "</td>");
-                                                        out.println("<td>" + ICNumber + "</td>");
-                                                        out.println("<td>");
-                                                        out.println("<button class=\"btn btn-primary btn-sm\" onclick=\"editStaff(" + userID + ")\">Edit</button>");
-                                                        out.println("<button class=\"btn btn-danger btn-sm\" onclick=\"deleteStaff(" + userID + ")\">Delete</button>");
-                                                        out.println("</td>");
-                                                        out.println("</tr>");
+                                            %>
+                                            <tr>
+                                                <td><%= userID%></td>
+                                                <td><%= firstname%></td>
+                                                <td><%= email%></td>
+                                                <td><%= phone%></td>
+                                                <td><%= ICNumber%></td>
+                                                <td>
+                                                    <a href="editManagerList.jsp?userID=<%= userID%>" class="btn btn-info btn-sm">View</a>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteManager('<%= userID%>')">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <%
                                                     }
 
                                                     con.close();
@@ -231,7 +210,6 @@
                                                     out.println("Error: " + e);
                                                 }
                                             %>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -244,26 +222,67 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addStaffModalLabel">Add Staff</h5>
+                                    <h5 class="modal-title" id="addStaffModalLabel">Add Manager</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <!-- Add a form to input staff information -->
-                                    <form>
+                                    <form action="processRegisterManager.jsp" method="post">
                                         <div class="form-group">
-                                            <label for="staffName">Name:</label>
-                                            <input type="text" class="form-control" id="staffName" placeholder="Enter Staff Name">
+                                            <label for="firstname">Firstname:</label>
+                                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter Manager Firstname" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="staffEmail">Email:</label>
-                                            <input type="email" class="form-control" id="staffEmail" placeholder="Enter Staff Email">
+                                            <label for="lastname">Lastname</label>
+                                            <input type="text" class="form-control" name="lastname" id="staffName" placeholder="Enter Manager Lastname" required>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="email">Email:</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Manager Email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Phone:</label>
+                                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Manager Phone" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password:</label>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Manager Password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Cofirm Password:</label>
+                                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Manager Password" required oninput="checkPasswordMatch()">
+                                        </div>
+
+                                        <input type="hidden" name="roles" id="roles" value="manager">
                                         <!-- Add more input fields based on your staff information -->
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">ADD</button>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Modal -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this manager?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <!-- Add a hidden input to store the staffID to be deleted -->
+                                <input type="hidden" id="managerIDToDelete">
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -292,18 +311,51 @@
         <script src="JS/jquery-3.3.1.min.js"></script>
 
         <script>
-            $(document).ready(function () {
-                $(".xp-menubar").on('click', function () {
-                    $("#sidebar").toggleClass('active');
-                    $("#content").toggleClass('active');
-                });
+                                    $(document).ready(function () {
+                                        $(".xp-menubar").on('click', function () {
+                                            $("#sidebar").toggleClass('active');
+                                            $("#content").toggleClass('active');
+                                        });
 
-                $('.xp-menubar,.body-overlay').on('click', function () {
-                    $("#sidebar,.body-overlay").toggleClass('show-nav');
-                });
-            });
+                                        $('.xp-menubar,.body-overlay').on('click', function () {
+                                            $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                        });
+                                    });
         </script>
+        <script>
+            function deleteManager(managerID) {
+                if (confirm("Are you sure you want to delete this manager?")) {
+                    // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
+                    $.ajax({
+                        type: "POST",
+                        url: "processDeleteManager.jsp",
+                        data: {managerID: managerID},
+                        success: function (response) {
+                            // Reload the page after successful deletion
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                            alert("Error deleting manager. Please try again.");
+                        }
+                    });
+                }
+            }
+        </script>
+        <script>
 
+            function checkPasswordMatch() {
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirmPassword").value;
+                var passwordError = document.getElementById("passwordError");
+
+                if (password !== confirmPassword) {
+                    passwordError.innerHTML = "Passwords do not match!";
+                } else {
+                    passwordError.innerHTML = "";
+                }
+            }
+        </script>
     </body>
 
 </html>

@@ -75,6 +75,8 @@
                     </svg>
                     <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required oninput="checkPasswordMatch()">
                 </div>
+                
+                <input type="hidden" name="roles" id="roles" value="customer">
 
                 <p id="passwordError" style="color: red; text-align: center;"></p>
 

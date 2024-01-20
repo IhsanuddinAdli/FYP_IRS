@@ -89,25 +89,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                                <!-- <div class="xp-searchbar">
-                                    <form>
-                                        <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn" type="submit" id="button-addon2">Go
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> -->
-                            </div>
+                            <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
 
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
-                                            <li class="dropdown nav-item active">
+                                            <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
                                                     <span class="notification">4</span>
@@ -127,21 +115,12 @@
                                             </li>
 
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                <a class="nav-link" href="adminProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
-                                                <ul class="dropdown-menu small-menu">
-                                                    <li><a href="#">
-                                                            <span class="material-icons">person_outline</span>
-                                                            Profile
-                                                        </a></li>
-                                                    <li><a href="#">
-                                                            <span class="material-icons">logout</span>
-                                                            Logout
-                                                        </a></li>
-                                                </ul>
                                             </li>
+
                                         </ul>
                                     </nav>
                                 </div>
@@ -150,7 +129,7 @@
                         </div>
 
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Manage Staff</h4>
+                            <h4 class="page-title">Manage Customer</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
@@ -167,14 +146,14 @@
                 <div class="main-content">
                     <div class="container-fluid">
                         <!-- Add Staff Button (Moved to the top right corner) -->
-                        <div class="text-right mb-4">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Staff</button>
-                        </div>
+                        <!--                        <div class="text-right mb-4">
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Staff</button>
+                                                </div>-->
 
                         <!-- Staff Table -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title">List of Staff</h5>
+                                <h5 class="card-title">List of Customer</h5>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -195,7 +174,7 @@
                                                 String query = "SELECT * FROM customer";
 
                                                 if (searchCustomerID != null && !searchCustomerID.isEmpty()) {
-                                                    query = "SELECT * FROM staff WHERE userID = " + searchCustomerID;
+                                                    query = "SELECT * FROM customer WHERE userID = " + searchCustomerID;
                                                 }
 
                                                 try {
@@ -211,19 +190,19 @@
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
-
-                                                        // Output staff details in table rows
-                                                        out.println("<tr>");
-                                                        out.println("<td>" + userID + "</td>");
-                                                        out.println("<td>" + firstname + "</td>");
-                                                        out.println("<td>" + email + "</td>");
-                                                        out.println("<td>" + phone + "</td>");
-                                                        out.println("<td>" + ICNumber + "</td>");
-                                                        out.println("<td>");
-                                                        out.println("<button class=\"btn btn-primary btn-sm\" onclick=\"editStaff(" + userID + ")\">Edit</button>");
-                                                        out.println("<button class=\"btn btn-danger btn-sm\" onclick=\"deleteStaff(" + userID + ")\">Delete</button>");
-                                                        out.println("</td>");
-                                                        out.println("</tr>");
+                                            %>
+                                            <tr>
+                                                <td><%= userID%></td>
+                                                <td><%= firstname%></td>
+                                                <td><%= email%></td>
+                                                <td><%= phone%></td>
+                                                <td><%= ICNumber%></td>
+                                                <td>
+                                                    <a href="editCustomerList.jsp?userID=<%= userID%>" class="btn btn-info btn-sm">View</a>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteStaff('<%= userID%>')">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <%
                                                     }
 
                                                     con.close();
@@ -231,94 +210,88 @@
                                                     out.println("Error: " + e);
                                                 }
                                             %>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Add Staff Modal -->
-                    <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel"
-                         aria-hidden="true">
+                    <!-- Confirmation Modal -->
+                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addStaffModalLabel">Add Staff</h5>
+                                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Add a form to input staff information -->
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="firstname">Firstname:</label>
-                                            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter Staff Firstname">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lastname">Lastname</label>
-                                            <input type="text" class="form-control" name="lastname" id="staffName" placeholder="Enter Staff Lastname">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email:</label>
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter Staff Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone">Phone:</label>
-                                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Staff Phone">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password:</label>
-                                            <input type="text" class="form-control" name="password" id="password" placeholder="Enter Staff Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="confirmPassword">Cofirm Password:</label>
-                                            <input type="text" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Staff Password">
-                                        </div>
-                                        <!-- Add more input fields based on your staff information -->
-                                        <button type="submit" class="btn btn-primary">ADD</button>
-                                    </form>
+                                    <p>Are you sure you want to delete this customer member?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <!-- Add a hidden input to store the staffID to be deleted -->
+                                    <input type="hidden" id="customerIDToDelete">
+                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <!----main-content-end--->
 
-                <!----main-content-end--->
+                    <!----footer-design------------->
 
-                <!----footer-design------------->
-
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <div class="footer-in">
+                                <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            </div>
                         </div>
-                    </div>
-                </footer>
+                    </footer>
+                </div>
             </div>
-        </div>
-        <!-------complete html----------->
+            <!-------complete html----------->
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="JS/jquery-3.3.1.slim.min.js"></script>
-        <script src="JS/popper.min.js"></script>
-        <script src="JS/bootstrap.min.js"></script>
-        <script src="JS/jquery-3.3.1.min.js"></script>
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="JS/jquery-3.3.1.slim.min.js"></script>
+            <script src="JS/popper.min.js"></script>
+            <script src="JS/bootstrap.min.js"></script>
+            <script src="JS/jquery-3.3.1.min.js"></script>
 
-        <script>
-                                            $(document).ready(function () {
-                                                $(".xp-menubar").on('click', function () {
-                                                    $("#sidebar").toggleClass('active');
-                                                    $("#content").toggleClass('active');
-                                                });
-
-                                                $('.xp-menubar,.body-overlay').on('click', function () {
-                                                    $("#sidebar,.body-overlay").toggleClass('show-nav');
-                                                });
+            <script>
+                                        $(document).ready(function () {
+                                            $(".xp-menubar").on('click', function () {
+                                                $("#sidebar").toggleClass('active');
+                                                $("#content").toggleClass('active');
                                             });
-        </script>
+
+                                            $('.xp-menubar,.body-overlay').on('click', function () {
+                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                            });
+                                        });
+            </script>
+            <script>
+                function deleteStaff(customerID) {
+                    if (confirm("Are you sure you want to delete this staff member?")) {
+                        // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
+                        $.ajax({
+                            type: "POST",
+                            url: "processDeleteCustomer.jsp",
+                            data: {customerID: customerID},
+                            success: function (response) {
+                                // Reload the page after successful deletion
+                                window.location.reload();
+                            },
+                            error: function (error) {
+                                console.log("Error:", error);
+                                alert("Error deleting customer member. Please try again.");
+                            }
+                        });
+                    }
+                }
+            </script>
 
     </body>
 

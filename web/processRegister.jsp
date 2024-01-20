@@ -17,7 +17,8 @@
             customer.setEmail(request.getParameter("email"));
             customer.setPhone(request.getParameter("phone"));
             customer.setPassword(request.getParameter("password"));
-
+            customer.setRoles(request.getParameter("roles"));
+            
             int result = 0;
 
             try {
@@ -25,7 +26,7 @@
                 String myURL = "jdbc:mysql://localhost/irs";
 
                 try (Connection myConnection = DriverManager.getConnection(myURL, "root", "admin")) {
-                    String sInsertQry = "INSERT INTO customer(firstname, lastname, email, phone, password) VALUES (?,?,?,?,?)";
+                    String sInsertQry = "INSERT INTO customer(firstname, lastname, email, phone, password, roles) VALUES (?,?,?,?,?,?)";
 
                     try (PreparedStatement myPS = myConnection.prepareStatement(sInsertQry)) {
                         myPS.setString(1, customer.getFirstname());
@@ -33,6 +34,7 @@
                         myPS.setString(3, customer.getEmail());
                         myPS.setString(4, customer.getPhone());
                         myPS.setString(5, customer.getPassword());
+                        myPS.setString(6, customer.getRoles());
 
                         result = myPS.executeUpdate();
 
