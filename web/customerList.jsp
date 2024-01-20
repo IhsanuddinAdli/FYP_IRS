@@ -43,7 +43,7 @@
                     </li>
 
                     <li class="">
-                        <a href="profile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
+                        <a href="adminProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
 
                     <li class="dropdown active">
@@ -62,7 +62,7 @@
                     </li>
 
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
+                        <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
 
                     <!-- <li class="">

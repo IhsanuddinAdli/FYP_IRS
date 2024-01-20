@@ -82,7 +82,7 @@
                 }
             %>
 
-            <form action="processUpdateStaff.jsp" method="post">
+            <form action="processUpdateCustomer.jsp" method="post">
                 <!-- The existing code for displaying the form with staff details -->
                 <input type="hidden" name="customerID" value="<%= customerID%>">
                 <div class="form-group">
@@ -111,6 +111,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='customerList.jsp'">Back</button>
             </form>
         </div>
 

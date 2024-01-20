@@ -9,6 +9,7 @@
     String ICNumber = "";
     String email = "";
     String phone = "";
+    String password ="";
     String residence = "";
     String city = "";
     String zipcode = "";
@@ -29,6 +30,7 @@
                 ICNumber = rs.getString("ICNumber");
                 email = rs.getString("email");
                 phone = rs.getString("phone");
+                password = rs.getString("password");
                 residence = rs.getString("residence");
                 city = rs.getString("city");
                 zipcode = rs.getString("zipcode");
@@ -230,6 +232,10 @@
                                                 <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
                                             </div>
                                             <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="residence">Residence</label>
                                                 <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
                                             </div>
@@ -294,6 +300,10 @@
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
                                         <input type="text" class="form-control" id="phone" name="phone" required value="<%= phone%>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" id="password" name="password" required value="<%= password%>">
                                     </div>
                                     <div class="form-group">
                                         <label for="residence">Residence</label>

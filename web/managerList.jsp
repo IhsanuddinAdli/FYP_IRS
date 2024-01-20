@@ -62,7 +62,7 @@
                     </li>
 
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
+                        <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
 
                     <!-- <li class="">

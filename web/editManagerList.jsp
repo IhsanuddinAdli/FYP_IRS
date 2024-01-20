@@ -93,6 +93,7 @@
                 <!-- Add more form fields for other staff details -->
 
                 <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='managerList.jsp'">Back</button>
             </form>
         </div>
 

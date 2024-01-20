@@ -9,6 +9,7 @@
     String ICNumber = "";
     String email = "";
     String phone = "";
+    String password = "";
     String residence = "";
     String city = "";
     String zipcode = "";
@@ -29,6 +30,7 @@
                 ICNumber = rs.getString("ICNumber");
                 email = rs.getString("email");
                 phone = rs.getString("phone");
+                password = rs.getString("password");
                 residence = rs.getString("residence");
                 city = rs.getString("city");
                 zipcode = rs.getString("zipcode");
@@ -85,11 +87,11 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="active">
+                    <li class="">
                         <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
                     </li>
 
-                    <li class="">
+                    <li class="active">
                         <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
 
@@ -116,7 +118,7 @@
                     </li>
 
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
+                        <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
 
                     <!-- <li class="">
@@ -143,26 +145,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 col-lg-3 order-3 order-md-2">
-                                <!-- <div class="xp-searchbar">
-                                    <form>
-                                        <div class="input-group">
-                                            <input type="search" class="form-control" placeholder="Search">
-                                            <div class="input-group-append">
-                                                <button class="btn" type="submit" id="button-addon2">Go
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div> -->
-                            </div>
-
+                            <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
 
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
-                                            <li class="dropdown nav-item active">
+                                            <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
                                                     <span class="notification">4</span>
@@ -182,23 +171,11 @@
                                             </li>
 
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                <a class="nav-link" href="managerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
-                                                <ul class="dropdown-menu small-menu">
-                                                    <li><a href="#">
-                                                            <span class="material-icons">person_outline</span>
-                                                            Profile
-                                                        </a></li>
-                                                    <li><a href="#">
-                                                            <span class="material-icons">logout</span>
-                                                            Logout
-                                                        </a></li>
-
-                                                </ul>
                                             </li>
-
 
                                         </ul>
                                     </nav>
@@ -260,6 +237,10 @@
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
                                                 <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="residence">Residence</label>
@@ -328,10 +309,13 @@
                                         <input type="text" class="form-control" id="phone" name="phone" required value="<%= phone%>">
                                     </div>
                                     <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control" id="password" name="password" required value="<%= password%>">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="residence">Residence</label>
                                         <input type="text" class="form-control" id="residence" name="residence" required value="<%= residence%>">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="zipcode">Zipcode</label>
                                         <input type="text" class="form-control" id="zipcode" name="zipcode" required value="<%= zipcode%>">

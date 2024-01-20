@@ -15,6 +15,7 @@
             String ICNumber = request.getParameter("ICNumber");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
+            String password = request.getParameter("password");
             String residence = request.getParameter("residence");
             String zipcode = request.getParameter("zipcode");
             String city = request.getParameter("city");
@@ -24,18 +25,19 @@
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
 
-                String query = "UPDATE customer SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
+                String query = "UPDATE customer SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, password=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
                 try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
                     preparedStatement.setString(1, firstname);
                     preparedStatement.setString(2, lastname);
                     preparedStatement.setString(3, ICNumber);
                     preparedStatement.setString(4, email);
                     preparedStatement.setString(5, phone);
-                    preparedStatement.setString(6, residence);
-                    preparedStatement.setInt(7, Integer.parseInt(zipcode)); // Assuming zipcode is an integer
-                    preparedStatement.setString(8, city);
-                    preparedStatement.setString(9, state);
-                    preparedStatement.setString(10, userID);
+                    preparedStatement.setString(6, password);
+                    preparedStatement.setString(7, residence);
+                    preparedStatement.setInt(8, Integer.parseInt(zipcode)); // Assuming zipcode is an integer
+                    preparedStatement.setString(9, city);
+                    preparedStatement.setString(10, state);
+                    preparedStatement.setString(11, userID);
 
                     int rowsUpdated = preparedStatement.executeUpdate();
 

@@ -15,6 +15,7 @@
             String ICNumber = request.getParameter("ICNumber");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
+            String password = request.getParameter("password");
             String residence = request.getParameter("residence");
             String zipcode = request.getParameter("zipcode");
             String city = request.getParameter("city");
@@ -30,13 +31,13 @@
                 // Adjust the query based on the user's role
                 switch (roles) {
                     case "staff":
-                        query = "UPDATE staff SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
+                        query = "UPDATE staff SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, password=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
                         break;
                     case "manager":
-                        query = "UPDATE manager SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
+                        query = "UPDATE manager SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, password=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
                         break;
                     case "admin":
-                        query = "UPDATE admin SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
+                        query = "UPDATE admin SET firstname=?, lastname=?, ICNumber=?, email=?, phone=?, password=?, residence=?, zipcode=?, city=?, state=? WHERE userID=?";
                         break;
                     default:
                         out.println("Invalid user role");
@@ -49,11 +50,12 @@
                     preparedStatement.setString(3, ICNumber);
                     preparedStatement.setString(4, email);
                     preparedStatement.setString(5, phone);
-                    preparedStatement.setString(6, residence);
-                    preparedStatement.setInt(7, Integer.parseInt(zipcode)); // Assuming zipcode is an integer
-                    preparedStatement.setString(8, city);
-                    preparedStatement.setString(9, state);
-                    preparedStatement.setString(10, userID); // Assuming staffID, managerID, adminID are correct column names
+                    preparedStatement.setString(6, password);
+                    preparedStatement.setString(7, residence);
+                    preparedStatement.setInt(8, Integer.parseInt(zipcode)); // Assuming zipcode is an integer
+                    preparedStatement.setString(9, city);
+                    preparedStatement.setString(10, state);
+                    preparedStatement.setString(11, userID); // Assuming staffID, managerID, adminID are correct column names
 
                     int rowsUpdated = preparedStatement.executeUpdate();
 
