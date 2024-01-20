@@ -248,11 +248,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password:</label>
-                                            <input type="text" class="form-control" name="password" id="password" placeholder="Enter Staff Password" required>
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Staff Password" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="confirmPassword">Cofirm Password:</label>
-                                            <input type="text" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Staff Password" required oninput="checkPasswordMatch()">
+                                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Staff Password" required oninput="checkPasswordMatch()">
                                         </div>
 
                                         <input type="hidden" name="roles" id="roles" value="staff">
