@@ -151,15 +151,8 @@
                         </div>
                     </div>
                 </footer>
-
-
-
-
             </div>
-
         </div>
-
-
 
         <!-------complete html----------->
 

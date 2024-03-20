@@ -56,7 +56,7 @@ public class ForgotPassword extends HttpServlet {
 				MimeMessage message = new MimeMessage(session);
 				message.setFrom(new InternetAddress(email));// change accordingly
 				message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-				message.setSubject("Hello");
+				message.setSubject("Insurance Renewal System (IRS)");
 				message.setText("your OTP is: " + otpvalue);
 				// send message
 				Transport.send(message);
