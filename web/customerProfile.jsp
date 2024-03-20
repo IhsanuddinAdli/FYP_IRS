@@ -88,14 +88,8 @@
                     <li class="">
                         <a href="#" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">library_books</i>Feedback
-                        </a>
-                        <ul class="collapse list-unstyled menu" id="homeSubmenu2">
-                            <li><a href="#">Feedback for company</a></li>
-                            <li><a href="#">Feedback for show</a></li>
-                        </ul>
+                    <li class="">
+                        <a href="#" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
                     <li class="">
                         <a href="#" class=""><i class="material-icons">date_range</i>History</a>
