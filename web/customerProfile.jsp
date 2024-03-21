@@ -89,7 +89,7 @@
                         <a href="#" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Feedback</a>
+                        <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
                     <li class="">
                         <a href="#" class=""><i class="material-icons">date_range</i>History</a>

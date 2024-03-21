@@ -487,34 +487,8 @@ input[type="search"] {
 
 /*---navbardesign -end-----*/
 
+
 /* main content */
-.main-content {
-    padding: 30px;
-}
-
-.card {
-    margin-top: 20px;
-}
-
-.card-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.btn-primary {
-    background-color: #4c7cf3;
-    color: #fff;
-}
-
-.btn-secondary {
-    background-color: #4c7cf3;
-    color: #fff;
-}
-
 #main-content-image {
     text-align: center;
     margin-top: 0;
@@ -522,7 +496,6 @@ input[type="search"] {
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
-
 /* main content end */
 
 /*-------footer design start------*/
@@ -536,20 +509,6 @@ footer {
 }
 
 /*-------footer design end------*/
-
-
-
-#sidebar.show-nav,
-.body-overlay.show-nav {
-    transform: translatex(0%);
-    opacity: 1;
-    display: block;
-    visibility: visible;
-    z-index: 15;
-}
-
-
-
 
 /*========main-content- navbardesign -end-----*/
 
@@ -580,3 +539,29 @@ footer {
         background-color: rgba(0, 0, 0, 0.5);
     }
 }
+
+/* star */
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: .5rem;
+    font-size: 2rem;
+    color: var(--yellow);
+    margin-bottom: 2rem;
+}
+
+.rating .star {
+    cursor: pointer;
+    color: #ccc; /* Default star color */
+}
+
+.rating .star.active {
+    color: gold; /* Gold color for active (selected) stars */
+}
+
+.rating .star:hover {
+    color: gold; /* Gold color on hover */
+}
+
+
