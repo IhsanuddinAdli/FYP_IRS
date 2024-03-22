@@ -119,31 +119,19 @@
                 <!----main-content--->
                 <div id="main-content-image">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-md-8 offset-md-2">
-                                <div class="card mt-5">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <button class="btn btn-primary btn-block">Button 1</button>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <button class="btn btn-secondary btn-block">Button 2</button>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <button class="btn btn-success btn-block">Button 3</button>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <button class="btn btn-danger btn-block">Button 4</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="button-container">
+                            <button class="button" id="car-btn"><i class="material-icons">directions_car</i></button>
+                            <button class="button" id="moto-btn"><i class="material-icons">motorcycle</i></button>
+                        </div>
+                        <div class="button-container">
+                            <button class="button" id="van-btn"><i class="material-icons">directions_bus</i></button>
+                            <button class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></button>
                         </div>
                     </div>
                 </div>
                 <!----main-content-end--->
+
+
 
                 <!----footer-design------------->
 

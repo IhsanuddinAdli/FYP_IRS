@@ -492,11 +492,44 @@ input[type="search"] {
 #main-content-image {
     text-align: center;
     margin-top: 0;
-    height: 75vh; /* Set the container height to 80vh */
+    height: 75vh; /* Set the container height */
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 15%;
+}
+
+.button {
+    padding: 60px 70px;
+    background-color: white;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 5px; /* Adjust as needed */
+}
+.button i.material-icons {
+    font-size: 80px; /* Adjust the size as needed */
+}
 /* main content end */
+
+
 
 /*-------footer design start------*/
 footer {
