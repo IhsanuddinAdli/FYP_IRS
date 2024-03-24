@@ -124,15 +124,17 @@
                             <!-- Left Section for Payment Submission -->
                             <div id="left-section" class="col-md-6">
                                 <div class="payment-details">
-                                    <h2>Payment Submission</h2>
+                                    <h3>Payment Submission</h3>
                                     <!-- Form for Payment Submission -->
                                     <div class="account-number">
-                                        <h2>Account Number</h2>
+                                        <h4>7632754905</h4>
+                                        <p>Muhammad Ihsanuddin Bin Adli</p>
+                                        <p>CIMB</p>
                                         <!-- Display Account Number Image -->
-                                        <img src="account_number_image.jpg" alt="Account Number">
+                                        <img src="IMG/qr_bank.jpeg" alt="QR Code">
                                     </div>
                                 </div>
-                                <form action="submit_payment.jsp" method="POST" enctype="multipart/form-data">
+                                <form action="customerQuo.jsp" method="POST" enctype="multipart/form-data">
                                     <label for="receipt">Upload Receipt:</label>
                                     <input type="file" id="receipt" name="receipt" accept="image/*" required>
 
@@ -143,7 +145,7 @@
                             <!-- Right Section for Transaction Details and Price -->
                             <div id="right-section" class="col-md-6">
                                 <div class="transaction-details">
-                                    <h2>Transaction Details</h2>
+                                    <h3>Transaction Details</h3>
                                     <!-- Display Transaction Details here -->
                                     <p>Transaction ID: ABC123</p>
                                     <p>Date: March 23, 2024</p>
@@ -157,8 +159,6 @@
                     </div>
                 </div>
                 <!-- Main content end -->
-
-
 
                 <!----footer-design------------->
 
