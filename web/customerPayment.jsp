@@ -6,19 +6,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Feedback Page</title>
+        <title>Payment Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
-        <link rel="stylesheet" href="CSS/customerFeedback.css">
+        <link rel="stylesheet" href="CSS/customerPayment.css">
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--star-->
-        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
@@ -39,10 +37,10 @@
                     <li class="">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-                    <li class="">
+                    <li class="active">
                         <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
                     <li class="">
@@ -101,60 +99,66 @@
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
-
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Feedback</h4>
+                            <h4 class="page-title">Payment</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
-
-
                     </div>
                 </div>
                 <!------top-navbar-end----------->
 
-                <!----main-content--->
+                <!-- Main content start -->
                 <div id="main-content-image">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-md-8 offset-md-2">
-                                <div class="card mt-5">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Feedback Box</h5>
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="feedback">Your Feedback:</label>
-                                                <textarea class="form-control" id="feedback" rows="3"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rating">Rate your experience:</label><br>
-                                                <div class="rating">
-                                                    <input type="number" name="rating" hidden>
-                                                    <i class='bx bx-star star' style="--i: 0;"></i>
-                                                    <i class='bx bx-star star' style="--i: 1;"></i>
-                                                    <i class='bx bx-star star' style="--i: 2;"></i>
-                                                    <i class='bx bx-star star' style="--i: 3;"></i>
-                                                    <i class='bx bx-star star' style="--i: 4;"></i>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
-                                        </form>
+                        <!-- Payment Page -->
+                        <div id="payment-page" class="row">
+                            <!-- Left Section for Payment Submission -->
+                            <div id="left-section" class="col-md-6">
+                                <div class="payment-details">
+                                    <h2>Payment Submission</h2>
+                                    <!-- Form for Payment Submission -->
+                                    <div class="account-number">
+                                        <h2>Account Number</h2>
+                                        <!-- Display Account Number Image -->
+                                        <img src="account_number_image.jpg" alt="Account Number">
                                     </div>
+                                </div>
+                                <form action="submit_payment.jsp" method="POST" enctype="multipart/form-data">
+                                    <label for="receipt">Upload Receipt:</label>
+                                    <input type="file" id="receipt" name="receipt" accept="image/*" required>
+
+                                    <button type="submit">Submit Payment</button>
+                                </form>
+                            </div>
+
+                            <!-- Right Section for Transaction Details and Price -->
+                            <div id="right-section" class="col-md-6">
+                                <div class="transaction-details">
+                                    <h2>Transaction Details</h2>
+                                    <!-- Display Transaction Details here -->
+                                    <p>Transaction ID: ABC123</p>
+                                    <p>Date: March 23, 2024</p>
+                                    <p>Product: Product Name</p>
+                                    <p>Price: $100</p>
+                                    <!-- Add more details as needed -->
                                 </div>
                             </div>
                         </div>
+                        <!-- Payment Page End -->
                     </div>
                 </div>
-                <!----main-content-end--->
+                <!-- Main content end -->
+
+
 
                 <!----footer-design------------->
 
@@ -186,34 +190,5 @@
                 });
             });
         </script>
-        <script>
-            const allStar = document.querySelectorAll('.rating .star')
-            const ratingValue = document.querySelector('.rating input')
-
-            allStar.forEach((item, idx) => {
-                item.addEventListener('click', function () {
-                    let click = 0
-                    ratingValue.value = idx + 1
-
-                    allStar.forEach(i => {
-                        i.classList.replace('bxs-star', 'bx-star')
-                        i.classList.remove('active')
-                    })
-                    for (let i = 0; i < allStar.length; i++) {
-                        if (i <= idx) {
-                            allStar[i].classList.replace('bx-star', 'bxs-star')
-                            allStar[i].classList.add('active')
-                        } else {
-                            allStar[i].style.setProperty('--i', click)
-                            click++
-                        }
-                    }
-                })
-            })
-        </script>
     </body>
-
-
-
-
 </html>

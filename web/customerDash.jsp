@@ -45,7 +45,7 @@
                     </li>
                     
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">border_color</i>Quotation</a>
+                        <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
                     
                     <li class="">

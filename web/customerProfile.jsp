@@ -86,7 +86,7 @@
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">border_color</i>Quotation</a>
+                        <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
                     <li class="">
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>

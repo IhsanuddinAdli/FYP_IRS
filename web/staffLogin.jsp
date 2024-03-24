@@ -116,7 +116,6 @@
                                     case "admin":
                                         response.sendRedirect("adminDash.jsp");
                                         break;
-                                    // Add more cases for other roles if needed
                                 }
                             } else {
                                 // User not found, display error message
