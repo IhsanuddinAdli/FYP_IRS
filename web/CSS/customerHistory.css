@@ -487,46 +487,49 @@ input[type="search"] {
 
 /*---navbardesign -end-----*/
 
+
 /* main content */
-.main-content {
-    padding: 30px;
+#main-content-image {
+    text-align: center;
+    margin-top: 0;
+    height: 75vh; /* Set the container height */
+    overflow: hidden; /* Hide any overflowing content */
+    background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
 
-.card {
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-.card-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.btn-primary {
-    background-color: #4c7cf3;
-    color: #fff;
-}
-
-.btn-secondary {
-    background-color: #4c7cf3;
-    color: #fff;
-}
-
-#main-content-image {
+th, td {
+    padding: 8px;
     text-align: center;
-    margin-top: auto; /* Adjust as needed */
-    min-height: 90vh; /* Ensure the container takes up at least the height of the viewport */
-    background-image: url('background2.png'); /* Set background image */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-    overflow: hidden; /* Hide any overflowing content */
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
 }
 
 /* main content end */
+
 
 /*-------footer design start------*/
 footer {
@@ -539,20 +542,6 @@ footer {
 }
 
 /*-------footer design end------*/
-
-
-
-#sidebar.show-nav,
-.body-overlay.show-nav {
-    transform: translatex(0%);
-    opacity: 1;
-    display: block;
-    visibility: visible;
-    z-index: 15;
-}
-
-
-
 
 /*========main-content- navbardesign -end-----*/
 

@@ -6,11 +6,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Quotation Page</title>
+        <title>History Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
-        <link rel="stylesheet" href="CSS/customerQuo.css">
+        <link rel="stylesheet" href="CSS/customerHistory.css">
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,13 +37,13 @@
                     <li class="">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
                     <li class="">
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
-                    <li class="">
+                    <li class="active">
                         <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
                     <li class="">
@@ -106,7 +106,7 @@
                         </div>
 
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Quotation</h4>
+                            <h4 class="page-title">History</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
@@ -119,15 +119,45 @@
                 <!----main-content--->
                 <div id="main-content-image">
                     <div class="container">
-                        <div class="button-container">
-                            <button class="button" id="car-btn"><i class="material-icons">directions_car</i></button>
-                            <button class="button" id="moto-btn"><i class="material-icons">motorcycle</i></button>
-                        </div>
-                        <div class="button-container">
-                            <button class="button" id="van-btn"><i class="material-icons">directions_bus</i></button>
-                            <button class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></button>
-                        </div>
+                        <h2>History of Vehicle Insurance Purchases</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Policy Number</th>
+                                    <th>Vehicle</th>
+                                    <th>Insurance Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Amount Paid</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Sample data, replace with actual data -->
+                                <tr>
+                                    <td>ABC123</td>
+                                    <td>Toyota Corolla</td>
+                                    <td>Comprehensive</td>
+                                    <td>2023-01-01</td>
+                                    <td>2024-01-01</td>
+                                    <td>$500</td>
+                                    <td><button class="btn btn-primary renew-btn">Renew</button></td> <!-- Add the renew button -->
+                                </tr>
+                                <tr>
+                                    <td>DEF456</td>
+                                    <td>Honda Civic</td>
+                                    <td>Third Party</td>
+                                    <td>2022-05-15</td>
+                                    <td>2023-05-15</td>
+                                    <td>$300</td>
+                                    <td><button class="btn btn-primary renew-btn">Renew</button></td> <!-- Add the renew button -->
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+
+                        </table>
                     </div>
+
                 </div>
                 <!----main-content-end--->
 

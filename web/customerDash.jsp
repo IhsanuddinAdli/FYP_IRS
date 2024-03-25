@@ -63,7 +63,7 @@
                     </li>-->
 
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">date_range</i>History</a>
+                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
 
                     <li class="">

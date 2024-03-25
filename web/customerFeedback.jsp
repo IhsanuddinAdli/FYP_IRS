@@ -46,7 +46,7 @@
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">date_range</i>History</a>
+                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
                     <li class="">
                         <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>

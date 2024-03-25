@@ -71,7 +71,7 @@
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-            
+
             <!-------sidebar--design------------>
 
             <div id="sidebar">
@@ -79,7 +79,7 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="">
+                    <li class=""> 
                         <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
                     </li>
                     <li class="active">
@@ -92,7 +92,7 @@
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">date_range</i>History</a>
+                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
                     <li class="">
                         <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
@@ -169,78 +169,80 @@
                 <!------top-navbar-end----------->
 
                 <!----main-content--->
-                <div class="main-content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body text-center">
-                                        <img src="IMG/avatar.jpg" alt="Avatar" class="img-fluid rounded-circle mb-3"
-                                             style="width: 100px; height: 100px;">
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                                data-target="#updateImageModal">Update Image</button>
+<!--                <div id="main-content-image">-->
+                    <div class="main-content">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <img src="IMG/avatar.jpg" alt="Avatar" class="img-fluid rounded-circle mb-3"
+                                                 style="width: 100px; height: 100px;">
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                                    data-target="#updateImageModal">Update Image</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Customer Details</h5>
-                                        <form id="profileForm" action="UpdateProfileServlet">
-                                            <div class="form-group">
-                                                <label for="firstname">Firstname</label>
-                                                <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lastname">Lastname</label>
-                                                <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ICNumber">IC Number</label>
-                                                <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="phone">Phone</label>
-                                                <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password">Password</label>
-                                                <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="residence">Residence</label>
-                                                <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="zipcode">Zipcode</label>
-                                                <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="city">City</label>
-                                                <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="state">State</label>
-                                                <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
-                                            </div>
-                                            <!-- Add more fields as needed -->
+                                <div class="col-md-8">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Customer Details</h5>
+                                            <form id="profileForm" action="UpdateProfileServlet">
+                                                <div class="form-group">
+                                                    <label for="firstname">Firstname</label>
+                                                    <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="lastname">Lastname</label>
+                                                    <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ICNumber">IC Number</label>
+                                                    <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone">Phone</label>
+                                                    <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Password</label>
+                                                    <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="residence">Residence</label>
+                                                    <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="zipcode">Zipcode</label>
+                                                    <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="city">City</label>
+                                                    <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="state">State</label>
+                                                    <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
+                                                </div>
+                                                <!-- Add more fields as needed -->
 
-                                            <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
-                                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
+                                                <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
+                                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
 
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <!--</div>-->
 
                 <!----main-content-end--->
 
