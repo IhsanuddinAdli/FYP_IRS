@@ -1,31 +1,25 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang=" en">
-
+<html>
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Staff dashboard</title>
+        <title>Quotation Form Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
-        <link rel="stylesheet" href="CSS/staffDash.css">
-
-
+        <link rel="stylesheet" href="CSS/customerQuoForm.css">
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
 
     <body>
-
         <div class="wrapper">
 
             <div class="body-overlay"></div>
@@ -37,29 +31,26 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
+                    <li class="">
+                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                    </li>
+                    <li class="">
+                        <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
+                    </li>
                     <li class="active">
-                        <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
                     </li>
-
                     <li class="">
-                        <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
+                        <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
                     </li>
-
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
+                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
                     </li>
-
                     <li class="">
                         <a href="homePage.html" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
-
-                    <!-- <li class="">
-                            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-                        </li> -->
-
                 </ul>
             </div>
-
             <!-------sidebar--design- close----------->
 
             <!-------page-content start----------->
@@ -103,28 +94,24 @@
                                             </li>
 
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="staffProfile.jsp">
+                                                <a class="nav-link" href="customerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
-
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Dashboard</h4>
+                            <h4 class="page-title">Quotation Form</h4>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Staff</a></li>
+                                <li class="breadcrumb-item"><a href="#">Customer</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
-
-
                     </div>
                 </div>
                 <!------top-navbar-end----------->
@@ -132,39 +119,38 @@
                 <!----main-content--->
                 <div id="main-content-image">
                     <div class="container">
-                        <!-- Real-time Dashboard -->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Customer Number</h5>
-                                        <p class="card-text" id="customerNumber">Loading...</p>
-                                    </div>
-                                </div>
+                        <form id="quotation-form">
+                            <div class="form-group">
+                                <label for="policy-number">Policy Number</label>
+                                <input type="text" class="form-control" id="policy-number" placeholder="Enter policy number">
                             </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Total Profit</h5>
-                                        <p class="card-text" id="totalProfit">Loading...</p>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="vehicle-model">Vehicle Model</label>
+                                <input type="text" class="form-control" id="vehicle-model" placeholder="Enter vehicle model">
                             </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Real-time Data Graph</h5>
-                                        <canvas id="realTimeGraphCanvas" style="height: 300px;"></canvas>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="insurance-type">Insurance Type</label>
+                                <select class="form-control" id="insurance-type">
+                                    <option>Comprehensive</option>
+                                    <option>Third Party</option>
+                                    <!-- Add more options if needed -->
+                                </select>
                             </div>
-                        </div>
-                        <!-- End Real-time Dashboard -->
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="date" class="form-control" id="expiry-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="premium-amount">Premium Amount</label>
+                                <input type="text" class="form-control" id="premium-amount" placeholder="Enter premium amount">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
                     </div>
                 </div>
+
                 <!----main-content-end--->
+
 
 
                 <!----footer-design------------->
@@ -176,17 +162,8 @@
                         </div>
                     </div>
                 </footer>
-
-
-
-
             </div>
-
         </div>
-
-
-
-        <!-------complete html----------->
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -201,51 +178,10 @@
                     $("#sidebar").toggleClass('active');
                     $("#content").toggleClass('active');
                 });
-
                 $('.xp-menubar,.body-overlay').on('click', function () {
                     $("#sidebar,.body-overlay").toggleClass('show-nav');
                 });
             });
         </script>
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            // Sample data for the graph
-            const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-            const data = {
-                labels: labels,
-                datasets: [{
-                        label: 'Profit',
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: [0, 10, 5, 2, 20, 30, 45],
-                    }]
-            };
-
-            const config = {
-                type: 'line',
-                data: data,
-                options: {}
-            };
-
-            var myChart = new Chart(
-                    document.getElementById('realTimeGraphCanvas'),
-                    config
-                    );
-
-            // Sample function to update graph data
-            function updateGraph() {
-                // Simulate real-time data update
-                const newData = data.datasets[0].data.map((value) => value + Math.random() * 10);
-                myChart.data.datasets[0].data = newData;
-                myChart.update();
-            }
-
-            // Call updateGraph function periodically (every 5 seconds for example)
-            setInterval(updateGraph, 5000);
-        </script>
-
-
     </body>
-
 </html>

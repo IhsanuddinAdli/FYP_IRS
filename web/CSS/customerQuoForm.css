@@ -487,11 +487,12 @@ input[type="search"] {
 
 /*---navbardesign -end-----*/
 
+
 /* main content */
 #main-content-image {
     text-align: center;
     margin-top: 0;
-    height: 90vh; /* Set the container height */
+    height: 75vh; /* Set the container height */
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
@@ -516,20 +517,6 @@ footer {
 }
 
 /*-------footer design end------*/
-
-
-
-#sidebar.show-nav,
-.body-overlay.show-nav {
-    transform: translatex(0%);
-    opacity: 1;
-    display: block;
-    visibility: visible;
-    z-index: 15;
-}
-
-
-
 
 /*========main-content- navbardesign -end-----*/
 
