@@ -167,152 +167,105 @@
                     </div>
                 </div>
                 <!------top-navbar-end----------->
-
-                <!----main-content--->
-<!--                <div id="main-content-image">-->
-                    <div class="main-content">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <img src="IMG/avatar.jpg" alt="Avatar" class="img-fluid rounded-circle mb-3"
-                                                 style="width: 100px; height: 100px;">
-                                        </div>
-                                        <div class="card-footer text-center">
-                                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                                    data-target="#updateImageModal">Update Image</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Customer Details</h5>
-                                            <form id="profileForm" action="UpdateProfileServlet">
-                                                <div class="form-group">
-                                                    <label for="firstname">Firstname</label>
-                                                    <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="lastname">Lastname</label>
-                                                    <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="ICNumber">IC Number</label>
-                                                    <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="email">Email</label>
-                                                    <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="phone">Phone</label>
-                                                    <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="residence">Residence</label>
-                                                    <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="zipcode">Zipcode</label>
-                                                    <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="city">City</label>
-                                                    <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="state">State</label>
-                                                    <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
-                                                </div>
-                                                <!-- Add more fields as needed -->
-
-                                                <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
-                                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <!--</div>-->
-
-                <!----main-content-end--->
-
-                <!-- Modal for Updating Profile -->
-                <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+                <!-- modal for updating profile image -->
+                <div class="modal fade" id="updateImageModal" tabindex="-1" role="dialog" aria-labelledby="updateImageModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="updateProfileForm" action="updateCustomerProfile.jsp" method="post">
+                            <form id="updateImageForm" action="uploadImage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateImageModalLabel">Update Profile Image</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
                                     <div class="form-group">
-                                        <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
-
-                                        <label for="firstname">Firstname</label>
-                                        <input type="text" class="form-control" id="firstname" name="firstname" required value="<%= firstname%>">
+                                        <label for="imageFile">Choose Image:</label>
+                                        <input type="file" class="form-control-file" id="imageFile" name="imageFile">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="lastname">Lastname</label>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" required value="<%= lastname%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ICNumber">IC Number</label>
-                                        <input type="text" class="form-control" id="ICNumber" name="ICNumber" required value="<%= ICNumber%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" id="email" name="email" required value="<%= email%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" class="form-control" id="phone" name="phone" required value="<%= phone%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="text" class="form-control" id="password" name="password" required value="<%= password%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="residence">Residence</label>
-                                        <input type="text" class="form-control" id="residence" name="residence" required value="<%= residence%>">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="zipcode">Zipcode</label>
-                                        <input type="text" class="form-control" id="zipcode" name="zipcode" required value="<%= zipcode%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control" id="city" name="city" required value="<%= city%>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <input type="text" class="form-control" id="state" name="state" value="<%= state%>">
-                                    </div>
-                                    <div class="text-right">
-                                        <a href="updateProfile.jsp?id=<%= userID%>">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        </a>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
+                                    <input type="hidden" name="userID" value="<%= userID%>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Upload Image</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
+                <div id="main-content-image">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <!-- Display the customer's current profile image -->
+                                        <img src="getImage?userID=<%= userID%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <!-- Button to trigger the modal for updating the profile image -->
+                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateImageModal">Update Image</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Customer Details</h5>
+                                        <form id="profileForm" action="">
+                                            <div class="form-group">
+                                                <label for="firstname">Firstname</label>
+                                                <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lastname">Lastname</label>
+                                                <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ICNumber">IC Number</label>
+                                                <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="residence">Residence</label>
+                                                <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="zipcode">Zipcode</label>
+                                                <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city">City</label>
+                                                <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="state">State</label>
+                                                <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
+                                            </div>
+                                            <!-- Add more fields as needed -->
+
+                                            <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
+                                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!----footer-design------------->
 
                 <footer class="footer">
@@ -322,14 +275,78 @@
                         </div>
                     </div>
                 </footer>
-
-
-
-
             </div>
-
         </div>
+        <!--</div>-->
 
+        <!----main-content-end--->
+
+        <!-- Modal for Updating Profile -->
+        <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateProfileForm" action="updateCustomerProfile.jsp" method="post">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
+
+                                <label for="firstname">Firstname</label>
+                                <input type="text" class="form-control" id="firstname" name="firstname" required value="<%= firstname%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Lastname</label>
+                                <input type="text" class="form-control" id="lastname" name="lastname" required value="<%= lastname%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="ICNumber">IC Number</label>
+                                <input type="text" class="form-control" id="ICNumber" name="ICNumber" required value="<%= ICNumber%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" required value="<%= email%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone" required value="<%= phone%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password" name="password" required value="<%= password%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="residence">Residence</label>
+                                <input type="text" class="form-control" id="residence" name="residence" required value="<%= residence%>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode</label>
+                                <input type="text" class="form-control" id="zipcode" name="zipcode" required value="<%= zipcode%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="city" required value="<%= city%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" class="form-control" id="state" name="state" value="<%= state%>">
+                            </div>
+                            <div class="text-right">
+                                <a href="updateProfile.jsp?id=<%= userID%>">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </a>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <!-------complete html----------->

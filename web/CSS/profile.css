@@ -488,8 +488,13 @@ input[type="search"] {
 /*---navbardesign -end-----*/
 
 /* main content */
-.main-content {
+#main-content-image {
     padding: 30px;
+    text-align: center;
+    margin-top: 0;
+    height: 170vh; /* Set the container height */
+    overflow: hidden; /* Hide any overflowing content */
+    background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
 
 .card {
@@ -515,17 +520,6 @@ input[type="search"] {
     color: #fff;
 }
 
-#main-content-image {
-    text-align: center;
-    margin-top: auto; /* Adjust as needed */
-    min-height: 90vh; /* Ensure the container takes up at least the height of the viewport */
-    background-image: url('background2.png'); /* Set background image */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-    overflow: hidden; /* Hide any overflowing content */
-}
-
 /* main content end */
 
 /*-------footer design start------*/
@@ -540,8 +534,6 @@ footer {
 
 /*-------footer design end------*/
 
-
-
 #sidebar.show-nav,
 .body-overlay.show-nav {
     transform: translatex(0%);
@@ -550,9 +542,6 @@ footer {
     visibility: visible;
     z-index: 15;
 }
-
-
-
 
 /*========main-content- navbardesign -end-----*/
 
