@@ -507,7 +507,7 @@ input[type="search"] {
 
 .button-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     width: 15%;
 }
 

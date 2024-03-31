@@ -23,7 +23,7 @@ public class CustomerDAO {
             preparedStatement.setString(1, userID);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return rs.getBlob("profile_image").getBinaryStream();
+                return rs.getBlob("profileIMG").getBinaryStream();
             } else {
                 return null;
             }

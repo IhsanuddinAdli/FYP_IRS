@@ -1,4 +1,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+
+<%
+    String userID = (String) session.getAttribute("userID");
+
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
+            ps.setString(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            out.println("An error occurred while fetching customer data. Please try again later.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            out.println("An error occurred while loading database driver.");
+        }
+    } else {
+        out.println("User not logged in.");
+    }
+%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -130,15 +158,15 @@
                                 <div class="card mt-5">
                                     <div class="card-body">
                                         <h5 class="card-title">Feedback Box</h5>
-                                        <form>
+                                        <form action="submitFeedback" method="post"> 
                                             <div class="form-group">
                                                 <label for="feedback">Your Feedback:</label>
-                                                <textarea class="form-control" id="feedback" rows="3"></textarea>
+                                                <textarea class="form-control" id="feedback" name="feedback" rows="3"></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="rating">Rate your experience:</label><br>
                                                 <div class="rating">
-                                                    <input type="number" name="rating" hidden>
+                                                    <input type="hidden" name="rating" id="rating" value="0"> <!-- Hidden input for rating -->
                                                     <i class='bx bx-star star' style="--i: 0;"></i>
                                                     <i class='bx bx-star star' style="--i: 1;"></i>
                                                     <i class='bx bx-star star' style="--i: 2;"></i>
@@ -146,6 +174,7 @@
                                                     <i class='bx bx-star star' style="--i: 4;"></i>
                                                 </div>
                                             </div>
+                                            <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
                                             <button type="submit" class="btn btn-primary">Submit Feedback</button>
                                         </form>
                                     </div>
@@ -161,7 +190,7 @@
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p>&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>

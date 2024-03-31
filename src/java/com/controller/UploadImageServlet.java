@@ -21,7 +21,8 @@ public class UploadImageServlet extends HttpServlet {
 
         try (InputStream fileContent = filePart.getInputStream()) {
             CustomerDAO.updateProfileImage(userID, fileContent);
-            response.getWriter().println("Image uploaded successfully.");
+            // Redirect to customerProfile.jsp after successful upload
+            response.sendRedirect("customerProfile.jsp");
         } catch (Exception e) {
             response.getWriter().println("Error: " + e.getMessage());
         }
