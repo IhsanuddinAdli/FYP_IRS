@@ -8,8 +8,7 @@
 }
 
 #header {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-        url("background.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("background.jpg");
     background-position: center;
     background-size: cover;
     width: 100%;
@@ -125,19 +124,6 @@ svg.wave {
     overflow: hidden; /* Hide overflowing content */
 }
 
-.profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-/* Adjust layout of review box container */
-.review-box-container {
-    position: relative;
-    overflow: hidden;
-}
-
 /* Add arrow styles for scrolling */
 .scroll-arrow {
     position: absolute;
@@ -145,10 +131,7 @@ svg.wave {
     transform: translateY(-50%);
     font-size: 24px;
     cursor: pointer;
-    color: #3498db;
-    background-color: transparent;
-    border: none;
-    padding: 5px;
+    color: #3498db; /* Adjust the arrow color as needed */
 }
 
 .scroll-left {
@@ -176,4 +159,14 @@ footer {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Additional Styles for Image in Review Section */
+
+.review-profile-img {
+    width: 80px; /* Adjust the width of the profile image */
+    height: 80px; /* Adjust the height of the profile image */
+    border-radius: 50%; /* Make the profile image circular */
+    object-fit: cover; /* Ensure the image covers the entire container */
+    margin-right: 20px; /* Add some space between the profile image and the content */
 }
