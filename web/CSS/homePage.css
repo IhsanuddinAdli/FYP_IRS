@@ -101,37 +101,41 @@ svg.wave {
 }
 
 .review-box {
-    flex: 0 0 auto;
-    width: 400px; /* Set a fixed width for the review box */
-    height: 300px; /* Set a fixed height for the review box */
-    margin-right: 20px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    scroll-snap-align: start;
-    overflow: hidden; /* Hide overflowing content */
+    width: 300px; /* Reduce the width of the review box */
+    height: auto; /* Let the height adjust based on content */
+    margin-bottom: 20px; /* Add some space between review boxes */
+    padding: 15px; /* Reduce the padding inside the review box */
 }
 
 .review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 10px; /* Add some space below the header */
 }
 
 .review-name {
-    font-size: 18px;
+    font-size: 16px; /* Reduce the font size of the user ID */
 }
 
 .review-stars {
-    color: #f39c12; /* Adjust the star color as needed */
+    font-size: 14px; /* Reduce the font size of stars */
 }
 
 .review-content {
-    margin-top: 10px;
-    font-size: 16px;
+    font-size: 14px; /* Reduce the font size of the feedback content */
+    height: 80px; /* Limit the height of feedback content */
     overflow: hidden; /* Hide overflowing content */
-    text-overflow: ellipsis; /* Display an ellipsis (...) for overflow */
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Adjust layout of review box container */
+.review-box-container {
+    position: relative;
+    overflow: hidden;
 }
 
 /* Add arrow styles for scrolling */
@@ -141,7 +145,10 @@ svg.wave {
     transform: translateY(-50%);
     font-size: 24px;
     cursor: pointer;
-    color: #3498db; /* Adjust the arrow color as needed */
+    color: #3498db;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
 }
 
 .scroll-left {

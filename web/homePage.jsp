@@ -1,3 +1,7 @@
+<%@page import="com.dao.FeedbackDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.model.Feedback"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -97,7 +101,7 @@
                 <h2 class="text-center mb-4">About Us</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="IMG/company.jpg" class="img-fluid rounded" alt="About Us Image">
+                        <img src="IMG/kedai.jpg" class="img-fluid rounded" alt="About Us Image">
                     </div>
                     <div class="col-md-6" style="background-color: #yourColorCode;">
                         <p class="lead">
@@ -112,43 +116,42 @@
             </div>
         </section>
 
-        <!-- "Review" section -->
-        <section id="review" class="bg-white py-5">
+        <!-- Add content for the "Review" section -->
+        <section id="review" class="bg-light py-5">
             <div class="container">
-                <h2 class="text-center mb-4">Review</h2>
-                <div class="reviews-container">
-                    <div class="scroll-arrow scroll-left">&lt;</div>
-                    <div class="review-box">
-                        <div class="review-header">
-                            <h4 class="review-name">John Doe</h4>
-                            <div class="review-stars">
-                                ★★★★☆
-                            </div>
-                        </div>
-                        <p class="review-content">
-                            "GuardWheels provided excellent service. The insurance renewal process was quick and hassle-free.
-                            I highly recommend their system."
-                        </p>
-                    </div>
-                    <!-- Add more review boxes as needed -->
+                <h2 class="text-center mb-4">Customer Reviews</h2>
 
-                    <!-- Example of another review box -->
-                    <div class="review-box">
-                        <div class="review-header">
-                            <h4 class="review-name">Jane Smith</h4>
-                            <div class="review-stars">
-                                ★★★★★
+                <!-- Iterate over feedback data and display -->
+                <div class="row">
+                    <%
+                        // Retrieve feedback data from the database
+                        FeedbackDAO feedbackDAO = new FeedbackDAO();
+                        List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
+
+                        // Iterate over each feedback entry and display
+                for (Feedback feedback : feedbackList) {%>
+                    <div class="col-md-6">
+                        <div class="review-box">
+                            <div class="review-header">
+                                <h4 class="review-name">User ID: <%= feedback.getUserID()%></h4>
+                                <div class="review-stars">
+                                    <!-- Render star rating here if available -->
+                                    <%-- Example: ★★★★☆ for rating 4 --%>
+                                    <% for (int i = 0; i < feedback.getRating(); i++) { %>
+                                    <span class="star">&#9733;</span>
+                                    <% }%>
+                                </div>
                             </div>
+                            <p class="review-content">
+                                <%= feedback.getFeedback()%>
+                            </p>
                         </div>
-                        <p class="review-content">
-                            "I've been using GuardWheels for years, and they never disappoint. The system is user-friendly,
-                            and their customer support is top-notch."
-                        </p>
                     </div>
-                    <div class="scroll-arrow scroll-right">&gt;</div>
+                    <% }%>
                 </div>
             </div>
         </section>
+
 
         <!-- "Contact Us" section -->
         <section id="contact" class="bg-light py-5">
