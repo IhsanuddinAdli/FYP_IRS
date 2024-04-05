@@ -86,42 +86,54 @@ svg.wave {
 #review {
     background-color: #f8f9fa;
     overflow-x: hidden;
-    /* Change the background color as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-box {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.review-profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.review-header {
+    flex: 1;
+}
+
+.review-name {
+    margin-bottom: 10px;
+}
+
+.review-content {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.review-stars {
+    color: gold;
+    margin-top: 10px;
 }
 
 .reviews-container {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: var(--main-color) #f8f9fa;
-    white-space: nowrap;
-    position: relative; /* Position relative for arrow placement */
-}
-
-.review-box {
-    width: 300px; /* Reduce the width of the review box */
-    height: auto; /* Let the height adjust based on content */
-    margin-bottom: 20px; /* Add some space between review boxes */
-    padding: 15px; /* Reduce the padding inside the review box */
-}
-
-.review-header {
-    margin-bottom: 10px; /* Add some space below the header */
-}
-
-.review-name {
-    font-size: 16px; /* Reduce the font size of the user ID */
-}
-
-.review-stars {
-    font-size: 14px; /* Reduce the font size of stars */
-}
-
-.review-content {
-    font-size: 14px; /* Reduce the font size of the feedback content */
-    height: 80px; /* Limit the height of feedback content */
-    overflow: hidden; /* Hide overflowing content */
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Add arrow styles for scrolling */

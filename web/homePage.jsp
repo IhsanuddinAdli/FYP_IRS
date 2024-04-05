@@ -127,33 +127,36 @@
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
 
-                <!-- Iterate over feedback data and display -->
-                <div class="row">
-                    <%
-                        // Retrieve feedback data from the database
-                        FeedbackDAO feedbackDAO = new FeedbackDAO();
-                        List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
+                <!-- Review container for horizontal scrolling -->
+                <div class="reviews-container">
+                    <!-- Iterate over feedback data and display -->
+                    <div class="row">
+                        <%
+                            // Retrieve feedback data from the database
+                            FeedbackDAO feedbackDAO = new FeedbackDAO();
+                            List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
 
-                        // Iterate over each feedback entry and display
-                        for (Feedback feedback : feedbackList) {
-                            // Retrieve customer data based on userID from feedback
-                            Customer customer = CustomerDAO.getCustomerByID(feedback.getUserID());
-                            if (customer != null) {
-                                // Display profile picture
-                                InputStream profileImageStream = customer.getProfileImage();
-                                if (profileImageStream != null) {
-                                    byte[] profileImageBytes = profileImageStream.readAllBytes();
-                                    String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
-                    %>
-                    <div class="col-md-6">
-                        <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
-                             alt="Profile Picture" class="review-profile-img">
-                        <p>Name: <%= customer.getFirstname() + " " + customer.getLastname()%></p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="review-box">
-                            <div class="review-header">
-                                <h4 class="review-name">User ID: <%= feedback.getUserID()%></h4>
+                            // Iterate over each feedback entry and display
+                            for (Feedback feedback : feedbackList) {
+                                // Retrieve customer data based on userID from feedback
+                                Customer customer = CustomerDAO.getCustomerByID(feedback.getUserID());
+                                if (customer != null) {
+                                    // Display profile picture
+                                    InputStream profileImageStream = customer.getProfileImage();
+                                    if (profileImageStream != null) {
+                                        byte[] profileImageBytes = profileImageStream.readAllBytes();
+                                        String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
+                        %>
+                        <div class="col-md-4">
+                            <div class="review-box">
+                                <div class="review-header">
+                                    <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
+                                         alt="Profile Picture" class="review-profile-img">
+                                    <h4 class="review-name"><%= customer.getFirstname() + " " + customer.getLastname()%></h4>
+                                </div>
+                                <p class="review-content">
+                                    <%= feedback.getFeedback()%>
+                                </p>
                                 <div class="review-stars">
                                     <!-- Render star rating here if available -->
                                     <%-- Example: ★★★★☆ for rating 4 --%>
@@ -162,17 +165,18 @@
                                     <% }%>
                                 </div>
                             </div>
-                            <p class="review-content">
-                                <%= feedback.getFeedback()%>
-                            </p>
                         </div>
-                    </div>
-                    <%
+                        <%
+                                    }
                                 }
                             }
-                        }
-                    %>
+                        %>
+                    </div>
                 </div>
+
+                <!-- Arrow buttons for horizontal scrolling -->
+                <div class="scroll-arrow scroll-left">&#9664;</div>
+                <div class="scroll-arrow scroll-right">&#9654;</div>
             </div>
         </section>
 
@@ -223,6 +227,27 @@
                     e.preventDefault();
 
                     document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const reviewsContainer = document.querySelector('.reviews-container');
+                const scrollLeftBtn = document.querySelector('.scroll-left');
+                const scrollRightBtn = document.querySelector('.scroll-right');
+
+                scrollLeftBtn.addEventListener('click', function () {
+                    reviewsContainer.scrollBy({
+                        left: -200,
+                        behavior: 'smooth'
+                    });
+                });
+
+                scrollRightBtn.addEventListener('click', function () {
+                    reviewsContainer.scrollBy({
+                        left: 200,
                         behavior: 'smooth'
                     });
                 });
