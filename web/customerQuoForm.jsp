@@ -124,91 +124,61 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="registration-number">Vehicle Registration Number</label>
-                                        <input type="text" class="form-control" id="registration-number" placeholder="Enter registration number">
+                                        <input type="text" class="form-control wide-input" id="registration-number" placeholder="Example: ABC123">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
-                                        <input type="text" class="form-control" id="owner-name" placeholder="Enter owner's name">
+                                        <input type="text" class="form-control wide-input" id="owner-name" placeholder="Example: Ihsanuddin">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="owner-id">Owner's Identification Number</label>
-                                        <input type="text" class="form-control" id="owner-id" placeholder="Enter identification number">
+                                        <input type="text" class="form-control wide-input" id="owner-id" placeholder="Example: 123456789" maxlength="9">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vehicle-make">Vehicle Make</label>
-                                        <input type="text" class="form-control" id="vehicle-make" placeholder="Enter vehicle make">
+                                        <input type="text" class="form-control wide-input" id="vehicle-make" placeholder="Example: Toyota">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vehicle-year">Vehicle Year</label>
+                                        <input type="text" class="form-control wide-input" id="vehicle-year" placeholder="Example: 2022">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vehicle-model">Vehicle Model</label>
-                                        <input type="text" class="form-control" id="vehicle-model" placeholder="Enter vehicle model">
+                                        <input type="text" class="form-control wide-input" id="vehicle-model" placeholder="Example: Camry">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="vehicle-year">Vehicle Year</label>
-                                        <input type="text" class="form-control" id="vehicle-year" placeholder="Enter vehicle year">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="engine-number">Engine Number</label>
-                                        <input type="text" class="form-control" id="engine-number" placeholder="Enter engine number">
+                                        <input type="text" class="form-control wide-input" id="engine-number" placeholder="Example: 1234567890">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="chassis-number">Chassis Number</label>
-                                        <input type="text" class="form-control" id="chassis-number" placeholder="Enter chassis number">
+                                        <input type="text" class="form-control wide-input" id="chassis-number" placeholder="Example: 123ABC456DEF">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="color">Vehicle Color</label>
-                                        <input type="text" class="form-control" id="color" placeholder="Enter vehicle color">
+                                        <input type="text" class="form-control wide-input" id="color" placeholder="Example: Blue">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="registration-date">Registration Date</label>
-                                        <input type="date" class="form-control" id="registration-date">
+                                        <input type="date" class="form-control wide-input" id="registration-date">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="vehicle-class">Vehicle Class</label>
-                                        <input type="text" class="form-control" id="vehicle-class" placeholder="Enter vehicle class">
+                                        <input type="text" class="form-control wide-input" id="vehicle-class" placeholder="Example: Sedan">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="owner-address">Owner's Address</label>
-                                        <input type="text" class="form-control" id="owner-address" placeholder="Enter owner's address">
+                                        <input type="text" class="form-control wide-input" id="owner-address" placeholder="Example: 123 Main St, City, Country">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="ownership-status">Vehicle Ownership Status</label>
-                                        <input type="text" class="form-control" id="ownership-status" placeholder="Enter ownership status">
+                                        <input type="text" class="form-control wide-input" id="ownership-status" placeholder="Example: Owned">
                                     </div>
                                 </div>
                             </div>

@@ -1,7 +1,6 @@
 /* Adjustments for form styling */
 #main-content-image {
     text-align: center;
-    margin-top: 0;
     padding-top: 50px; /* Add padding to the top */
     background: url('background2.png') center/cover no-repeat; /* Keep the background image */
 }
@@ -13,31 +12,45 @@
     align-items: center;
     min-height: 100%; /* Ensure the container takes at least the height of the viewport */
     padding: 20px; /* Add padding to prevent content from touching the edges */
-    max-width: 600px; /* Limit form width for better readability */
+    max-width: 100%; /* Limit form width for better readability */
 }
 
 .form-group {
-    margin-bottom: 25px; /* Increase spacing between form groups */
+    margin-bottom: 25px;
+    width: 100%; /* Set the width of form-group to 100% */
 }
 
 label {
-    font-weight: 600; /* Make labels bold for better visibility */
+    font-weight: 600;
+    width: 100%; /* Set the width of labels to 100% */
+    display: inline-block; /* Ensure labels are displayed inline-block */
 }
 
 input[type="text"],
 input[type="date"] {
-    border-radius: 5px; /* Add slight border-radius to input fields */
+    border-radius: 8px; /* Increase border-radius for a softer look */
+    padding: 12px; /* Increase padding for more space inside the input */
+    font-size: 16px; /* Increase font size for better readability */
+    display: block; /* Make the input fields block-level elements */
+    width: 100%; /* Make the input fields expand to fill the container width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.wide-input {
+    width: calc(100% - 20px); /* Adjust width as needed */
+    max-width: none; /* Remove maximum width constraint */
 }
 
 .btn-primary {
-    background-color: #007bff; /* Set button color to Bootstrap's primary color */
-    border-color: #007bff; /* Set button border color */
+    padding: 12px 20px; /* Increase padding for button */
+    font-size: 16px; /* Increase font size for button text */
 }
 
 .btn-primary:hover {
     background-color: #0056b3; /* Darken button color on hover */
     border-color: #0056b3; /* Darken button border color on hover */
 }
+
 
 /* Integrating your provided styles */
 body,
