@@ -1,3 +1,45 @@
+/* Adjustments for form styling */
+#main-content-image {
+    text-align: center;
+    margin-top: 0;
+    padding-top: 50px; /* Add padding to the top */
+    background: url('background2.png') center/cover no-repeat; /* Keep the background image */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%; /* Ensure the container takes at least the height of the viewport */
+    padding: 20px; /* Add padding to prevent content from touching the edges */
+    max-width: 600px; /* Limit form width for better readability */
+}
+
+.form-group {
+    margin-bottom: 25px; /* Increase spacing between form groups */
+}
+
+label {
+    font-weight: 600; /* Make labels bold for better visibility */
+}
+
+input[type="text"],
+input[type="date"] {
+    border-radius: 5px; /* Add slight border-radius to input fields */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Set button color to Bootstrap's primary color */
+    border-color: #007bff; /* Set button border color */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darken button color on hover */
+    border-color: #0056b3; /* Darken button border color on hover */
+}
+
+/* Integrating your provided styles */
 body,
 html {
     line-height: 1.8;
@@ -9,17 +51,15 @@ html {
     padding: 0px;
 }
 
-
 /*==========================================================
   material-icon font-style
   ================================*/
-
 
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
-    src: url(https://example.com/MaterialIcons-Regular.eot);
+    src: url(https://example.com/MaterialIcons-Regular.eot); /* Update URL as needed */
     /* For IE6-8 */
     src: local('Material Icons'),
         local('MaterialIcons-Regular'),
@@ -27,8 +67,6 @@ html {
         url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
         url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
-
-
 
 .material-icons {
     font-family: 'Material Icons';
@@ -48,10 +86,8 @@ html {
     -webkit-font-smoothing: antialiased;
     /* Support for Safari and Chrome. */
     text-rendering: optimizeLegibility;
-
     /* Support for Firefox. */
     -moz-osx-font-smoothing: grayscale;
-
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
@@ -59,8 +95,6 @@ html {
 /*==========================================================
   material-icon font-style end
   ================================*/
-
-
 
 h1,
 h2,
@@ -72,8 +106,7 @@ h6,
 .h3,
 .h4 {
     font-weight: 400;
-    line-height:
-        1.5em;
+    line-height: 1.5em;
 }
 
 p {
@@ -85,16 +118,13 @@ p {
 a {
     color: #333;
     font-weight: 400;
-
 }
-
 
 button:focus {
     box-shadow: none;
     outline: none;
     border: none;
 }
-
 
 button {
     cursor: pointer;
@@ -115,7 +145,6 @@ a:focus {
     transition: all 0.3s;
 }
 
-
 .wrapper {
     position: relative;
     width: 100%;
@@ -123,7 +152,6 @@ a:focus {
 }
 
 /*=========sidebar---design------*/
-
 #sidebar {
     position: fixed;
     height: 100% !important;
@@ -135,11 +163,10 @@ a:focus {
     overflow: auto;
     transition: all 0.3s;
     background-color: #fff;
-    box-shadow: 0 0 30px 0 rgba(200 200 200 / 20%);
+    box-shadow: 0 0 30px 0 rgba(200, 200, 200, 0.2);
 }
 
-
-@media only screen and (min-width:992px) {
+@media only screen and (min-width: 992px) {
     #sidebar.active {
         left: -260px;
         height: 100% !important;
@@ -161,9 +188,7 @@ a:focus {
     #content.active {
         width: 100%;
     }
-
 }
-
 
 #sidebar::-webkit-scrollbar {
     width: 5px;
@@ -213,21 +238,17 @@ a:focus {
 
 #sidebar ul li.active>a {
     color: #4c7cf3;
-    background-color: #DBE5FD;
+    background-color: #dbe5fd;
 }
-
 
 #sidebar ul li.active>a i {
     color: #4c7cf3;
 }
 
-
-
 #sidebar ul li a:hover {
     color: #4c7cf3;
-    background-color: #DBE5FD;
+    background-color: #dbe5fd;
 }
-
 
 .dropdown-toggle::after {
     position: absolute;
@@ -239,7 +260,6 @@ a:focus {
 #sidebar ul li.dropdown {
     position: sticky;
 }
-
 
 #sidebar ul.component {
     padding: 20px 0px;
@@ -262,9 +282,7 @@ a:focus {
     top: 6px;
 }
 
-
 /*=========sidebar---design- end-----*/
-
 
 /*========main-content- navbardesign -start-----*/
 
@@ -273,7 +291,6 @@ a:focus {
     transition: all 0.5s;
     background-attachment: #f9fafc;
 }
-
 
 .top-navbar {
     width: 100%;
@@ -300,7 +317,6 @@ input[type="search"] {
     margin-left: -1px;
 }
 
-
 .xp-searchbar .btn {
     background-color: #4a5263;
     color: #fff;
@@ -309,7 +325,6 @@ input[type="search"] {
     border-radius: 0 50px 50px 0;
     padding: 4px 15px;
 }
-
 
 .xp-breadcrumbbar .page-title {
     font-size: 20px;
@@ -333,7 +348,6 @@ input[type="search"] {
     color: #6c757d;
 }
 
-
 .breadcrumb-item+.breadcrumb-item {
     padding-left: .5rem;
 }
@@ -343,7 +357,7 @@ input[type="search"] {
 }
 
 .navbar {
-    background-color: #353B48;
+    background-color: #353b48;
     color: #fff;
 }
 
@@ -372,7 +386,6 @@ input[type="search"] {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.09);
 }
-
 
 .xp-menubar span {
     margin: 9px;
@@ -406,7 +419,7 @@ input[type="search"] {
     line-height: 14px;
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .xp-searchbar {
         margin-top: 20px;
     }
@@ -437,7 +450,6 @@ input[type="search"] {
     min-width: 10rem;
 }
 
-
 .dropdown-menu li>a {
     font-size: 13px;
     padding: 10px 20px;
@@ -447,14 +459,12 @@ input[type="search"] {
     transition: all 150ms linear;
 }
 
-
 .dropdown-menu li>a .material-icons {
     position: relative;
     top: 3px;
     color: #777;
     margin-right: 6px;
     font-size: 16px;
-
 }
 
 .navbar-nav>.active>a:focus {
@@ -487,25 +497,6 @@ input[type="search"] {
 
 /*---navbardesign -end-----*/
 
-
-/* main content */
-#main-content-image {
-    text-align: center;
-    margin-top: 0;
-    height: 75vh; /* Set the container height */
-    overflow: hidden; /* Hide any overflowing content */
-    background: url('background2.png') center/cover no-repeat; /* Add background image */
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-/* main content end */
-
 /*-------footer design start------*/
 footer {
     background-color: #353b48;
@@ -519,31 +510,3 @@ footer {
 /*-------footer design end------*/
 
 /*========main-content- navbardesign -end-----*/
-
-
-@media only screen and (max-width:992px) {
-    #sidebar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        z-index: 10;
-        width: 260px;
-        transform: translatex(-100%);
-        transition: all 150ms linear;
-        box-shadow: none !important;
-    }
-
-    .body-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        visibility: hidden;
-        opacity: 0;
-        z-index: 3;
-        transition: all 150ms linear;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-}

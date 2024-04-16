@@ -120,12 +120,12 @@
                 <div id="main-content-image">
                     <div class="container">
                         <div class="button-container">
-                            <button class="button" id="car-btn"><i class="material-icons">directions_car</i></button>
-                            <button class="button" id="moto-btn"><i class="material-icons">motorcycle</i></button>
+                            <a href="customerQuoForm.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
+                            <a href="customerQuoForm.jsp" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
                         </div>
                         <div class="button-container">
-                            <button class="button" id="van-btn"><i class="material-icons">directions_bus</i></button>
-                            <button class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></button>
+                            <a href="customerQuoForm.jsp" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
+                            <a href="customerQuoForm.jsp" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>

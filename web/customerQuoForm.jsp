@@ -120,45 +120,114 @@
                 <div id="main-content-image">
                     <div class="container">
                         <form id="quotation-form">
-                            <div class="form-group">
-                                <label for="policy-number">Policy Number</label>
-                                <input type="text" class="form-control" id="policy-number" placeholder="Enter policy number">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="registration-number">Vehicle Registration Number</label>
+                                        <input type="text" class="form-control" id="registration-number" placeholder="Enter registration number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="owner-name">Owner's Name</label>
+                                        <input type="text" class="form-control" id="owner-name" placeholder="Enter owner's name">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="vehicle-model">Vehicle Model</label>
-                                <input type="text" class="form-control" id="vehicle-model" placeholder="Enter vehicle model">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="owner-id">Owner's Identification Number</label>
+                                        <input type="text" class="form-control" id="owner-id" placeholder="Enter identification number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vehicle-make">Vehicle Make</label>
+                                        <input type="text" class="form-control" id="vehicle-make" placeholder="Enter vehicle make">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="insurance-type">Insurance Type</label>
-                                <select class="form-control" id="insurance-type">
-                                    <option>Comprehensive</option>
-                                    <option>Third Party</option>
-                                    <!-- Add more options if needed -->
-                                </select>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vehicle-model">Vehicle Model</label>
+                                        <input type="text" class="form-control" id="vehicle-model" placeholder="Enter vehicle model">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vehicle-year">Vehicle Year</label>
+                                        <input type="text" class="form-control" id="vehicle-year" placeholder="Enter vehicle year">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="expiry-date">Expiry Date</label>
-                                <input type="date" class="form-control" id="expiry-date">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="engine-number">Engine Number</label>
+                                        <input type="text" class="form-control" id="engine-number" placeholder="Enter engine number">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="chassis-number">Chassis Number</label>
+                                        <input type="text" class="form-control" id="chassis-number" placeholder="Enter chassis number">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="premium-amount">Premium Amount</label>
-                                <input type="text" class="form-control" id="premium-amount" placeholder="Enter premium amount">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="color">Vehicle Color</label>
+                                        <input type="text" class="form-control" id="color" placeholder="Enter vehicle color">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="registration-date">Registration Date</label>
+                                        <input type="date" class="form-control" id="registration-date">
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vehicle-class">Vehicle Class</label>
+                                        <input type="text" class="form-control" id="vehicle-class" placeholder="Enter vehicle class">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="owner-address">Owner's Address</label>
+                                        <input type="text" class="form-control" id="owner-address" placeholder="Enter owner's address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ownership-status">Vehicle Ownership Status</label>
+                                        <input type="text" class="form-control" id="ownership-status" placeholder="Enter ownership status">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
-
                 <!----main-content-end--->
-
-
 
                 <!----footer-design------------->
 
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
