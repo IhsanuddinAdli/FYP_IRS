@@ -84,93 +84,83 @@ svg.wave {
 }
 
 #review {
-    background-color: #f8f9fa;
-    overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #f1f1f1f1;
 }
 
-.review-box {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Slideshow container */
+.slideshow-container {
+    position: relative;
+    background: #f1f1f1f1;
+}
+
+/* Full-width slides */
+.mySlides {
+    display: none;
+    padding: 80px;
     text-align: center;
-    margin-top: 20px;
 }
 
-.review-profile-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-.review-header {
-    flex: 1;
-}
-
-.review-name {
-    margin-bottom: 10px;
-}
-
-.review-content {
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.review-stars {
-    color: gold;
-    margin-top: 10px;
-}
-
-.reviews-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Add arrow styles for scrolling */
-.scroll-arrow {
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    font-size: 24px;
-    cursor: pointer;
-    color: #3498db; /* Adjust the arrow color as needed */
+    width: auto;
+    margin-top: -30px;
+    padding: 16px;
+    color: #888;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    z-index: 1;
 }
 
-.scroll-left {
-    left: 10px;
+/* Position the "next button" to the right */
+.next {
+    position: absolute;
+    right: 0;
+    border-radius: 3px 0 0 3px;
 }
 
-.scroll-right {
-    right: 10px;
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
 }
 
-#contact {
-    background-color: #e9ecef;
-    /* Change the background color as needed */
-}
-
-/* Add these styles for the footer */
-
-footer {
-    background-color: #353b48;
-    color: #fff;
-    padding: 15px 0;
+/* The dot/bullet/indicator container */
+.dot-container {
     text-align: center;
+    padding: 20px;
+    background: #ddd;
 }
 
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* Add an italic font style to all quotes */
+q {
+    font-style: italic;
+}
+
+/* Add a blue color to the author */
+.author {
+    color: cornflowerblue;
 }
 
 /* Additional Styles for Image in Review Section */
@@ -181,4 +171,17 @@ footer {
     border-radius: 50%; /* Make the profile image circular */
     object-fit: cover; /* Ensure the image covers the entire container */
     margin-right: 20px; /* Add some space between the profile image and the content */
+}
+
+/* Footer Section */
+footer {
+    background-color: #353b48;
+    color: #fff;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }

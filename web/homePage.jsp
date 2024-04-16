@@ -127,56 +127,71 @@
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
 
-                <!-- Review container for horizontal scrolling -->
-                <div class="reviews-container">
+                <!-- Slideshow container -->
+                <div class="slideshow-container">
                     <!-- Iterate over feedback data and display -->
-                    <div class="row">
-                        <%
-                            // Retrieve feedback data from the database
-                            FeedbackDAO feedbackDAO = new FeedbackDAO();
-                            List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
+                    <%
+                        // Retrieve feedback data from the database
+                        FeedbackDAO feedbackDAO = new FeedbackDAO();
+                        List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
 
-                            // Iterate over each feedback entry and display
-                            for (Feedback feedback : feedbackList) {
-                                // Retrieve customer data based on userID from feedback
-                                Customer customer = CustomerDAO.getCustomerByID(feedback.getUserID());
-                                if (customer != null) {
-                                    // Display profile picture
-                                    InputStream profileImageStream = customer.getProfileImage();
-                                    if (profileImageStream != null) {
-                                        byte[] profileImageBytes = profileImageStream.readAllBytes();
-                                        String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
-                        %>
-                        <div class="col-md-4">
-                            <div class="review-box">
-                                <div class="review-header">
-                                    <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
-                                         alt="Profile Picture" class="review-profile-img">
-                                    <h4 class="review-name"><%= customer.getFirstname() + " " + customer.getLastname()%></h4>
-                                </div>
-                                <p class="review-content">
-                                    <%= feedback.getFeedback()%>
-                                </p>
-                                <div class="review-stars">
-                                    <!-- Render star rating here if available -->
-                                    <%-- Example: ★★★★☆ for rating 4 --%>
-                                    <% for (int i = 0; i < feedback.getRating(); i++) { %>
-                                    <span class="star">&#9733;</span>
-                                    <% }%>
+                        // Determine the number of slides needed
+                        int numSlides = (int) Math.ceil((double) feedbackList.size() / 3);
+
+                        // Loop through each slide
+                        for (int i = 0; i < numSlides; i++) {
+                    %>
+                    <div class="mySlides">
+                        <div class="row">
+                            <% for (int j = i * 3; j < Math.min((i + 1) * 3, feedbackList.size()); j++) {
+                                    Feedback feedback = feedbackList.get(j);
+                                    Customer customer = CustomerDAO.getCustomerByID(feedback.getUserID());
+                                    if (customer != null) {
+                                        InputStream profileImageStream = customer.getProfileImage();
+                                        if (profileImageStream != null) {
+                                            byte[] profileImageBytes = profileImageStream.readAllBytes();
+                                            String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
+                            %>
+                            <div class="col-md-4">
+                                <div class="review-box">
+                                    <div class="review-header">
+                                        <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
+                                             alt="Profile Picture" class="review-profile-img">
+                                        <h4 class="review-name"><%= customer.getFirstname() + " " + customer.getLastname()%></h4>
+                                    </div>
+                                    <p class="review-content">
+                                        <%= feedback.getFeedback()%>
+                                    </p>
+                                    <div class="review-stars">
+                                        <!-- Render star rating here if available -->
+                                        <%-- Example: ★★★★☆ for rating 4 --%>
+                                        <% for (int k = 0; k < feedback.getRating(); k++) { %>
+                                        <span class="star">&#9733;</span>
+                                        <% } %>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <%
-                                    }
+                            <%
                                 }
                             }
-                        %>
+                        } %>
+                        </div>
                     </div>
+                    <%
+                        }
+                    %>
+
+                    <!-- Next/prev buttons -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 </div>
 
-                <!-- Arrow buttons for horizontal scrolling -->
-                <div class="scroll-arrow scroll-left">&#9664;</div>
-                <div class="scroll-arrow scroll-right">&#9654;</div>
+                <!-- Dots/bullets/indicators -->
+                <div class="dot-container">
+                    <% for (int i = 0; i < numSlides; i++) {%>
+                    <span class="dot" onclick="currentSlide(<%= i + 1%>)"></span>
+                    <% }%>
+                </div>
             </div>
         </section>
 
@@ -222,36 +237,48 @@
         crossorigin="anonymous"></script>
 
         <script>
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
 
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     });
                 });
-            });
         </script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const reviewsContainer = document.querySelector('.reviews-container');
-                const scrollLeftBtn = document.querySelector('.scroll-left');
-                const scrollRightBtn = document.querySelector('.scroll-right');
+            var slideIndex = 1;
+            showSlides(slideIndex);
 
-                scrollLeftBtn.addEventListener('click', function () {
-                    reviewsContainer.scrollBy({
-                        left: -200,
-                        behavior: 'smooth'
-                    });
-                });
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
 
-                scrollRightBtn.addEventListener('click', function () {
-                    reviewsContainer.scrollBy({
-                        left: 200,
-                        behavior: 'smooth'
-                    });
-                });
-            });
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                if (n > slides.length) {
+                    slideIndex = 1
+                }
+                if (n < 1) {
+                    slideIndex = slides.length
+                }
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+
         </script>
 
         <!-- Footer Section -->
