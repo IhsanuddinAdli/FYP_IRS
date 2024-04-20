@@ -10,7 +10,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
-        <link rel="stylesheet" href="CSS/customerQuoForm.css">
+        <link rel="stylesheet" href="CSS/quoteCar.css">
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,12 +120,9 @@
                 <div id="main-content-image">
                     <div class="container">
                         <form id="quotation-form">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="registration-number">Vehicle Registration Number</label>
-                                        <input type="text" class="form-control wide-input" id="registration-number" placeholder="Example: ABC123">
-                                    </div>
+                            <div class="row"> <!-- Add a row wrapper -->
+                                <!-- Insured Particulars -->
+                                <div class="col-md-6"> <!-- Use col-md-6 to make two columns in one row -->
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
                                         <input type="text" class="form-control wide-input" id="owner-name" placeholder="Example: Ihsanuddin">
@@ -135,18 +132,44 @@
                                         <input type="text" class="form-control wide-input" id="owner-id" placeholder="Example: 123456789" maxlength="9">
                                     </div>
                                     <div class="form-group">
-                                        <label for="vehicle-make">Vehicle Make</label>
-                                        <input type="text" class="form-control wide-input" id="vehicle-make" placeholder="Example: Toyota">
+                                        <label for="dob">Date of Birth (Auto-generated from ID number above)</label>
+                                        <input type="text" class="form-control wide-input" id="dob" placeholder="Auto-generated">
                                     </div>
                                     <div class="form-group">
-                                        <label for="vehicle-year">Vehicle Year</label>
-                                        <input type="text" class="form-control wide-input" id="vehicle-year" placeholder="Example: 2022">
+                                        <label for="gender">Gender (Auto-generated from ID number above)</label>
+                                        <input type="text" class="form-control wide-input" id="gender" placeholder="Auto-generated">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="marital-status">Marital Status</label>
+                                        <select class="form-control" id="marital-status">
+                                            <option value="single">Single</option>
+                                            <option value="married">Married</option>
+                                            <option value="divorced">Divorced</option>
+                                            <option value="widowed">Widowed</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="owner-address">Owner's Address</label>
+                                        <input type="text" class="form-control wide-input" id="owner-address" placeholder="Example: 123 Main St, City, Country">
                                     </div>
                                 </div>
+                                <hr>
+                                <!-- Vehicle Particulars -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vehicle-model">Vehicle Model</label>
-                                        <input type="text" class="form-control wide-input" id="vehicle-model" placeholder="Example: Camry">
+                                        <label for="vehicle-type">Vehicle Type</label>
+                                        <input type="text" class="form-control wide-input" id="vehicle-type" placeholder="Example: Sedan">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="local-import">Local / Import Vehicle</label>
+                                        <select class="form-control" id="local-import">
+                                            <option value="local">Local</option>
+                                            <option value="import">Import</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="registration-number">Vehicle Registration Number</label>
+                                        <input type="text" class="form-control wide-input" id="registration-number" placeholder="Example: ABC123">
                                     </div>
                                     <div class="form-group">
                                         <label for="engine-number">Engine Number</label>
@@ -157,36 +180,47 @@
                                         <input type="text" class="form-control wide-input" id="chassis-number" placeholder="Example: 123ABC456DEF">
                                     </div>
                                     <div class="form-group">
-                                        <label for="color">Vehicle Color</label>
-                                        <input type="text" class="form-control wide-input" id="color" placeholder="Example: Blue">
+                                        <label for="coverage">Coverage</label>
+                                        <select class="form-control" id="coverage">
+                                            <option value="comprehensive">Comprehensive</option>
+                                            <option value="third-party-motorcycle">Third Party (Motorcycle only)</option>
+                                            <option value="third-party-fire-theft">Third Party Fire and Theft</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="registration-date">Registration Date</label>
-                                        <input type="date" class="form-control wide-input" id="registration-date">
+                                        <label for="vehicle-body">Vehicle Body</label>
+                                        <input type="text" class="form-control wide-input" id="vehicle-body" placeholder="Example: Sedan">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vehicle-make">Vehicle Make</label>
+                                        <input type="text" class="form-control wide-input" id="vehicle-make" placeholder="Example: Toyota">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vehicle-model">Vehicle Model</label>
+                                        <input type="text" class="form-control wide-input" id="vehicle-model" placeholder="Example: Camry">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="engine-capacity">Engine Capacity</label>
+                                        <input type="text" class="form-control wide-input" id="engine-capacity" placeholder="Example: 2000 cc">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="manufacture-year">Year Of Manufactured</label>
+                                        <input type="text" class="form-control wide-input" id="manufacture-year" placeholder="Example: 2022">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ncd">Current NCD</label>
+                                        <input type="text" class="form-control wide-input" id="ncd" placeholder="Example: 20%">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="policy-commencement-date">Policy Commencement Date</label>
+                                        <input type="date" class="form-control wide-input" id="policy-commencement-date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="policy-expiry-date">Policy Expiry Date (auto generate one year from policy commencement date)</label>
+                                        <input type="text" class="form-control wide-input" id="policy-expiry-date" readonly>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="vehicle-class">Vehicle Class</label>
-                                        <input type="text" class="form-control wide-input" id="vehicle-class" placeholder="Example: Sedan">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="owner-address">Owner's Address</label>
-                                        <input type="text" class="form-control wide-input" id="owner-address" placeholder="Example: 123 Main St, City, Country">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ownership-status">Vehicle Ownership Status</label>
-                                        <input type="text" class="form-control wide-input" id="ownership-status" placeholder="Example: Owned">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                                </div>
-                            </div>
+                            </div> <!-- End of row -->
                         </form>
                     </div>
                 </div>

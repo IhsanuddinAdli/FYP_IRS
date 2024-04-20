@@ -120,12 +120,12 @@
                 <div id="main-content-image">
                     <div class="container">
                         <div class="button-container">
-                            <a href="customerQuoForm.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
-                            <a href="customerQuoForm.jsp" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
+                            <a href="quoteCar.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
+                            <a href="" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
                         </div>
                         <div class="button-container">
-                            <a href="customerQuoForm.jsp" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
-                            <a href="customerQuoForm.jsp" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
+                            <a href="" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
+                            <a href="" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
                         </div>
                     </div>
                 </div>

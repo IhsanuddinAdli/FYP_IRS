@@ -17,7 +17,8 @@
 
 .form-group {
     margin-bottom: 25px;
-    width: 100%; /* Set the width of form-group to 100% */
+    width: 50%; /* Set the width of form-group to 100% */
+    display: inline-block;
 }
 
 label {
