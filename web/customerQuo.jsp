@@ -120,7 +120,7 @@
                 <div id="main-content-image">
                     <div class="container">
                         <div class="button-container">
-                            <a href="quoteCar.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
+                            <a href="customerQuoForm.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
                             <a href="" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
                         </div>
                         <div class="button-container">
