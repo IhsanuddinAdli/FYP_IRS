@@ -118,7 +118,7 @@
 
                 <!----main-content--->
                 <div id="main-content-image">
-                    <form id="quotation-form" action="calculate.jsp" method="post">
+                    <form id="quotation-form" action="insuranceQuotation.jsp" method="post">
                         <div class="container">
                             <h2 style="text-align: center;">Insured Particulars</h2>
                             <div class="row">
@@ -134,17 +134,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth</label>
-                                        <input type="text" class="form-control wide-input" id="dob" placeholder="Auto-generated (view only)" readonly>
+                                        <input type="text" class="form-control wide-input" id="dob" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
-                                        <input type="text" class="form-control wide-input" id="gender" placeholder="Auto-generated (view only)" readonly>
+                                        <input type="text" class="form-control wide-input" id="gender" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="marital-status">Marital Status</label>
                                         <select class="form-control" id="marital-status">
+                                            <option>Select a status</option>
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
                                             <option value="divorced">Divorced</option>
@@ -152,20 +153,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="zipcode">Zipcode</label>
-                                        <input type="text" class="form-control wide-input" id="zipcode" placeholder="Example: 12345">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address1">Address</label>
-                                        <input type="text" class="form-control wide-input" id="address1" placeholder="Example: 123 Main St">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">City</label>
-                                        <input type="text" class="form-control wide-input" id="city" placeholder="Example: City">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State</label>
-                                        <input type="text" class="form-control wide-input" id="state" placeholder="Example: State">
+                                        <label for="location">Location</label>
+                                        <select class="form-control" id="location" name="location">
+                                            <option>Select a location</option>
+                                            <option value="peninsular">Peninsular Malaysia</option>
+                                            <option value="east">East Malaysia</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -177,11 +170,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" placeholder="Example: Sedan">
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" value="Car" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
                                     <select class="form-control" id="local-import">
+                                        <option>Select local / import</option>
                                         <option value="local">Local</option>
                                         <option value="import">Import</option>
                                     </select>
@@ -201,28 +195,80 @@
                                 <div class="form-group">
                                     <label for="coverage">Coverage</label>
                                     <select class="form-control" id="coverage">
+                                        <option>Select a coverage</option>
                                         <option value="comprehensive">Comprehensive</option>
                                         <option value="third-party-motorcycle">Third Party (Motorcycle only)</option>
                                         <option value="third-party-fire-theft">Third Party Fire and Theft</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="insured-value">Insured Value (in MYR)</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">MYR</span>
+                                        </div>
+                                        <input type="text" class="form-control wide-input" id="insured-value" name="insured-value" placeholder="Enter Insured Value" min="0" step="0.01">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-body">Vehicle Body</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-body" placeholder="Example: Sedan">
+                                    <select class="form-control" id="vehicle-body">
+                                        <option>Select a body first</option>
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="Hatchback">Hatchback</option>
+                                        <option value="SUV">SUV (Sports Utility Vehicle)</option>
+                                        <option value="MPV">MPV (Multi-Purpose Vehicle)</option>
+                                        <option value="Coupe">Coupe</option>
+                                        <option value="Convertible">Convertible</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-make">Vehicle Make</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-make" placeholder="Example: Toyota">
+                                    <select class="form-control wide-input" id="vehicle-make">
+                                        <option>Select a make first</option>
+                                        <option value="Alfa Romeo">Alfa Romeo</option>
+                                        <option value="Audi">Audi</option>
+                                        <option value="BMW">BMW</option>
+                                        <option value="Borgward">Borgward</option>
+                                        <option value="Chery">Chery</option>
+                                        <option value="Chevrolet">Chevrolet</option>
+                                        <option value="Citroen">Citroen</option>
+                                        <option value="Ford">Ford</option>
+                                        <option value="Honda">Honda</option>
+                                        <option value="Hyundai">Hyundai</option>
+                                        <option value="Infiniti">Infiniti</option>
+                                        <option value="Isuzu">Isuzu</option>
+                                        <option value="Jaguar">Jaguar</option>
+                                        <option value="Jeep">Jeep</option>
+                                        <option value="Kia">Kia</option>
+                                        <option value="Land Rover">Land Rover</option>
+                                        <option value="Lexus">Lexus</option>
+                                        <option value="Mazda">Mazda</option>
+                                        <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                        <option value="MINI">MINI</option>
+                                        <option value="Mitsubishi">Mitsubishi</option>
+                                        <option value="Nissan">Nissan</option>
+                                        <option value="Perodua">Perodua</option>
+                                        <option value="Peugeot">Peugeot</option>
+                                        <option value="Proton">Proton</option>
+                                        <option value="Subaru">Subaru</option>
+                                        <option value="Suzuki">Suzuki</option>
+                                        <option value="Toyota">Toyota</option>
+                                        <option value="Volkswagen">Volkswagen</option>
+                                        <option value="Volvo">Volvo</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-model">Vehicle Model</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-model" placeholder="Example: Camry">
+                                    <select class="form-control wide-input" id="vehicle-model">
+                                        <option>Select a model first</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="engine-capacity">Engine Capacity</label>
-                                    <input type="text" class="form-control wide-input" id="engine-capacity" placeholder="Example: 2000 cc">
+                                    <input type="text" class="form-control wide-input" id="engine-capacity" name="engine-capacity" placeholder="Example: 2000 cc">
                                 </div>
                                 <div class="form-group">
                                     <label for="manufacture-year">Year Of Manufactured</label>
@@ -230,12 +276,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="ncd">Current NCD</label>
-                                    <select class="form-control" id="ncd">
+                                    <select class="form-control" id="ncd" name="ncd">
+                                        <option>Select a NCD</option>
                                         <option value="0%">0%</option>
-                                        <option value="10%">30%</option>
-                                        <option value="20%">38.33%</option>
-                                        <option value="30%">45%</option>
-                                        <option value="30%">55%</option>
+                                        <option value="30%">30%</option>
+                                        <option value="38.33%">38.33%</option>
+                                        <option value="45%">45%</option>
+                                        <option value="55%">55%</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -245,13 +292,40 @@
                                 <div class="form-group">
                                     <label for="policy-duration">Policy Duration</label>
                                     <select class="form-control" id="policy-duration">
+                                        <option>Select a policy duration</option>
                                         <option value="6">6 months</option>
                                         <option value="12">12 months</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-expiry-date">Policy Expiry Date</label>
-                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" placeholder="Auto-generated (view only)" readonly>
+                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- add-ons -->
+                        <h2 style="text-align: center;">Add-ons</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon">
+                                    <label class="form-check-label" for="windscreen-addon">Windscreen</label>
+                                    <input type="number" class="form-control wide-input" id="windscreen-price" name="windscreen-price" placeholder="Enter windscreen price (MYR)">
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="all-driver-addon" name="all-driver-addon">
+                                    <label class="form-check-label" for="all-driver-addon">All Driver</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="special-perils-addon" name="special-perils-addon">
+                                    <label class="form-check-label" for="special-perils-addon">Special Perils (Flood)</label>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="legal-liability-addon" name="legal-liability-addon">
+                                    <label class="form-check-label" for="legal-liability-addon">Legal Liability of Passengers</label>
                                 </div>
                             </div>
                         </div>
@@ -335,5 +409,6 @@
         document.getElementById('policy-expiry-date').value = expiryDate.toISOString().split('T')[0];
     }
 </script>
+<script src="JS/carList.js"></script>
 </body>
 </html>
