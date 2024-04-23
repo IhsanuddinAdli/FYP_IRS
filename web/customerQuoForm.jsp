@@ -118,7 +118,7 @@
 
                 <!----main-content--->
                 <div id="main-content-image">
-                    <form id="quotation-form" action="insuranceQuotation.jsp" method="post">
+                    <form id="quotation-form" action="carInsuranceQuotation.jsp" method="post">
                         <div class="container">
                             <h2 style="text-align: center;">Insured Particulars</h2>
                             <div class="row">
@@ -126,25 +126,25 @@
                                 <div class="col-md-6"> <!-- Use col-md-6 to make two columns in one row -->
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
-                                        <input type="text" class="form-control wide-input" id="owner-name" placeholder="Example: Ihsanuddin">
+                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name" placeholder="Example: Ihsanuddin">
                                     </div>
                                     <div class="form-group">
                                         <label for="owner-id">Owner's Identification Number</label>
-                                        <input type="text" class="form-control wide-input" id="owner-id" placeholder="Example: 123456789" maxlength="12">
+                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id" placeholder="Example: 123456789" maxlength="12">
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth</label>
-                                        <input type="text" class="form-control wide-input" id="dob" readonly>
+                                        <input type="text" class="form-control wide-input" id="dob" name="dob" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
-                                        <input type="text" class="form-control wide-input" id="gender" readonly>
+                                        <input type="text" class="form-control wide-input" id="gender" name="gender" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="marital-status">Marital Status</label>
-                                        <select class="form-control" id="marital-status">
+                                        <select class="form-control" id="marital-status" name="marital-status">
                                             <option>Select a status</option>
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
@@ -170,11 +170,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" value="Car" readonly>
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="Car" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
-                                    <select class="form-control" id="local-import">
+                                    <select class="form-control" id="local-import" name="local-import">
                                         <option>Select local / import</option>
                                         <option value="local">Local</option>
                                         <option value="import">Import</option>
@@ -182,19 +182,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="registration-number">Vehicle Registration Number</label>
-                                    <input type="text" class="form-control wide-input" id="registration-number" placeholder="Example: ABC123">
+                                    <input type="text" class="form-control wide-input" id="registration-number" name="registration-number" placeholder="Example: ABC123">
                                 </div>
                                 <div class="form-group">
                                     <label for="engine-number">Engine Number</label>
-                                    <input type="text" class="form-control wide-input" id="engine-number" placeholder="Example: 1234567890">
+                                    <input type="text" class="form-control wide-input" id="engine-number" name="engine-number" placeholder="Example: 1234567890">
                                 </div>
                                 <div class="form-group">
                                     <label for="chassis-number">Chassis Number</label>
-                                    <input type="text" class="form-control wide-input" id="chassis-number" placeholder="Example: 123ABC456DEF">
+                                    <input type="text" class="form-control wide-input" id="chassis-number" name="chassis-number" placeholder="Example: 123ABC456DEF">
                                 </div>
                                 <div class="form-group">
                                     <label for="coverage">Coverage</label>
-                                    <select class="form-control" id="coverage">
+                                    <select class="form-control" id="coverage" name="coverage">
                                         <option>Select a coverage</option>
                                         <option value="comprehensive">Comprehensive</option>
                                         <option value="third-party-motorcycle">Third Party (Motorcycle only)</option>
@@ -214,7 +214,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-body">Vehicle Body</label>
-                                    <select class="form-control" id="vehicle-body">
+                                    <select class="form-control" id="vehicle-body" name="vehicle-body">
                                         <option>Select a body first</option>
                                         <option value="Sedan">Sedan</option>
                                         <option value="Hatchback">Hatchback</option>
@@ -226,7 +226,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-make">Vehicle Make</label>
-                                    <select class="form-control wide-input" id="vehicle-make">
+                                    <select class="form-control wide-input" id="vehicle-make" name="vehicle-make">
                                         <option>Select a make first</option>
                                         <option value="Alfa Romeo">Alfa Romeo</option>
                                         <option value="Audi">Audi</option>
@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-model">Vehicle Model</label>
-                                    <select class="form-control wide-input" id="vehicle-model">
+                                    <select class="form-control wide-input" id="vehicle-model" name="vehicle-model">
                                         <option>Select a model first</option>
                                     </select>
                                 </div>
@@ -272,7 +272,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="manufacture-year">Year Of Manufactured</label>
-                                    <input type="text" class="form-control wide-input" id="manufacture-year" placeholder="Example: 2022">
+                                    <input type="text" class="form-control wide-input" id="manufacture-year" name="manufacture-year" placeholder="Example: 2022">
                                 </div>
                                 <div class="form-group">
                                     <label for="ncd">Current NCD</label>
@@ -287,11 +287,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-commencement-date">Policy Commencement Date</label>
-                                    <input type="date" class="form-control wide-input" id="policy-commencement-date">
+                                    <input type="date" class="form-control wide-input" id="policy-commencement-date" name="policy-commencement-date">
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-duration">Policy Duration</label>
-                                    <select class="form-control" id="policy-duration">
+                                    <select class="form-control" id="policy-duration" name="policy-duration">
                                         <option>Select a policy duration</option>
                                         <option value="6">6 months</option>
                                         <option value="12">12 months</option>
@@ -299,7 +299,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-expiry-date">Policy Expiry Date</label>
-                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" readonly>
+                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" name="policy-expiry-date" readonly>
                                 </div>
                             </div>
                         </div>
@@ -309,22 +309,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon">
-                                    <label class="form-check-label" for="windscreen-addon">Windscreen</label>
-                                    <input type="number" class="form-control wide-input" id="windscreen-price" name="windscreen-price" placeholder="Enter windscreen price (MYR)">
+                                    <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon" value="true">
+                                    <label class="form-check-label" for="windscreen-addon">
+                                        Windscreen
+                                        <a href="https://www.autoglass.com.my/insurance-pricelist.html" target="_blank">(Price List)</a>
+                                    </label>
+                                    <!-- Windscreen price input field initially hidden -->
+                                    <input type="number" class="form-control wide-input" id="windscreen-price" name="windscreen-price" placeholder="Enter windscreen price (RM)" style="display: none;">
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="all-driver-addon" name="all-driver-addon">
+                                    <input type="checkbox" class="form-check-input" id="all-driver-addon" name="all-driver-addon" value="true">
                                     <label class="form-check-label" for="all-driver-addon">All Driver</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="special-perils-addon" name="special-perils-addon">
+                                    <input type="checkbox" class="form-check-input" id="special-perils-addon" name="special-perils-addon" value="true">
                                     <label class="form-check-label" for="special-perils-addon">Special Perils (Flood)</label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="legal-liability-addon" name="legal-liability-addon">
+                                    <input type="checkbox" class="form-check-input" id="legal-liability-addon" name="legal-liability-addon" value="true">
                                     <label class="form-check-label" for="legal-liability-addon">Legal Liability of Passengers</label>
                                 </div>
                             </div>
@@ -410,5 +414,16 @@
     }
 </script>
 <script src="JS/carList.js"></script>
+<script>
+    // Function to show/hide windscreen price input field based on checkbox state
+    document.getElementById("windscreen-addon").addEventListener("change", function () {
+        var windscreenPriceInput = document.getElementById("windscreen-price");
+        if (this.checked) {
+            windscreenPriceInput.style.display = "block"; // Show the input field
+        } else {
+            windscreenPriceInput.style.display = "none"; // Hide the input field
+        }
+    });
+</script>
 </body>
 </html>
