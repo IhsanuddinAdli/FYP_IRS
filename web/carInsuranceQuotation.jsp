@@ -8,6 +8,11 @@
     </head>
     <body>
         <%
+            double windscreenCost = 0.0;
+            double specialPerilsCost = 0.0;
+            double allDriverCost = 0.0;
+            double legalLiabilityCost = 0.0;
+
             String ownerName = request.getParameter("owner-name");
             String ownerId = request.getParameter("owner-id");
             String dob = request.getParameter("dob");
@@ -90,37 +95,46 @@
             // Initialize totalAddOnsCost
             double totalAddOnsCost = 0.0;
 
+            String windscreenPriceStr = request.getParameter("windscreen-price");
+            double windscreenPrice = 0.0; // Default value
+            if (windscreenPriceStr != null && !windscreenPriceStr.isEmpty()) {
+                try {
+                    windscreenPrice = Double.parseDouble(windscreenPriceStr);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
             // Check if windscreen addon is selected
             String windscreenAddon = request.getParameter("windscreen-addon");
             if ("true".equals(windscreenAddon)) {
-                // Assuming windscreen cost is calculated as 15% of insured value
-                double windscreenCost = 0.15 * insuredValue;
-                totalAddOnsCost += windscreenCost;
+                // Adjust the windscreen cost calculation based on the windscreen price
+                windscreenCost = 0.15 * windscreenPrice;
             }
 
             // Check if all driver addon is selected
             String allDriverAddon = request.getParameter("all-driver-addon");
             if ("true".equals(allDriverAddon)) {
                 // Assuming a fixed cost of RM20 for all driver addon
-                totalAddOnsCost += 20.0;
+                allDriverCost = 20.0;
             }
 
             // Check if special perils addon is selected
             String specialPerilsAddon = request.getParameter("special-perils-addon");
             if ("true".equals(specialPerilsAddon)) {
                 // Assuming special perils cost is calculated as 0.25% of insured value
-                double specialPerilsCost = 0.0025 * insuredValue;
-                totalAddOnsCost += specialPerilsCost;
+                specialPerilsCost = 0.0025 * insuredValue;
             }
 
             // Check if legal liability addon is selected
             String legalLiabilityAddon = request.getParameter("legal-liability-addon");
             if ("true".equals(legalLiabilityAddon)) {
                 // Assuming a fixed cost of RM7.50 for legal liability of passengers addon
-                totalAddOnsCost += 7.50;
+                legalLiabilityCost = 7.50;
             }
 
             // Calculate total premium after deducting NCD and adding add-ons
+            totalAddOnsCost = windscreenCost + specialPerilsCost + allDriverCost + legalLiabilityCost;
             double totalPremium = (grossPremium - ncd) + totalAddOnsCost;
 
             // Apply SST (SST is 10%)
@@ -180,16 +194,16 @@
         <% if (totalAddOnsCost > 0) { %>
         <h2>Add-ons</h2>
         <% if ("true".equals(request.getParameter("windscreen-addon"))) {%>
-        <p>Windscreen: RM <%= df.format(totalAddOnsCost)%></p>
+        <p>Windscreen: RM <%= df.format(windscreenCost)%></p>
         <% } %>
         <% if ("true".equals(request.getParameter("all-driver-addon"))) {%>
-        <p>All Driver: RM <%= df.format(totalAddOnsCost)%></p>
+        <p>All Driver: RM <%= df.format(allDriverCost)%></p>
         <% } %>
         <% if ("true".equals(request.getParameter("special-perils-addon"))) {%>
-        <p>Special Perils (Flood): RM <%= df.format(totalAddOnsCost)%></p>
+        <p>Special Perils (Flood): RM <%= df.format(specialPerilsCost)%></p>
         <% } %>
         <% if ("true".equals(request.getParameter("legal-liability-addon"))) {%>
-        <p>Legal Liability of Passengers: RM <%= df.format(totalAddOnsCost)%></p>
+        <p>Legal Liability of Passengers: RM <%= df.format(legalLiabilityCost)%></p>
         <% } %>
         <% }%>
 
