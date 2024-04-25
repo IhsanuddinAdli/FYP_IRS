@@ -126,11 +126,11 @@
                                 <div class="col-md-6"> <!-- Use col-md-6 to make two columns in one row -->
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
-                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name" placeholder="Example: Ihsanuddin">
+                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name">
                                     </div>
                                     <div class="form-group">
                                         <label for="owner-id">Owner's Identification Number</label>
-                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id" placeholder="Example: 123456789" maxlength="12">
+                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id"maxlength="12">
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth</label>
@@ -423,6 +423,16 @@
         } else {
             windscreenPriceInput.style.display = "none"; // Hide the input field
         }
+    });
+    $(document).ready(function () {
+        // Set the minimum date for policy commencement date input field
+        var currentDate = new Date();
+        var nextDay = new Date(currentDate);
+        nextDay.setDate(currentDate.getDate() + 1); // Get the next day
+
+        var minDate = currentDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+
+        $("#policy-commencement-date").attr('min', minDate);
     });
 </script>
 </body>
