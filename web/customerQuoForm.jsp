@@ -126,11 +126,11 @@
                                 <div class="col-md-6"> <!-- Use col-md-6 to make two columns in one row -->
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
-                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name">
+                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="owner-id">Owner's Identification Number</label>
-                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id"maxlength="12">
+                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id"maxlength="12"required>
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth</label>
@@ -144,7 +144,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="marital-status">Marital Status</label>
-                                        <select class="form-control" id="marital-status" name="marital-status">
+                                        <select class="form-control" id="marital-status" name="marital-status" required>
                                             <option>Select a status</option>
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
@@ -154,7 +154,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="location">Location</label>
-                                        <select class="form-control" id="location" name="location">
+                                        <select class="form-control" id="location" name="location" required>
                                             <option>Select a location</option>
                                             <option value="peninsular">Peninsular Malaysia</option>
                                             <option value="east">East Malaysia</option>
@@ -170,11 +170,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="Car" readonly>
+                                    <select class="form-control wide-input" id="vehicle-type" name="vehicle-type" required>
+                                        <option>Select vehicle type</option>
+                                        <option value="Car">Car</option>
+                                        <option value="Motorcycle">Motorcycle</option>
+                                        <option value="Van">Van</option>
+                                        <option value="Lorry">Lorry</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
-                                    <select class="form-control" id="local-import" name="local-import">
+                                    <select class="form-control" id="local-import" name="local-import" required>
                                         <option>Select local / import</option>
                                         <option value="local">Local</option>
                                         <option value="import">Import</option>
@@ -182,39 +188,39 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="registration-number">Vehicle Registration Number</label>
-                                    <input type="text" class="form-control wide-input" id="registration-number" name="registration-number" placeholder="Example: ABC123">
+                                    <input type="text" class="form-control wide-input" id="registration-number" name="registration-number" placeholder="Example: ABC123" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="engine-number">Engine Number</label>
-                                    <input type="text" class="form-control wide-input" id="engine-number" name="engine-number" placeholder="Example: 1234567890">
+                                    <input type="text" class="form-control wide-input" id="engine-number" name="engine-number" placeholder="Example: 1234567890" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="chassis-number">Chassis Number</label>
-                                    <input type="text" class="form-control wide-input" id="chassis-number" name="chassis-number" placeholder="Example: 123ABC456DEF">
+                                    <input type="text" class="form-control wide-input" id="chassis-number" name="chassis-number" placeholder="Example: 123ABC456DEF" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="coverage">Coverage</label>
-                                    <select class="form-control" id="coverage" name="coverage">
+                                    <select class="form-control" id="coverage" name="coverage" required>
                                         <option>Select a coverage</option>
                                         <option value="comprehensive">Comprehensive</option>
                                         <option value="third-party-motorcycle">Third Party (Motorcycle only)</option>
-                                        <option value="third-party-fire-theft">Third Party Fire and Theft</option>
+                                        <option value="third-party-fire-theft">Third Party Fire and Theft (Car only)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="insured-value">Insured Value (in MYR)</label>
+                                    <label for="insured-value">Insured Value (in RM)</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">MYR</span>
+                                            <span class="input-group-text">RM</span>
                                         </div>
-                                        <input type="text" class="form-control wide-input" id="insured-value" name="insured-value" placeholder="Enter Insured Value" min="0" step="0.01">
+                                        <input type="text" class="form-control wide-input" id="insured-value" name="insured-value" placeholder="Enter Insured Value" min="0" step="0.01" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-body">Vehicle Body</label>
-                                    <select class="form-control" id="vehicle-body" name="vehicle-body">
+                                    <select class="form-control" id="vehicle-body" name="vehicle-body" required>
                                         <option>Select a body first</option>
                                         <option value="Sedan">Sedan</option>
                                         <option value="Hatchback">Hatchback</option>
@@ -226,7 +232,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-make">Vehicle Make</label>
-                                    <select class="form-control wide-input" id="vehicle-make" name="vehicle-make">
+                                    <select class="form-control wide-input" id="vehicle-make" name="vehicle-make" required>
                                         <option>Select a make first</option>
                                         <option value="Alfa Romeo">Alfa Romeo</option>
                                         <option value="Audi">Audi</option>
@@ -262,21 +268,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-model">Vehicle Model</label>
-                                    <select class="form-control wide-input" id="vehicle-model" name="vehicle-model">
+                                    <select class="form-control wide-input" id="vehicle-model" name="vehicle-model" required>
                                         <option>Select a model first</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="engine-capacity">Engine Capacity</label>
-                                    <input type="text" class="form-control wide-input" id="engine-capacity" name="engine-capacity" placeholder="Example: 2000 cc">
+                                    <label for="engine-capacity">Engine Capacity (CC)</label>
+                                    <input type="text" class="form-control wide-input" id="engine-capacity" name="engine-capacity" placeholder="Example: 2000" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="manufacture-year">Year Of Manufactured</label>
-                                    <input type="text" class="form-control wide-input" id="manufacture-year" name="manufacture-year" placeholder="Example: 2022">
+                                    <input type="text" class="form-control wide-input" id="manufacture-year" name="manufacture-year" placeholder="Example: 2022" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ncd">Current NCD</label>
-                                    <select class="form-control" id="ncd" name="ncd">
+                                    <label for="ncd">
+                                        Current NCD 
+                                        <a href="https://www.mycarinfo.com.my/NCDCheck/Online" target="_blank">(Check NCD)</a>
+                                    </label>
+                                    <select class="form-control" id="ncd" name="ncd" required>
                                         <option>Select a NCD</option>
                                         <option value="0%">0%</option>
                                         <option value="30%">30%</option>
@@ -287,11 +296,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-commencement-date">Policy Commencement Date</label>
-                                    <input type="date" class="form-control wide-input" id="policy-commencement-date" name="policy-commencement-date">
+                                    <input type="date" class="form-control wide-input" id="policy-commencement-date" name="policy-commencement-date" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-duration">Policy Duration</label>
-                                    <select class="form-control" id="policy-duration" name="policy-duration">
+                                    <select class="form-control" id="policy-duration" name="policy-duration" required>
                                         <option>Select a policy duration</option>
                                         <option value="6">6 months</option>
                                         <option value="12">12 months</option>
@@ -306,7 +315,7 @@
                         <hr>
                         <!-- add-ons -->
                         <h2 style="text-align: center;">Add-ons</h2>
-                        <div class="row">
+                        <div class="row" id="add-ons-section">
                             <div class="col-md-6">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon" value="true">
@@ -335,7 +344,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">Calculate Insurance</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Calculate Insurance</button>
                             </div>
                         </div>
                     </form>
@@ -364,15 +373,33 @@
 <script src="JS/jquery-3.3.1.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $(".xp-menubar").on('click', function () {
-            $("#sidebar").toggleClass('active');
-            $("#content").toggleClass('active');
-        });
-        $('.xp-menubar,.body-overlay').on('click', function () {
-            $("#sidebar,.body-overlay").toggleClass('show-nav');
-        });
-    });
+                                    $(document).ready(function () {
+                                        $(".xp-menubar").on('click', function () {
+                                            $("#sidebar").toggleClass('active');
+                                            $("#content").toggleClass('active');
+                                        });
+                                        $('.xp-menubar,.body-overlay').on('click', function () {
+                                            $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                        });
+                                    });
+</script>
+<script>
+    function submitForm() {
+        var vehicleType = document.getElementById("vehicle-type").value;
+        var form = document.getElementById("quotation-form");
+
+        if (vehicleType === "Car") {
+            form.action = "carInsuranceQuotation.jsp";
+        } else if (vehicleType === "Motorcycle") {
+            form.action = "motoInsuranceQuotation.jsp";
+        } else if (vehicleType === "Van") {
+            form.action = "vanInsuranceQuotation.jsp";
+        } else if (vehicleType === "Lorry") {
+            form.action = "lorryInsuranceQuotation.jsp";
+        }
+
+        form.submit();
+    }
 </script>
 <script>
     document.getElementById('owner-id').addEventListener('input', function () {
@@ -434,6 +461,39 @@
 
         $("#policy-commencement-date").attr('min', minDate);
     });
+
+    //for disable add-ons
+    // Function to disable add-ons based on selected coverage
+    function toggleAddonsState() {
+        var coverage = document.getElementById("coverage").value;
+        var addonsCheckboxes = document.querySelectorAll("#add-ons-section input[type='checkbox']");
+        var addonsSelects = document.querySelectorAll("#add-ons-section select");
+
+        // Check if the selected coverage is "Comprehensive"
+        if (coverage === "comprehensive") {
+            // Enable all checkboxes and select elements
+            addonsCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = false;
+            });
+            addonsSelects.forEach(function (select) {
+                select.disabled = false;
+            });
+        } else {
+            // Disable all checkboxes and select elements
+            addonsCheckboxes.forEach(function (checkbox) {
+                checkbox.disabled = true;
+            });
+            addonsSelects.forEach(function (select) {
+                select.disabled = true;
+            });
+        }
+    }
+
+// Add event listener to the coverage select element
+    document.getElementById("coverage").addEventListener("change", toggleAddonsState);
+
+// Call the function initially to set the initial state based on the selected coverage
+    toggleAddonsState();
 </script>
 </body>
 </html>
