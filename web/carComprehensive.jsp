@@ -168,15 +168,6 @@
             totalAddOnsCost = windscreenCost + specialPerilsCost + allDriverCost + legalLiabilityCost;
             double totalPremium = (grossPremium - ncd) + totalAddOnsCost;
 
-            // Apply SST (SST is 10%)
-            double sst = 0.10 * totalPremium;
-
-            // Add stamp duty (stamp duty is RM10)
-            double stampDuty = 10.0;
-
-            // Calculate final total premium after applying SST and adding stamp duty
-            double finalTotalPremium = totalPremium + sst + stampDuty;
-
             // Format all decimal values to two decimal points
             DecimalFormat df = new DecimalFormat("#.##");
             String formattedInsuredValue = df.format(insuredValue);
@@ -184,9 +175,6 @@
             String formattedNCD = df.format(ncd);
             String formattedTotalAddOnsCost = df.format(totalAddOnsCost);
             String formattedTotalPremium = df.format(totalPremium);
-            String formattedSST = df.format(sst);
-            String formattedStampDuty = df.format(stampDuty);
-            String formattedFinalTotalPremium = df.format(finalTotalPremium);
         %>
 
         <h1>Insurance Quotation</h1>
@@ -242,11 +230,6 @@
         <p>NCD: RM <%= formattedNCD%></p>
         <p>Total Add-ons Cost: RM <%= formattedTotalAddOnsCost%></p>
         <p>Total Premium after NCD and Add-ons: RM <%= formattedTotalPremium%></p>
-        <p>SST (10%): RM <%= formattedSST%></p>
-        <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
-
-        <h2>Final Total Premium</h2>
-        <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
 
         <%
             // Define percentages based on vehicle make for each company
@@ -534,14 +517,29 @@
 
                 // If the percentage is found for the selected make, calculate the insurance price for this company
                 if (companyPercentage != null) {
-                    double companyTotalPremium = finalTotalPremium * (1 + companyPercentage);
+                    double companyTotalPremium = totalPremium * (1 + companyPercentage);
+
+                    // Apply SST (SST is 10%)
+                    double sst = 0.10 * companyTotalPremium;
+
+                    // Add stamp duty (stamp duty is RM10)
+                    double stampDuty = 10.0;
+
+                    // Calculate final total premium after applying SST and adding stamp duty
+                    double finalTotalPremium = companyTotalPremium + sst + stampDuty;
 
                     // Format the insurance price
                     String formattedCompanyTotalPremium = df.format(companyTotalPremium);
+                    String formattedSST = df.format(sst);
+                    String formattedStampDuty = df.format(stampDuty);
+                    String formattedFinalTotalPremium = df.format(finalTotalPremium);
 
-                    // Display insurance price for the current company
+                    // Display insurance price for the current company including SST and stamp duty
                     out.println("<h3>" + companyName + "</h3>");
                     out.println("<p>Insurance Price: RM " + formattedCompanyTotalPremium + "</p>");
+                    out.println("<p>SST (10%): RM " + formattedSST + "</p>");
+                    out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
+                    out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
                 } else {
                     // If percentage not found for the selected make, display a message
                     out.println("<h3>" + companyName + "</h3>");
