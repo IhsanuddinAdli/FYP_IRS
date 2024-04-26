@@ -386,16 +386,33 @@
 <script>
     function submitForm() {
         var vehicleType = document.getElementById("vehicle-type").value;
+        var coverageType = document.getElementById("coverage").value;
         var form = document.getElementById("quotation-form");
 
         if (vehicleType === "Car") {
-            form.action = "carInsuranceQuotation.jsp";
+            if (coverageType === "comprehensive") {
+                form.action = "carComprehensive.jsp";
+            } else if (coverageType === "third-party-fire-theft") {
+                form.action = "carTPFT.jsp";
+            }
         } else if (vehicleType === "Motorcycle") {
-            form.action = "motoInsuranceQuotation.jsp";
+            if (coverageType === "comprehensive") {
+                form.action = "motoComprehensive.jsp";
+            } else if (coverageType === "third-party-motorcycle") {
+                form.action = "motoTP.jsp";
+            }
         } else if (vehicleType === "Van") {
-            form.action = "vanInsuranceQuotation.jsp";
+            if (coverageType === "comprehensive") {
+                form.action = "vanComprehensive.jsp";
+            } else if (coverageType === "third-party-fire-theft") {
+                form.action = "vanTPFT.jsp";
+            }
         } else if (vehicleType === "Lorry") {
-            form.action = "lorryInsuranceQuotation.jsp";
+            if (coverageType === "comprehensive") {
+                form.action = "lorryComprehensive.jsp";
+            } else if (coverageType === "third-party-fire-theft") {
+                form.action = "lorryTPFT.jsp";
+            }
         }
 
         form.submit();

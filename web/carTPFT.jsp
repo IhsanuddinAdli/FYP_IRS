@@ -6,15 +6,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Insurance Quotation</title>
+        <title>Car Insurance Third Party Fire And Theft Quotation</title>
     </head>
     <body>
         <%
-            double windscreenCost = 0.0;
-            double specialPerilsCost = 0.0;
-            double allDriverCost = 0.0;
-            double legalLiabilityCost = 0.0;
-
             String ownerName = request.getParameter("owner-name");
             String ownerId = request.getParameter("owner-id");
             String dob = request.getParameter("dob");
@@ -60,25 +55,52 @@
                 engineCapacity = Integer.parseInt(engineCapacityStr.replaceAll("[^0-9]", ""));
             }
 
-            double[] baseValues = {273.80, 305.50, 339.10, 372.60, 404.30, 436.00, 469.60, 501.30};
+            double[] peninsulaBaseValues = {
+                120.60, 135.00, 151.20, 167.40, 181.80, 196.20, 212.40, 220.60
+            };
+
+            double[] eastMalaysiaBaseValues = {
+                67.50, 75.60, 85.20, 93.60, 101.70, 110.10, 118.20, 120.30
+            };
 
             double baseValue = 0.0;
-            if (engineCapacity <= 1400) {
-                baseValue = baseValues[0];
-            } else if (engineCapacity <= 1650) {
-                baseValue = baseValues[1];
-            } else if (engineCapacity <= 2200) {
-                baseValue = baseValues[2];
-            } else if (engineCapacity <= 3050) {
-                baseValue = baseValues[3];
-            } else if (engineCapacity <= 4100) {
-                baseValue = baseValues[4];
-            } else if (engineCapacity <= 4250) {
-                baseValue = baseValues[5];
-            } else if (engineCapacity <= 4400) {
-                baseValue = baseValues[6];
-            } else {
-                baseValue = baseValues[7];
+
+            if ("peninsular".equals(location)) {
+                if (engineCapacity <= 1400) {
+                    baseValue = peninsulaBaseValues[0];
+                } else if (engineCapacity <= 1650) {
+                    baseValue = peninsulaBaseValues[1];
+                } else if (engineCapacity <= 2200) {
+                    baseValue = peninsulaBaseValues[2];
+                } else if (engineCapacity <= 3050) {
+                    baseValue = peninsulaBaseValues[3];
+                } else if (engineCapacity <= 4100) {
+                    baseValue = peninsulaBaseValues[4];
+                } else if (engineCapacity <= 4250) {
+                    baseValue = peninsulaBaseValues[5];
+                } else if (engineCapacity <= 4400) {
+                    baseValue = peninsulaBaseValues[6];
+                } else {
+                    baseValue = peninsulaBaseValues[7];
+                }
+            } else if ("east".equals(location)) {
+                if (engineCapacity <= 1400) {
+                    baseValue = eastMalaysiaBaseValues[0];
+                } else if (engineCapacity <= 1650) {
+                    baseValue = eastMalaysiaBaseValues[1];
+                } else if (engineCapacity <= 2200) {
+                    baseValue = eastMalaysiaBaseValues[2];
+                } else if (engineCapacity <= 3050) {
+                    baseValue = eastMalaysiaBaseValues[3];
+                } else if (engineCapacity <= 4100) {
+                    baseValue = eastMalaysiaBaseValues[4];
+                } else if (engineCapacity <= 4250) {
+                    baseValue = eastMalaysiaBaseValues[5];
+                } else if (engineCapacity <= 4400) {
+                    baseValue = eastMalaysiaBaseValues[6];
+                } else {
+                    baseValue = eastMalaysiaBaseValues[7];
+                }
             }
 
             double premiumRate = 0.026; // Default premium rate (2.6%)
@@ -94,50 +116,8 @@
             // Calculate NCD
             double ncd = ncdPercentage * grossPremium;
 
-            // Initialize totalAddOnsCost
-            double totalAddOnsCost = 0.0;
-
-            String windscreenPriceStr = request.getParameter("windscreen-price");
-            double windscreenPrice = 0.0; // Default value
-            if (windscreenPriceStr != null && !windscreenPriceStr.isEmpty()) {
-                try {
-                    windscreenPrice = Double.parseDouble(windscreenPriceStr);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            // Check if windscreen addon is selected
-            String windscreenAddon = request.getParameter("windscreen-addon");
-            if ("true".equals(windscreenAddon)) {
-                // Adjust the windscreen cost calculation based on the windscreen price
-                windscreenCost = 0.15 * windscreenPrice;
-            }
-
-            // Check if all driver addon is selected
-            String allDriverAddon = request.getParameter("all-driver-addon");
-            if ("true".equals(allDriverAddon)) {
-                // Assuming a fixed cost of RM20 for all driver addon
-                allDriverCost = 20.0;
-            }
-
-            // Check if special perils addon is selected
-            String specialPerilsAddon = request.getParameter("special-perils-addon");
-            if ("true".equals(specialPerilsAddon)) {
-                // Assuming special perils cost is calculated as 0.25% of insured value
-                specialPerilsCost = 0.0025 * insuredValue;
-            }
-
-            // Check if legal liability addon is selected
-            String legalLiabilityAddon = request.getParameter("legal-liability-addon");
-            if ("true".equals(legalLiabilityAddon)) {
-                // Assuming a fixed cost of RM7.50 for legal liability of passengers addon
-                legalLiabilityCost = 7.50;
-            }
-
-            // Calculate total premium after deducting NCD and adding add-ons
-            totalAddOnsCost = windscreenCost + specialPerilsCost + allDriverCost + legalLiabilityCost;
-            double totalPremium = (grossPremium - ncd) + totalAddOnsCost;
+            // Calculate total premium after deducting NCD
+            double totalPremium = grossPremium - ncd;
 
             // Apply SST (SST is 10%)
             double sst = 0.10 * totalPremium;
@@ -153,7 +133,6 @@
             String formattedInsuredValue = df.format(insuredValue);
             String formattedGrossPremium = df.format(grossPremium);
             String formattedNCD = df.format(ncd);
-            String formattedTotalAddOnsCost = df.format(totalAddOnsCost);
             String formattedTotalPremium = df.format(totalPremium);
             String formattedSST = df.format(sst);
             String formattedStampDuty = df.format(stampDuty);
@@ -191,28 +170,10 @@
 
         <h2>Gross Premium Calculation</h2>
         <p>Gross Premium: RM <%= formattedGrossPremium%></p>
-
-        <%-- Add-ons --%>
-        <% if (totalAddOnsCost > 0) { %>
-        <h2>Add-ons</h2>
-        <% if ("true".equals(request.getParameter("windscreen-addon"))) {%>
-        <p>Windscreen: RM <%= df.format(windscreenCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("all-driver-addon"))) {%>
-        <p>All Driver: RM <%= df.format(allDriverCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("special-perils-addon"))) {%>
-        <p>Special Perils (Flood): RM <%= df.format(specialPerilsCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("legal-liability-addon"))) {%>
-        <p>Legal Liability of Passengers: RM <%= df.format(legalLiabilityCost)%></p>
-        <% } %>
-        <% }%>
-
+        
         <h2>Additional Calculations</h2>
         <p>NCD: RM <%= formattedNCD%></p>
-        <p>Total Add-ons Cost: RM <%= formattedTotalAddOnsCost%></p>
-        <p>Total Premium after NCD and Add-ons: RM <%= formattedTotalPremium%></p>
+        <p>Total Premium after NCD: RM <%= formattedTotalPremium%></p>
         <p>SST (10%): RM <%= formattedSST%></p>
         <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
 
