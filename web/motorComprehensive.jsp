@@ -163,17 +163,16 @@
             // Define percentages based on vehicle make for each company
             Map<String, Map<String, Double>> companyVehicleMakePercentages = new HashMap<>();
 
-            // Define the percentages for Takaful Ikhlas
             Map<String, Double> takafulIkhlasPercentages = new HashMap<>();
             takafulIkhlasPercentages.put("Yamaha", 0.025);
-            takafulIkhlasPercentages.put("Honda", 0.023);
+            takafulIkhlasPercentages.put("Honda (Motor)", 0.023);
             takafulIkhlasPercentages.put("Kawasaki", 0.027);
             takafulIkhlasPercentages.put("Sym", 0.026);
             takafulIkhlasPercentages.put("Harley-Davidson", 0.030);
-            takafulIkhlasPercentages.put("Suzuki", 0.022);
+            takafulIkhlasPercentages.put("Suzuki (Motor)", 0.022);
             takafulIkhlasPercentages.put("Benelli", 0.020);
             takafulIkhlasPercentages.put("Ducati", 0.028);
-            takafulIkhlasPercentages.put("BMW", 0.019);
+            takafulIkhlasPercentages.put("BMW (Motor)", 0.019);
             takafulIkhlasPercentages.put("Vespa", 0.031);
             takafulIkhlasPercentages.put("Aprilia", 0.032);
             takafulIkhlasPercentages.put("Daiichi", 0.018);
@@ -185,61 +184,58 @@
             takafulIkhlasPercentages.put("Brixton", 0.034);
             companyVehicleMakePercentages.put("Takaful Ikhlas", takafulIkhlasPercentages);
 
-            // Define the percentages for Takaful Malaysia
             Map<String, Double> takafulMalaysiaPercentages = new HashMap<>();
             takafulMalaysiaPercentages.put("Yamaha", 0.015);
-            takafulMalaysiaPercentages.put("Honda", 0.014);
+            takafulMalaysiaPercentages.put("Honda (Motor)", 0.014);
             takafulMalaysiaPercentages.put("Kawasaki", 0.013);
             takafulMalaysiaPercentages.put("Sym", 0.012);
             takafulMalaysiaPercentages.put("Harley-Davidson", 0.011);
-            takafulMalaysiaPercentages.put("Suzuki", 0.01);
+            takafulMalaysiaPercentages.put("Suzuki (Motor)", 0.010);
             takafulMalaysiaPercentages.put("Benelli", 0.015);
             takafulMalaysiaPercentages.put("Ducati", 0.013);
-            takafulMalaysiaPercentages.put("BMW", 0.012);
+            takafulMalaysiaPercentages.put("BMW (Motor)", 0.012);
             takafulMalaysiaPercentages.put("Vespa", 0.011);
-            takafulMalaysiaPercentages.put("Aprilia", 0.01);
+            takafulMalaysiaPercentages.put("Aprilia", 0.010);
             takafulMalaysiaPercentages.put("Daiichi", 0.015);
             takafulMalaysiaPercentages.put("Modenas", 0.014);
             takafulMalaysiaPercentages.put("Piaggio", 0.013);
             takafulMalaysiaPercentages.put("Moto Guzzi", 0.012);
             takafulMalaysiaPercentages.put("GPX", 0.011);
-            takafulMalaysiaPercentages.put("Royal Enfield", 0.01);
+            takafulMalaysiaPercentages.put("Royal Enfield", 0.010);
             takafulMalaysiaPercentages.put("Brixton", 0.009);
             companyVehicleMakePercentages.put("Takaful Malaysia", takafulMalaysiaPercentages);
 
-            // Define the percentages for Etiqa
             Map<String, Double> etiqaPercentages = new HashMap<>();
             etiqaPercentages.put("Yamaha", 0.025);
-            etiqaPercentages.put("Honda", 0.026);
+            etiqaPercentages.put("Honda (Motor)", 0.026);
             etiqaPercentages.put("Kawasaki", 0.027);
             etiqaPercentages.put("Sym", 0.018);
             etiqaPercentages.put("Harley-Davidson", 0.019);
-            etiqaPercentages.put("Suzuki", 0.02);
+            etiqaPercentages.put("Suzuki (Motor)", 0.020);
             etiqaPercentages.put("Benelli", 0.021);
             etiqaPercentages.put("Ducati", 0.022);
-            etiqaPercentages.put("BMW", 0.023);
+            etiqaPercentages.put("BMW (Motor)", 0.023);
             etiqaPercentages.put("Vespa", 0.024);
             etiqaPercentages.put("Aprilia", 0.015);
             etiqaPercentages.put("Daiichi", 0.016);
             etiqaPercentages.put("Modenas", 0.017);
             etiqaPercentages.put("Piaggio", 0.018);
             etiqaPercentages.put("Moto Guzzi", 0.019);
-            etiqaPercentages.put("GPX", 0.02);
+            etiqaPercentages.put("GPX", 0.020);
             etiqaPercentages.put("Royal Enfield", 0.021);
             etiqaPercentages.put("Brixton", 0.022);
             companyVehicleMakePercentages.put("Etiqa", etiqaPercentages);
 
-            // Define the percentages for Allianz
             Map<String, Double> allianzPercentages = new HashMap<>();
             allianzPercentages.put("Yamaha", 0.03);
-            allianzPercentages.put("Honda", 0.031);
+            allianzPercentages.put("Honda (Motor)", 0.031);
             allianzPercentages.put("Kawasaki", 0.032);
             allianzPercentages.put("Sym", 0.023);
             allianzPercentages.put("Harley-Davidson", 0.024);
-            allianzPercentages.put("Suzuki", 0.025);
+            allianzPercentages.put("Suzuki (Motor)", 0.025);
             allianzPercentages.put("Benelli", 0.026);
             allianzPercentages.put("Ducati", 0.027);
-            allianzPercentages.put("BMW", 0.028);
+            allianzPercentages.put("BMW (Motor)", 0.028);
             allianzPercentages.put("Vespa", 0.029);
             allianzPercentages.put("Aprilia", 0.02);
             allianzPercentages.put("Daiichi", 0.021);
@@ -251,39 +247,37 @@
             allianzPercentages.put("Brixton", 0.027);
             companyVehicleMakePercentages.put("Allianz", allianzPercentages);
 
-            // Define the percentages for Pacific
             Map<String, Double> pacificPercentages = new HashMap<>();
             pacificPercentages.put("Yamaha", 0.015);
-            pacificPercentages.put("Honda", 0.016);
+            pacificPercentages.put("Honda (Motor)", 0.016);
             pacificPercentages.put("Kawasaki", 0.017);
             pacificPercentages.put("Sym", 0.018);
             pacificPercentages.put("Harley-Davidson", 0.019);
-            pacificPercentages.put("Suzuki", 0.02);
+            pacificPercentages.put("Suzuki (Motor)", 0.020);
             pacificPercentages.put("Benelli", 0.021);
             pacificPercentages.put("Ducati", 0.022);
-            pacificPercentages.put("BMW", 0.023);
+            pacificPercentages.put("BMW (Motor)", 0.023);
             pacificPercentages.put("Vespa", 0.024);
             pacificPercentages.put("Aprilia", 0.025);
             pacificPercentages.put("Daiichi", 0.026);
             pacificPercentages.put("Modenas", 0.027);
             pacificPercentages.put("Piaggio", 0.028);
             pacificPercentages.put("Moto Guzzi", 0.029);
-            pacificPercentages.put("GPX", 0.03);
+            pacificPercentages.put("GPX", 0.030);
             pacificPercentages.put("Royal Enfield", 0.031);
             pacificPercentages.put("Brixton", 0.032);
             companyVehicleMakePercentages.put("Pacific", pacificPercentages);
 
-            // Define the percentages for Liberty
             Map<String, Double> libertyPercentages = new HashMap<>();
             libertyPercentages.put("Yamaha", 0.013);
-            libertyPercentages.put("Honda", 0.014);
+            libertyPercentages.put("Honda (Motor)", 0.014);
             libertyPercentages.put("Kawasaki", 0.015);
             libertyPercentages.put("Sym", 0.016);
             libertyPercentages.put("Harley-Davidson", 0.017);
-            libertyPercentages.put("Suzuki", 0.018);
+            libertyPercentages.put("Suzuki (Motor)", 0.018);
             libertyPercentages.put("Benelli", 0.019);
             libertyPercentages.put("Ducati", 0.02);
-            libertyPercentages.put("BMW", 0.021);
+            libertyPercentages.put("BMW (Motor)", 0.021);
             libertyPercentages.put("Vespa", 0.022);
             libertyPercentages.put("Aprilia", 0.023);
             libertyPercentages.put("Daiichi", 0.024);
@@ -295,17 +289,16 @@
             libertyPercentages.put("Brixton", 0.03);
             companyVehicleMakePercentages.put("Liberty", libertyPercentages);
 
-            // Define the percentages for Zurich
             Map<String, Double> zurichPercentages = new HashMap<>();
             zurichPercentages.put("Yamaha", 0.019);
-            zurichPercentages.put("Honda", 0.020);
+            zurichPercentages.put("Honda (Motor)", 0.020);
             zurichPercentages.put("Kawasaki", 0.021);
             zurichPercentages.put("Sym", 0.022);
             zurichPercentages.put("Harley-Davidson", 0.023);
-            zurichPercentages.put("Suzuki", 0.024);
+            zurichPercentages.put("Suzuki (Motor)", 0.024);
             zurichPercentages.put("Benelli", 0.025);
             zurichPercentages.put("Ducati", 0.026);
-            zurichPercentages.put("BMW", 0.027);
+            zurichPercentages.put("BMW (Motor)", 0.027);
             zurichPercentages.put("Vespa", 0.028);
             zurichPercentages.put("Aprilia", 0.029);
             zurichPercentages.put("Daiichi", 0.030);
@@ -317,17 +310,16 @@
             zurichPercentages.put("Brixton", 0.036);
             companyVehicleMakePercentages.put("Zurich", zurichPercentages);
 
-            // Define the percentages for Generaly
             Map<String, Double> generalyPercentages = new HashMap<>();
             generalyPercentages.put("Yamaha", 0.015);
-            generalyPercentages.put("Honda", 0.016);
+            generalyPercentages.put("Honda (Motor)", 0.016);
             generalyPercentages.put("Kawasaki", 0.017);
             generalyPercentages.put("Sym", 0.018);
             generalyPercentages.put("Harley-Davidson", 0.019);
-            generalyPercentages.put("Suzuki", 0.020);
+            generalyPercentages.put("Suzuki (Motor)", 0.020);
             generalyPercentages.put("Benelli", 0.021);
             generalyPercentages.put("Ducati", 0.022);
-            generalyPercentages.put("BMW", 0.023);
+            generalyPercentages.put("BMW (Motor)", 0.023);
             generalyPercentages.put("Vespa", 0.024);
             generalyPercentages.put("Aprilia", 0.025);
             generalyPercentages.put("Daiichi", 0.026);

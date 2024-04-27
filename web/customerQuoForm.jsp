@@ -516,10 +516,11 @@
 </script>
 <script>
     var originalVehicleMakes = [
-        "Alfa Romeo", "Audi", "BMW", "Borgward", "Chery", "Chevrolet", "Citroen", "Ford", "Honda",
-        "Hyundai", "Infiniti", "Isuzu", "Jaguar", "Jeep", "Kia", "Land Rover", "Lexus", "Mazda",
-        "Mercedes-Benz", "MINI", "Mitsubishi", "Nissan", "Perodua", "Peugeot", "Proton", "Subaru",
-        "Suzuki", "Toyota", "Volkswagen", "Volvo"
+        "Perodua", "Proton", "Honda (Car)", "Toyota (Car)", "Nissan (Car)", "Mini Cooper", "Mitsubishi",
+        "Peugoet", "Volkswagen", "Subaru", "Ssangyong", "Kia", "Naza", "Isuzu (Car)", "Suzuki (Car)",
+        "Mazda", "McLaren", "Chevrolet", "Hyundai", "BMW (Car)", "Chery", "Volvo", "Ford",
+        "Mercedes Benz", "Lexus", "Rolls Royce", "Bentley", "Porsche",
+        "Jaguar", "Landrover Range Rover", "Infiniti", "Audi", "Citroen"
     ];
 
     function updateVehicleMakes() {
@@ -529,14 +530,14 @@
 
         if (vehicleBody === "Motorcycle") {
             addOptions(vehicleMakeSelect, [
-                "Yamaha", "Honda", "Kawasaki", "Sym", "Harley-Davidson",
-                "Suzuki", "Benelli", "Ducati", "BMW", "Vespa", "Aprilia", "Daiichi", "Modenas", "Piaggio",
+                "Yamaha", "Honda (Motor)", "Kawasaki", "Sym", "Harley-Davidson",
+                "Suzuki (Motor)", "Benelli", "Ducati", "BMW (Motor)", "Vespa", "Aprilia", "Daiichi", "Modenas", "Piaggio",
                 "Moto Guzzi", "GPX", "Royal Enfield", "Brixton"
             ]);
         } else if (vehicleBody === "Van") {
-            addOptions(vehicleMakeSelect, ["Toyota", "Nissan", "Daihatsu", "Foton"]);
+            addOptions(vehicleMakeSelect, ["Toyota (Van)", "Nissan (Van)", "Daihatsu", "Foton (Van)"]);
         } else if (vehicleBody === "Lorry") {
-            addOptions(vehicleMakeSelect, ["Hino", "Fuso", "Isuzu", "UD Truck", "Volvo", "CAMC", "Foton", "JMC"]);
+            addOptions(vehicleMakeSelect, ["Hino", "Fuso", "Isuzu (Lorry)", "UD Truck", "Volvo", "CAMC", "Foton (Lorry)", "JMC"]);
         } else {
             addOptions(vehicleMakeSelect, originalVehicleMakes);
         }
