@@ -203,8 +203,8 @@
                                     <select class="form-control" id="coverage" name="coverage" required>
                                         <option>Select a coverage</option>
                                         <option value="comprehensive">Comprehensive</option>
-                                        <option value="third-party-motorcycle">Third Party (Motorcycle only)</option>
-                                        <option value="third-party-fire-theft">Third Party Fire and Theft (Car only)</option>
+                                        <option value="third-party-motorcycle">Third Party</option>
+                                        <option value="third-party-fire-theft">Third Party Fire and Theft</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -220,50 +220,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-body">Vehicle Body</label>
-                                    <select class="form-control" id="vehicle-body" name="vehicle-body" required>
+                                    <select class="form-control" id="vehicle-body" name="vehicle-body" onchange="updateVehicleMakes()" required>
                                         <option>Select a body first</option>
                                         <option value="Sedan">Sedan</option>
                                         <option value="Hatchback">Hatchback</option>
                                         <option value="SUV">SUV (Sports Utility Vehicle)</option>
                                         <option value="MPV">MPV (Multi-Purpose Vehicle)</option>
-                                        <option value="Coupe">Coupe</option>
-                                        <option value="Convertible">Convertible</option>
+                                        <option value="Motorcycle">Motorcycle</option>
+                                        <option value="Van">Van</option>
+                                        <option value="Lorry">Lorry</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-make">Vehicle Make</label>
                                     <select class="form-control wide-input" id="vehicle-make" name="vehicle-make" required>
                                         <option>Select a make first</option>
-                                        <option value="Alfa Romeo">Alfa Romeo</option>
-                                        <option value="Audi">Audi</option>
-                                        <option value="BMW">BMW</option>
-                                        <option value="Borgward">Borgward</option>
-                                        <option value="Chery">Chery</option>
-                                        <option value="Chevrolet">Chevrolet</option>
-                                        <option value="Citroen">Citroen</option>
-                                        <option value="Ford">Ford</option>
-                                        <option value="Honda">Honda</option>
-                                        <option value="Hyundai">Hyundai</option>
-                                        <option value="Infiniti">Infiniti</option>
-                                        <option value="Isuzu">Isuzu</option>
-                                        <option value="Jaguar">Jaguar</option>
-                                        <option value="Jeep">Jeep</option>
-                                        <option value="Kia">Kia</option>
-                                        <option value="Land Rover">Land Rover</option>
-                                        <option value="Lexus">Lexus</option>
-                                        <option value="Mazda">Mazda</option>
-                                        <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                        <option value="MINI">MINI</option>
-                                        <option value="Mitsubishi">Mitsubishi</option>
-                                        <option value="Nissan">Nissan</option>
-                                        <option value="Perodua">Perodua</option>
-                                        <option value="Peugeot">Peugeot</option>
-                                        <option value="Proton">Proton</option>
-                                        <option value="Subaru">Subaru</option>
-                                        <option value="Suzuki">Suzuki</option>
-                                        <option value="Toyota">Toyota</option>
-                                        <option value="Volkswagen">Volkswagen</option>
-                                        <option value="Volvo">Volvo</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -457,7 +428,7 @@
         document.getElementById('policy-expiry-date').value = expiryDate.toISOString().split('T')[0];
     }
 </script>
-<script src="JS/carList.js"></script>
+<script src="JS/vehicleList.js"></script>
 <script>
     // Function to show/hide windscreen price input field based on checkbox state
     document.getElementById("windscreen-addon").addEventListener("change", function () {
@@ -511,6 +482,74 @@
 
 // Call the function initially to set the initial state based on the selected coverage
     toggleAddonsState();
+
+    // Function to hide Third Party and Third Party Fire and Theft options based on selected vehicle type
+    function toggleCoverageOptions() {
+        var vehicleType = document.getElementById("vehicle-type").value;
+        var coverageSelect = document.getElementById("coverage");
+        var thirdPartyOption = coverageSelect.querySelector("option[value='third-party-motorcycle']");
+        var tpftOption = coverageSelect.querySelector("option[value='third-party-fire-theft']");
+
+        // Check if the selected vehicle type is Car, Van, or Lorry
+        if (vehicleType === "Car" || vehicleType === "Van" || vehicleType === "Lorry") {
+            // Hide the Third Party option
+            thirdPartyOption.style.display = "none";
+            // Show the Third Party Fire and Theft option
+            tpftOption.style.display = "block";
+        } else if (vehicleType === "Motorcycle") {
+            // Hide the Third Party Fire and Theft option
+            tpftOption.style.display = "none";
+            // Show the Third Party option
+            thirdPartyOption.style.display = "block";
+        } else {
+            // Show both options if none of the vehicle types are selected
+            thirdPartyOption.style.display = "block";
+            tpftOption.style.display = "block";
+        }
+    }
+
+    // Add event listener to the vehicle type select element
+    document.getElementById("vehicle-type").addEventListener("change", toggleCoverageOptions);
+
+    // Call the function initially to set the initial state based on the selected vehicle type
+    toggleCoverageOptions();
+</script>
+<script>
+    var originalVehicleMakes = [
+        "Alfa Romeo", "Audi", "BMW", "Borgward", "Chery", "Chevrolet", "Citroen", "Ford", "Honda",
+        "Hyundai", "Infiniti", "Isuzu", "Jaguar", "Jeep", "Kia", "Land Rover", "Lexus", "Mazda",
+        "Mercedes-Benz", "MINI", "Mitsubishi", "Nissan", "Perodua", "Peugeot", "Proton", "Subaru",
+        "Suzuki", "Toyota", "Volkswagen", "Volvo"
+    ];
+
+    function updateVehicleMakes() {
+        var vehicleBody = document.getElementById("vehicle-body").value;
+        var vehicleMakeSelect = document.getElementById("vehicle-make");
+        vehicleMakeSelect.innerHTML = ""; // Clear existing options
+
+        if (vehicleBody === "Motorcycle") {
+            addOptions(vehicleMakeSelect, [
+                "Yamaha", "Honda", "Kawasaki", "Sym", "Harley-Davidson",
+                "Suzuki", "Benelli", "Ducati", "BMW", "Vespa", "Aprilia", "Daiichi", "Modenas", "Piaggio",
+                "Moto Guzzi", "GPX", "Royal Enfield", "Brixton"
+            ]);
+        } else if (vehicleBody === "Van") {
+            addOptions(vehicleMakeSelect, ["Toyota", "Nissan", "Daihatsu", "Foton"]);
+        } else if (vehicleBody === "Lorry") {
+            addOptions(vehicleMakeSelect, ["Hino", "Fuso", "Isuzu", "UD Truck", "Volvo", "CAMC", "Foton", "JMC"]);
+        } else {
+            addOptions(vehicleMakeSelect, originalVehicleMakes);
+        }
+    }
+
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement("option");
+            optionElement.text = option;
+            optionElement.value = option;
+            selectElement.add(optionElement);
+        });
+    }
 </script>
 </body>
 </html>

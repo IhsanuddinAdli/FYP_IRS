@@ -55,51 +55,47 @@
                 engineCapacity = Integer.parseInt(engineCapacityStr.replaceAll("[^0-9]", ""));
             }
 
-            double[] peninsulaBaseValues = {
-                120.60, 135.00, 151.20, 167.40, 181.80, 196.20, 212.40, 220.60
+            double[] peninsulaThirdPartyBaseValues = {
+                50.00, 60.00, 70.00, 80.00, 90.00, 100.00, 110.00
             };
 
-            double[] eastMalaysiaBaseValues = {
-                67.50, 75.60, 85.20, 93.60, 101.70, 110.10, 118.20, 120.30
+            double[] eastMalaysiaThirdPartyBaseValues = {
+                40.00, 50.00, 60.00, 70.00, 80.00, 90.00, 100.00
             };
 
             double baseValue = 0.0;
 
             if ("peninsular".equals(location)) {
-                if (engineCapacity <= 1400) {
-                    baseValue = peninsulaBaseValues[0];
-                } else if (engineCapacity <= 1650) {
-                    baseValue = peninsulaBaseValues[1];
-                } else if (engineCapacity <= 2200) {
-                    baseValue = peninsulaBaseValues[2];
-                } else if (engineCapacity <= 3050) {
-                    baseValue = peninsulaBaseValues[3];
-                } else if (engineCapacity <= 4100) {
-                    baseValue = peninsulaBaseValues[4];
-                } else if (engineCapacity <= 4250) {
-                    baseValue = peninsulaBaseValues[5];
-                } else if (engineCapacity <= 4400) {
-                    baseValue = peninsulaBaseValues[6];
+                if (engineCapacity <= 50) {
+                    baseValue = peninsulaThirdPartyBaseValues[0];
+                } else if (engineCapacity <= 100) {
+                    baseValue = peninsulaThirdPartyBaseValues[1];
+                } else if (engineCapacity <= 125) {
+                    baseValue = peninsulaThirdPartyBaseValues[2];
+                } else if (engineCapacity <= 225) {
+                    baseValue = peninsulaThirdPartyBaseValues[3];
+                } else if (engineCapacity <= 350) {
+                    baseValue = peninsulaThirdPartyBaseValues[4];
+                } else if (engineCapacity <= 500) {
+                    baseValue = peninsulaThirdPartyBaseValues[5];
                 } else {
-                    baseValue = peninsulaBaseValues[7];
+                    baseValue = peninsulaThirdPartyBaseValues[6];
                 }
             } else if ("east".equals(location)) {
-                if (engineCapacity <= 1400) {
-                    baseValue = eastMalaysiaBaseValues[0];
-                } else if (engineCapacity <= 1650) {
-                    baseValue = eastMalaysiaBaseValues[1];
-                } else if (engineCapacity <= 2200) {
-                    baseValue = eastMalaysiaBaseValues[2];
-                } else if (engineCapacity <= 3050) {
-                    baseValue = eastMalaysiaBaseValues[3];
-                } else if (engineCapacity <= 4100) {
-                    baseValue = eastMalaysiaBaseValues[4];
-                } else if (engineCapacity <= 4250) {
-                    baseValue = eastMalaysiaBaseValues[5];
-                } else if (engineCapacity <= 4400) {
-                    baseValue = eastMalaysiaBaseValues[6];
+                if (engineCapacity <= 50) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[0];
+                } else if (engineCapacity <= 100) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[1];
+                } else if (engineCapacity <= 125) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[2];
+                } else if (engineCapacity <= 225) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[3];
+                } else if (engineCapacity <= 350) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[4];
+                } else if (engineCapacity <= 500) {
+                    baseValue = eastMalaysiaThirdPartyBaseValues[5];
                 } else {
-                    baseValue = eastMalaysiaBaseValues[7];
+                    baseValue = eastMalaysiaThirdPartyBaseValues[6];
                 }
             }
 
@@ -448,6 +444,7 @@
                 if (("Takaful Ikhlas".equals(companyName) && Integer.parseInt(manufactureYear) < (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 15))
                         || (!"Takaful Ikhlas".equals(companyName) && Integer.parseInt(manufactureYear) < (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10))) {
 
+                    // Proceed with calculating the insurance price
                     // Find the percentage for the selected vehicle make for this company
                     Double companyPercentage = percentagesForCompany.get(vehicleMake);
 
