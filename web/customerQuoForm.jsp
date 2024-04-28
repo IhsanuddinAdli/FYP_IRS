@@ -170,13 +170,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <select class="form-control wide-input" id="vehicle-type" name="vehicle-type" required>
-                                        <option>Select vehicle type</option>
-                                        <option value="Car">Car</option>
-                                        <option value="Motorcycle">Motorcycle</option>
-                                        <option value="Van">Van</option>
-                                        <option value="Lorry">Lorry</option>
-                                    </select>
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
@@ -353,6 +347,18 @@
                                             $("#sidebar,.body-overlay").toggleClass('show-nav');
                                         });
                                     });
+                                    // Function to retrieve and display vehicle value
+                                    window.onload = function () {
+                                        // Retrieve vehicle value from URL query parameter
+                                        const urlParams = new URLSearchParams(window.location.search);
+                                        const vehicle = urlParams.get('vehicle');
+
+                                        // Display vehicle value in the input box
+                                        if (vehicle) {
+                                            const inputElement = document.getElementById('vehicle-type');
+                                            inputElement.value = vehicle;
+                                        }
+                                    };
 </script>
 <script>
     function submitForm() {
@@ -483,36 +489,30 @@
 // Call the function initially to set the initial state based on the selected coverage
     toggleAddonsState();
 
-    // Function to hide Third Party and Third Party Fire and Theft options based on selected vehicle type
     function toggleCoverageOptions() {
-        var vehicleType = document.getElementById("vehicle-type").value;
+        var urlParams = new URLSearchParams(window.location.search);
+        var vehicleType = urlParams.get('vehicle');
         var coverageSelect = document.getElementById("coverage");
         var thirdPartyOption = coverageSelect.querySelector("option[value='third-party-motorcycle']");
         var tpftOption = coverageSelect.querySelector("option[value='third-party-fire-theft']");
 
-        // Check if the selected vehicle type is Car, Van, or Lorry
-        if (vehicleType === "Car" || vehicleType === "Van" || vehicleType === "Lorry") {
-            // Hide the Third Party option
-            thirdPartyOption.style.display = "none";
-            // Show the Third Party Fire and Theft option
-            tpftOption.style.display = "block";
-        } else if (vehicleType === "Motorcycle") {
+        // Check if the selected vehicle type is Motorcycle
+        if (vehicleType === "Motorcycle") {
             // Hide the Third Party Fire and Theft option
             tpftOption.style.display = "none";
             // Show the Third Party option
             thirdPartyOption.style.display = "block";
         } else {
-            // Show both options if none of the vehicle types are selected
-            thirdPartyOption.style.display = "block";
+            // Show the Third Party Fire and Theft option
             tpftOption.style.display = "block";
+            // Hide the Third Party option
+            thirdPartyOption.style.display = "none";
         }
     }
 
-    // Add event listener to the vehicle type select element
-    document.getElementById("vehicle-type").addEventListener("change", toggleCoverageOptions);
-
-    // Call the function initially to set the initial state based on the selected vehicle type
+// Call the function initially to set the initial state based on the selected vehicle type
     toggleCoverageOptions();
+
 </script>
 <script>
     var originalVehicleMakes = [

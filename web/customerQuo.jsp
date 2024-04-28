@@ -120,19 +120,16 @@
                 <div id="main-content-image">
                     <div class="container">
                         <div class="button-container">
-                            <a href="customerQuoForm.jsp" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
-                            <a href="" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Car" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Motorcycle" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
                         </div>
                         <div class="button-container">
-                            <a href="" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
-                            <a href="" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Van" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Lorry" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
                         </div>
                     </div>
                 </div>
                 <!----main-content-end--->
-
-
-
                 <!----footer-design------------->
 
                 <footer class="footer">

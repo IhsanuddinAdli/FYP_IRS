@@ -15,6 +15,7 @@
             double allDriverCost = 0.0;
             double legalLiabilityCost = 0.0;
 
+            String userID = (String) session.getAttribute("userID");
             String ownerName = request.getParameter("owner-name");
             String ownerId = request.getParameter("owner-id");
             String dob = request.getParameter("dob");
@@ -178,6 +179,7 @@
         %>
 
         <h1>Insurance Quotation</h1>
+        <input type="hidden" name="userID" value="<%= userID %>">
 
         <h2>Personal Information</h2>
         <p>Owner Name: <%= ownerName%></p>
@@ -324,6 +326,14 @@
                     out.println("<p>SST (10%): RM " + formattedSST + "</p>");
                     out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
                     out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
+
+                    // Add buttons for Details and Purchase
+                    out.println("<form action='purchase.jsp' method='post'>");
+                    out.println("<input type='hidden' name='companyName' value='" + companyName + "'>");
+                    out.println("<input type='hidden' name='premium' value='" + formattedFinalTotalPremium + "'>");
+                    out.println("<button type='submit' name='action' value='details'>Details</button>");
+                    out.println("<button type='submit' name='action' value='purchase'>Purchase</button>");
+                    out.println("</form>");
                 } else {
                     // If percentage not found for the selected make, display a message
                     out.println("<h3>" + companyName + "</h3>");

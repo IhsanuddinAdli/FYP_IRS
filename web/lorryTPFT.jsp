@@ -292,6 +292,13 @@
                         out.println("<p>SST (10%): RM " + formattedSST + "</p>");
                         out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
                         out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
+                        // Add buttons for Details and Purchase
+                        out.println("<form action='purchase.jsp' method='post'>");
+                        out.println("<input type='hidden' name='companyName' value='" + companyName + "'>");
+                        out.println("<input type='hidden' name='premium' value='" + formattedFinalTotalPremium + "'>");
+                        out.println("<button type='submit' name='action' value='details'>Details</button>");
+                        out.println("<button type='submit' name='action' value='purchase'>Purchase</button>");
+                        out.println("</form>");
                     } else {
                         // If percentage not found for the selected make, display a message
                         out.println("<h3>" + companyName + "</h3>");
