@@ -72,7 +72,7 @@
             double baseValue = 0.0;
 
             if ("peninsular".equals(location)) {
-                baseValue = peninsulaBaseValues[0]; // Default to the lowest base value for Peninsula
+                baseValue = peninsulaBaseValues[0];
                 if (engineCapacity <= 1400) {
                     baseValue = peninsulaBaseValues[0];
                 } else if (engineCapacity <= 1650) {
@@ -91,7 +91,7 @@
                     baseValue = peninsulaBaseValues[7];
                 }
             } else if ("east".equals(location)) {
-                baseValue = eastMalaysiaBaseValues[0]; // Default to the lowest base value for East Malaysia
+                baseValue = eastMalaysiaBaseValues[0]; 
                 if (engineCapacity <= 1400) {
                     baseValue = eastMalaysiaBaseValues[0];
                 } else if (engineCapacity <= 1650) {
