@@ -104,7 +104,7 @@ $(document).ready(function () {
                 $('#vehicle-model').append('<option value="Honda WR-V Sensing">Honda WR-V Sensing</option>');
                 $('#vehicle-model').append('<option value="Honda N-BOX (CHINA GLASS)">Honda N-BOX (CHINA GLASS)</option>');
                 break;
-            case 'Toyota':
+            case 'Toyota (Car)':
                 $('#vehicle-model').append('<option value="Toyota Vios (2002-2006)">Toyota Vios (2002-2006)</option>');
                 $('#vehicle-model').append('<option value="Toyota Vios (2007-2014)">Toyota Vios (2007-2014)</option>');
                 $('#vehicle-model').append('<option value="Toyota Vios (2014-2018)">Toyota Vios (2014-2018)</option>');

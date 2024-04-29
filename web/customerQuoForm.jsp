@@ -118,7 +118,7 @@
 
                 <!----main-content--->
                 <div id="main-content-image">
-                    <form id="quotation-form" action="carInsuranceQuotation.jsp" method="post">
+                    <form id="quotation-form" action="saveQuotation.jsp" method="post">
                         <div class="container">
                             <h2 style="text-align: center;">Insured Particulars</h2>
                             <div class="row">
@@ -366,33 +366,40 @@
         var coverageType = document.getElementById("coverage").value;
         var form = document.getElementById("quotation-form");
 
-        if (vehicleType === "Car") {
-            if (coverageType === "comprehensive") {
-                form.action = "carComprehensive.jsp";
-            } else if (coverageType === "third-party-fire-theft") {
-                form.action = "carTPFT.jsp";
-            }
-        } else if (vehicleType === "Motorcycle") {
-            if (coverageType === "comprehensive") {
-                form.action = "motoComprehensive.jsp";
-            } else if (coverageType === "third-party-motorcycle") {
-                form.action = "motoTP.jsp";
-            }
-        } else if (vehicleType === "Van") {
-            if (coverageType === "comprehensive") {
-                form.action = "vanComprehensive.jsp";
-            } else if (coverageType === "third-party-fire-theft") {
-                form.action = "vanTPFT.jsp";
-            }
-        } else if (vehicleType === "Lorry") {
-            if (coverageType === "comprehensive") {
-                form.action = "lorryComprehensive.jsp";
-            } else if (coverageType === "third-party-fire-theft") {
-                form.action = "lorryTPFT.jsp";
-            }
-        }
+        // Set the action to saveQuotation.jsp
+        form.action = "saveQuotation.jsp";
 
+        // Submit the form
         form.submit();
+
+        // Redirect based on vehicleType and coverage after form submission
+        setTimeout(function () {
+            if (vehicleType === "Car") {
+                if (coverageType === "comprehensive") {
+                    window.location.href = "carComprehensive.jsp";
+                } else if (coverageType === "third-party-fire-theft") {
+                    window.location.href = "carTPFT.jsp";
+                }
+            } else if (vehicleType === "Motorcycle") {
+                if (coverageType === "comprehensive") {
+                    window.location.href = "motoComprehensive.jsp";
+                } else if (coverageType === "third-party-motorcycle") {
+                    window.location.href = "motoTP.jsp";
+                }
+            } else if (vehicleType === "Van") {
+                if (coverageType === "comprehensive") {
+                    window.location.href = "vanComprehensive.jsp";
+                } else if (coverageType === "third-party-fire-theft") {
+                    window.location.href = "vanTPFT.jsp";
+                }
+            } else if (vehicleType === "Lorry") {
+                if (coverageType === "comprehensive") {
+                    window.location.href = "lorryComprehensive.jsp";
+                } else if (coverageType === "third-party-fire-theft") {
+                    window.location.href = "lorryTPFT.jsp";
+                }
+            }
+        }, 1000); // Delay in milliseconds
     }
 </script>
 <script>

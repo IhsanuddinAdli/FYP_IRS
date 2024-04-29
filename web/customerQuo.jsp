@@ -37,8 +37,14 @@
                     <li class="">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-                    <li class="active">
-                        <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
+                    <li class="dropdown">
+                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">border_color</i>Quotation <b class="caret"></b>
+                        </a>
+                        <ul class="collapse list-unstyled menu active" id="quotationMenu">
+                            <li><a href="customerQuo.jsp"><i class="material-icons">list</i> Quotation Form</a></li>
+                            <li class=""><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i> Quotations List</a></li>
+                        </ul>
                     </li>
                     <li class="">
                         <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
