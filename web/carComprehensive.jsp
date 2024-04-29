@@ -14,8 +14,9 @@
             double specialPerilsCost = 0.0;
             double allDriverCost = 0.0;
             double legalLiabilityCost = 0.0;
-            
+
             String userID = (String) session.getAttribute("userID");
+            Integer quotationId = (Integer) request.getAttribute("quotationId");
             String ownerName = request.getParameter("owner-name");
             String ownerId = request.getParameter("owner-id");
             String dob = request.getParameter("dob");
@@ -91,7 +92,7 @@
                     baseValue = peninsulaBaseValues[7];
                 }
             } else if ("east".equals(location)) {
-                baseValue = eastMalaysiaBaseValues[0]; 
+                baseValue = eastMalaysiaBaseValues[0];
                 if (engineCapacity <= 1400) {
                     baseValue = eastMalaysiaBaseValues[0];
                 } else if (engineCapacity <= 1650) {
@@ -179,7 +180,8 @@
         %>
 
         <h1>Insurance Quotation</h1>
-        <input type="hidden" name="userID" value="<%= userID %>">
+        <input type="hidden" name="userID" value="<%= userID%>">
+        <input type="hidden" name="quotationId" value="<%= quotationId%>">
 
         <h2>Personal Information</h2>
         <p>Owner Name: <%= ownerName%></p>
