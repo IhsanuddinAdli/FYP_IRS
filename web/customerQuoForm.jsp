@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.Date"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,6 +21,40 @@
     </head>
 
     <body>
+        <%-- Retrieve quotation ID --%>
+        <% int quotationId = (Integer) request.getAttribute("quotationId"); %>
+        <%-- Retrieve other attributes --%>
+        <% String coverage = (String) request.getAttribute("coverage"); %>
+        <% Date policyCommencementDate = (Date) request.getAttribute("policyCommencementDate"); %>
+        <% int policyDuration = (Integer) request.getAttribute("policyDuration"); %>
+        <% Date policyExpiryDate = (Date) request.getAttribute("policyExpiryDate"); %>
+        <% String selectedNcd = (String) request.getAttribute("selectedNcd"); %>
+
+        <%-- Vehicle table attributes --%>
+        <% String vehicleType = (String) request.getAttribute("vehicleType"); %>
+        <% String ownerName = (String) request.getAttribute("ownerName"); %>
+        <% String ownerId = (String) request.getAttribute("ownerId"); %>
+        <% String dob = (String) request.getAttribute("dob"); %>
+        <% String gender = (String) request.getAttribute("gender"); %>
+        <% String maritalStatus = (String) request.getAttribute("maritalStatus"); %>
+        <% String location = (String) request.getAttribute("location"); %>
+        <% String localImport = (String) request.getAttribute("localImport"); %>
+        <% String registrationNumber = (String) request.getAttribute("registrationNumber"); %>
+        <% String engineNumber = (String) request.getAttribute("engineNumber"); %>
+        <% String chassisNumber = (String) request.getAttribute("chassisNumber"); %>
+        <% double insuredValue = (Double) request.getAttribute("insuredValue"); %>
+        <% String vehicleBody = (String) request.getAttribute("vehicleBody"); %>
+        <% String vehicleMake = (String) request.getAttribute("vehicleMake"); %>
+        <% String vehicleModel = (String) request.getAttribute("vehicleModel"); %>
+        <% int manufactureYear = (Integer) request.getAttribute("manufactureYear"); %>
+        <% int engineCapacity = (Integer) request.getAttribute("engineCapacity"); %>
+
+        <%-- Addons table attributes --%>
+        <% double windscreenCost = (Double) request.getAttribute("windscreenCost"); %>
+        <% double allDriverCost = (Double) request.getAttribute("allDriverCost"); %>
+        <% double specialPerilsCost = (Double) request.getAttribute("specialPerilsCost"); %>
+        <% double legalLiabilityCost = (Double) request.getAttribute("legalLiabilityCost");%>
+
         <div class="wrapper">
 
             <div class="body-overlay"></div>
@@ -123,22 +158,24 @@
                             <h2 style="text-align: center;">Insured Particulars</h2>
                             <div class="row">
                                 <!-- Insured Particulars -->
+                                <input type="hidden" id="userID" name="userID" value="<%= request.getAttribute("userID") != null ? request.getAttribute("userID") : ""%>">
+                                <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getAttribute("quotationId") != null ? request.getAttribute("quotationId") : ""%>">
                                 <div class="col-md-6"> <!-- Use col-md-6 to make two columns in one row -->
                                     <div class="form-group">
                                         <label for="owner-name">Owner's Name</label>
-                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name" required>
+                                        <input type="text" class="form-control wide-input" id="owner-name" name="owner-name" value="<%= request.getAttribute("ownerName") != null ? request.getAttribute("ownerName") : ""%>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="owner-id">Owner's Identification Number</label>
-                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id"maxlength="12"required>
+                                        <input type="text" class="form-control wide-input" id="owner-id" name="owner-id" value="<%= request.getAttribute("ownerId") != null ? request.getAttribute("ownerId") : ""%>" maxlength="12" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth</label>
-                                        <input type="text" class="form-control wide-input" id="dob" name="dob" readonly>
+                                        <input type="text" class="form-control wide-input" id="dob" name="dob" value="<%= request.getAttribute("dob") != null ? request.getAttribute("dob") : ""%>" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
-                                        <input type="text" class="form-control wide-input" id="gender" name="gender" readonly>
+                                        <input type="text" class="form-control wide-input" id="gender" name="gender" value="<%= request.getAttribute("gender") != null ? request.getAttribute("gender") : ""%>" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -146,18 +183,18 @@
                                         <label for="marital-status">Marital Status</label>
                                         <select class="form-control" id="marital-status" name="marital-status" required>
                                             <option>Select a status</option>
-                                            <option value="single">Single</option>
-                                            <option value="married">Married</option>
-                                            <option value="divorced">Divorced</option>
-                                            <option value="widowed">Widowed</option>
+                                            <option value="single" <%= (request.getAttribute("maritalStatus") != null && request.getAttribute("maritalStatus").equals("single")) ? "selected" : ""%>>Single</option>
+                                            <option value="married" <%= (request.getAttribute("maritalStatus") != null && request.getAttribute("maritalStatus").equals("married")) ? "selected" : ""%>>Married</option>
+                                            <option value="divorced" <%= (request.getAttribute("maritalStatus") != null && request.getAttribute("maritalStatus").equals("divorced")) ? "selected" : ""%>>Divorced</option>
+                                            <option value="widowed" <%= (request.getAttribute("maritalStatus") != null && request.getAttribute("maritalStatus").equals("widowed")) ? "selected" : ""%>>Widowed</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="location">Location</label>
                                         <select class="form-control" id="location" name="location" required>
                                             <option>Select a location</option>
-                                            <option value="peninsular">Peninsular Malaysia</option>
-                                            <option value="east">East Malaysia</option>
+                                            <option value="peninsular" <%= (request.getAttribute("location") != null && request.getAttribute("location").equals("peninsular")) ? "selected" : ""%>>Peninsular Malaysia</option>
+                                            <option value="east" <%= (request.getAttribute("location") != null && request.getAttribute("location").equals("east")) ? "selected" : ""%>>East Malaysia</option>
                                         </select>
                                     </div>
                                 </div>
@@ -170,35 +207,35 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" readonly>
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="<%= request.getAttribute("vehicleType") != null ? request.getAttribute("vehicleType") : ""%>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
                                     <select class="form-control" id="local-import" name="local-import" required>
                                         <option>Select local / import</option>
-                                        <option value="local">Local</option>
-                                        <option value="import">Import</option>
+                                        <option value="local" <%= (request.getAttribute("localImport") != null && request.getAttribute("localImport").equals("local")) ? "selected" : ""%>>Local</option>
+                                        <option value="import" <%= (request.getAttribute("localImport") != null && request.getAttribute("localImport").equals("import")) ? "selected" : ""%>>Import</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="registration-number">Vehicle Registration Number</label>
-                                    <input type="text" class="form-control wide-input" id="registration-number" name="registration-number" placeholder="Example: ABC123" required>
+                                    <input type="text" class="form-control wide-input" id="registration-number" name="registration-number" value="<%= request.getAttribute("registrationNumber") != null ? request.getAttribute("registrationNumber") : ""%>" placeholder="Example: ABC123" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="engine-number">Engine Number</label>
-                                    <input type="text" class="form-control wide-input" id="engine-number" name="engine-number" placeholder="Example: 1234567890" required>
+                                    <input type="text" class="form-control wide-input" id="engine-number" name="engine-number" value="<%= request.getAttribute("engineNumber") != null ? request.getAttribute("engineNumber") : ""%>" placeholder="Example: 1234567890" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="chassis-number">Chassis Number</label>
-                                    <input type="text" class="form-control wide-input" id="chassis-number" name="chassis-number" placeholder="Example: 123ABC456DEF" required>
+                                    <input type="text" class="form-control wide-input" id="chassis-number" name="chassis-number" value="<%= request.getAttribute("chassisNumber") != null ? request.getAttribute("chassisNumber") : ""%>" placeholder="Example: 123ABC456DEF" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="coverage">Coverage</label>
                                     <select class="form-control" id="coverage" name="coverage" required>
                                         <option>Select a coverage</option>
-                                        <option value="comprehensive">Comprehensive</option>
-                                        <option value="third-party-motorcycle">Third Party</option>
-                                        <option value="third-party-fire-theft">Third Party Fire and Theft</option>
+                                        <option value="comprehensive" <%= (request.getAttribute("coverage") != null && request.getAttribute("coverage").equals("comprehensive")) ? "selected" : ""%>>Comprehensive</option>
+                                        <option value="third-party-motorcycle" <%= (request.getAttribute("coverage") != null && request.getAttribute("coverage").equals("third-party-motorcycle")) ? "selected" : ""%>>Third Party</option>
+                                        <option value="third-party-fire-theft" <%= (request.getAttribute("coverage") != null && request.getAttribute("coverage").equals("third-party-fire-theft")) ? "selected" : ""%>>Third Party Fire and Theft</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -207,7 +244,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">RM</span>
                                         </div>
-                                        <input type="text" class="form-control wide-input" id="insured-value" name="insured-value" placeholder="Enter Insured Value" min="0" step="0.01" required>
+                                        <input type="text" class="form-control wide-input" id="insured-value" name="insured-value" value="<%= request.getAttribute("insuredValue") != null ? request.getAttribute("insuredValue") : ""%>" placeholder="Enter Insured Value" min="0" step="0.01" required>
                                     </div>
                                 </div>
                             </div>
@@ -216,93 +253,95 @@
                                     <label for="vehicle-body">Vehicle Body</label>
                                     <select class="form-control" id="vehicle-body" name="vehicle-body" onchange="updateVehicleMakes()" required>
                                         <option>Select a body first</option>
-                                        <option value="Sedan">Sedan</option>
-                                        <option value="Hatchback">Hatchback</option>
-                                        <option value="SUV">SUV (Sports Utility Vehicle)</option>
-                                        <option value="MPV">MPV (Multi-Purpose Vehicle)</option>
-                                        <option value="Motorcycle">Motorcycle</option>
-                                        <option value="Van">Van</option>
-                                        <option value="Lorry">Lorry</option>
+                                        <option value="Sedan" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("Sedan")) ? "selected" : ""%>>Sedan</option>
+                                        <option value="Hatchback" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("Hatchback")) ? "selected" : ""%>>Hatchback</option>
+                                        <option value="SUV" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("SUV")) ? "selected" : ""%>>SUV (Sports Utility Vehicle)</option>
+                                        <option value="MPV" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("MPV")) ? "selected" : ""%>>MPV (Multi-Purpose Vehicle)</option>
+                                        <option value="Motorcycle" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("Motorcycle")) ? "selected" : ""%>>Motorcycle</option>
+                                        <option value="Van" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("Van")) ? "selected" : ""%>>Van</option>
+                                        <option value="Lorry" <%= (request.getAttribute("vehicleBody") != null && request.getAttribute("vehicleBody").equals("Lorry")) ? "selected" : ""%>>Lorry</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-make">Vehicle Make</label>
                                     <select class="form-control wide-input" id="vehicle-make" name="vehicle-make" required>
                                         <option>Select a make first</option>
+                                        <option value="<%= request.getAttribute("vehicleMake") != null ? request.getAttribute("vehicleMake") : ""%>" selected><%= request.getAttribute("vehicleMake") != null ? request.getAttribute("vehicleMake") : ""%></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="vehicle-model">Vehicle Model</label>
                                     <select class="form-control wide-input" id="vehicle-model" name="vehicle-model" required>
                                         <option>Select a model first</option>
+                                        <option value="<%= request.getAttribute("vehicleModel") != null ? request.getAttribute("vehicleModel") : ""%>" selected><%= request.getAttribute("vehicleModel") != null ? request.getAttribute("vehicleModel") : ""%></option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="engine-capacity">Engine Capacity (CC)</label>
-                                    <input type="text" class="form-control wide-input" id="engine-capacity" name="engine-capacity" placeholder="Example: 2000" required>
+                                    <input type="text" class="form-control wide-input" id="engine-capacity" name="engine-capacity" value="<%= request.getAttribute("engineCapacity") != null ? request.getAttribute("engineCapacity") : ""%>" placeholder="Example: 2000" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="manufacture-year">Year Of Manufactured</label>
-                                    <input type="text" class="form-control wide-input" id="manufacture-year" name="manufacture-year" placeholder="Example: 2022" required>
+                                    <input type="text" class="form-control wide-input" id="manufacture-year" name="manufacture-year" value="<%= request.getAttribute("manufactureYear") != null ? request.getAttribute("manufactureYear") : ""%>" placeholder="Example: 2022" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="ncd">
-                                        Current NCD 
+                                        Current NCD
                                         <a href="https://www.mycarinfo.com.my/NCDCheck/Online" target="_blank">(Check NCD)</a>
                                     </label>
                                     <select class="form-control" id="ncd" name="ncd" required>
                                         <option>Select a NCD</option>
-                                        <option value="0%">0%</option>
-                                        <option value="30%">30%</option>
-                                        <option value="38.33%">38.33%</option>
-                                        <option value="45%">45%</option>
-                                        <option value="55%">55%</option>
+                                        <option value="0%" <%= (request.getAttribute("selectedNcd") != null && request.getAttribute("selectedNcd").equals("0%")) ? "selected" : ""%>>0%</option>
+                                        <option value="30%" <%= (request.getAttribute("selectedNcd") != null && request.getAttribute("selectedNcd").equals("30%")) ? "selected" : ""%>>30%</option>
+                                        <option value="38.33%" <%= (request.getAttribute("selectedNcd") != null && request.getAttribute("selectedNcd").equals("38.33%")) ? "selected" : ""%>>38.33%</option>
+                                        <option value="45%" <%= (request.getAttribute("selectedNcd") != null && request.getAttribute("selectedNcd").equals("45%")) ? "selected" : ""%>>45%</option>
+                                        <option value="55%" <%= (request.getAttribute("selectedNcd") != null && request.getAttribute("selectedNcd").equals("55%")) ? "selected" : ""%>>55%</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-commencement-date">Policy Commencement Date</label>
-                                    <input type="date" class="form-control wide-input" id="policy-commencement-date" name="policy-commencement-date" required>
+                                    <input type="date" class="form-control wide-input" id="policy-commencement-date" name="policy-commencement-date" value="<%= request.getAttribute("policyCommencementDate") != null ? request.getAttribute("policyCommencementDate") : ""%>" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-duration">Policy Duration</label>
                                     <select class="form-control" id="policy-duration" name="policy-duration" required>
                                         <option>Select a policy duration</option>
-                                        <option value="6">6 months</option>
-                                        <option value="12">12 months</option>
+                                        <option value="6" <%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 6) ? "selected" : ""%>>6 months</option>
+                                        <option value="12" <%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 12) ? "selected" : ""%>>12 months</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-expiry-date">Policy Expiry Date</label>
-                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" name="policy-expiry-date" readonly>
+                                    <input type="text" class="form-control wide-input" id="policy-expiry-date" name="policy-expiry-date" value="<%= request.getAttribute("policyExpiryDate") != null ? request.getAttribute("policyExpiryDate") : ""%>" readonly>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <!-- add-ons -->
+                        <!-- Add-ons -->
                         <h2 style="text-align: center;">Add-ons</h2>
                         <div class="row" id="add-ons-section">
                             <div class="col-md-6">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon" value="true">
+                                    <input type="checkbox" class="form-check-input" id="windscreen-addon" name="windscreen-addon" value="true" <%= (request.getAttribute("windscreenCost") != null && Double.parseDouble(request.getAttribute("windscreenCost").toString()) > 0.0) ? "checked" : ""%>>
                                     <label class="form-check-label" for="windscreen-addon">
                                         Windscreen
                                         <a href="https://www.autoglass.com.my/insurance-pricelist.html" target="_blank">(Price List)</a>
                                     </label>
                                     <!-- Windscreen price input field initially hidden -->
-                                    <input type="number" class="form-control wide-input" id="windscreen-price" name="windscreen-price" placeholder="Enter windscreen price (RM)" style="display: none;">
+                                    <input type="number" class="form-control wide-input" id="windscreen-price" name="windscreen-price" placeholder="Enter windscreen price (RM)" style="<%= (request.getAttribute("windscreenCost") != null && Double.parseDouble(request.getAttribute("windscreenCost").toString()) > 0.0) ? "" : "display: none;"%>" value="<%= request.getAttribute("windscreenCost") != null ? request.getAttribute("windscreenCost") : ""%>">
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="all-driver-addon" name="all-driver-addon" value="true">
+                                    <input type="checkbox" class="form-check-input" id="all-driver-addon" name="all-driver-addon" value="true" <%= (request.getAttribute("allDriverCost") != null && Double.parseDouble(request.getAttribute("allDriverCost").toString()) > 0.0) ? "checked" : ""%>>
                                     <label class="form-check-label" for="all-driver-addon">All Driver</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="special-perils-addon" name="special-perils-addon" value="true">
+                                    <input type="checkbox" class="form-check-input" id="special-perils-addon" name="special-perils-addon" value="true" <%= (request.getAttribute("specialPerilsCost") != null && Double.parseDouble(request.getAttribute("specialPerilsCost").toString()) > 0.0) ? "checked" : ""%>>
                                     <label class="form-check-label" for="special-perils-addon">Special Perils (Flood)</label>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="legal-liability-addon" name="legal-liability-addon" value="true">
+                                    <input type="checkbox" class="form-check-input" id="legal-liability-addon" name="legal-liability-addon" value="true" <%= (request.getAttribute("legalLiabilityCost") != null && Double.parseDouble(request.getAttribute("legalLiabilityCost").toString()) > 0.0) ? "checked" : ""%>>
                                     <label class="form-check-label" for="legal-liability-addon">Legal Liability of Passengers</label>
                                 </div>
                             </div>
@@ -362,8 +401,6 @@
 </script>
 <script>
     function submitForm() {
-        var vehicleType = document.getElementById("vehicle-type").value;
-        var coverageType = document.getElementById("coverage").value;
         var form = document.getElementById("quotation-form");
 
         // Set the action to saveQuotation.jsp
@@ -371,35 +408,6 @@
 
         // Submit the form
         form.submit();
-
-        // Redirect based on vehicleType and coverage after form submission
-        setTimeout(function () {
-            if (vehicleType === "Car") {
-                if (coverageType === "comprehensive") {
-                    window.location.href = "carComprehensive.jsp";
-                } else if (coverageType === "third-party-fire-theft") {
-                    window.location.href = "carTPFT.jsp";
-                }
-            } else if (vehicleType === "Motorcycle") {
-                if (coverageType === "comprehensive") {
-                    window.location.href = "motoComprehensive.jsp";
-                } else if (coverageType === "third-party-motorcycle") {
-                    window.location.href = "motoTP.jsp";
-                }
-            } else if (vehicleType === "Van") {
-                if (coverageType === "comprehensive") {
-                    window.location.href = "vanComprehensive.jsp";
-                } else if (coverageType === "third-party-fire-theft") {
-                    window.location.href = "vanTPFT.jsp";
-                }
-            } else if (vehicleType === "Lorry") {
-                if (coverageType === "comprehensive") {
-                    window.location.href = "lorryComprehensive.jsp";
-                } else if (coverageType === "third-party-fire-theft") {
-                    window.location.href = "lorryTPFT.jsp";
-                }
-            }
-        }, 1000); // Delay in milliseconds
     }
 </script>
 <script>

@@ -3,7 +3,7 @@
 <%@ page language="java" %>
 <%@ page import="java.io.*,java.util.*" %>
 <%@ page import="javax.servlet.*,javax.servlet.http.*" %>
-
+<%@page import="java.sql.SQLException"%>
 <%
 // Retrieve userID from session
     String userID = (String) session.getAttribute("userID");
@@ -61,26 +61,72 @@
         conn = DBConnection.getConnection();
 
         // Prepare SQL statement for Quotation Table
-        String quotationSql = "INSERT INTO quotation (userID, coverage, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd) VALUES (?, ?, ?, ?, ?, ?)";
+        String quotationSql = "";
+        if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+            quotationSql = "UPDATE quotation SET coverage = ?, policy_commencement_date = ?, policy_duration = ?, policy_expiry_date = ?, selected_ncd = ? WHERE quotation_id = ?";
+        } else {
+            quotationSql = "INSERT INTO quotation (userID, coverage, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd) VALUES (?, ?, ?, ?, ?, ?)";
+        }
         PreparedStatement quotationPstmt = conn.prepareStatement(quotationSql, Statement.RETURN_GENERATED_KEYS);
-        quotationPstmt.setString(1, userID);
-        quotationPstmt.setString(2, coverage);
-        quotationPstmt.setString(3, policyCommencementDate);
-        quotationPstmt.setString(4, policyDuration);
-        quotationPstmt.setString(5, policyExpiryDate);
-        quotationPstmt.setString(6, selectedNCD);
+        if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+            quotationPstmt.setString(1, coverage);
+            quotationPstmt.setString(2, policyCommencementDate);
+            quotationPstmt.setString(3, policyDuration);
+            quotationPstmt.setString(4, policyExpiryDate);
+            quotationPstmt.setString(5, selectedNCD);
+            quotationPstmt.setInt(6, Integer.parseInt(request.getParameter("quotationId")));
+        } else {
+            quotationPstmt.setString(1, userID);
+            quotationPstmt.setString(2, coverage);
+            quotationPstmt.setString(3, policyCommencementDate);
+            quotationPstmt.setString(4, policyDuration);
+            quotationPstmt.setString(5, policyExpiryDate);
+            quotationPstmt.setString(6, selectedNCD);
+        }
         int quotationRowsAffected = quotationPstmt.executeUpdate();
 
-        // Check if quotation insertion was successful
+        // Check if quotation insertion/update was successful
         if (quotationRowsAffected > 0) {
-            // Retrieve the generated quotation ID
-            ResultSet generatedKeys = quotationPstmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int quotationId = generatedKeys.getInt(1);
+            int quotationId = 0;
 
-                // Prepare SQL statement for Vehicle Table
-                String vehicleSql = "INSERT INTO vehicle (quotation_id, owner_name, owner_id, dob, gender, marital_status, location, vehicle_type, local_import, registration_number, engine_number, chassis_number, insured_value, vehicle_body, vehicle_make, vehicle_model, manufacture_year, engine_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                PreparedStatement vehiclePstmt = conn.prepareStatement(vehicleSql);
+            if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+                quotationId = Integer.parseInt(request.getParameter("quotationId"));
+            } else {
+                // Retrieve the generated quotation ID
+                ResultSet generatedKeys = quotationPstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    quotationId = generatedKeys.getInt(1);
+                }
+            }
+
+            // Prepare SQL statement for Vehicle Table
+            String vehicleSql = "";
+            if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+                vehicleSql = "UPDATE vehicle SET owner_name = ?, owner_id = ?, dob = ?, gender = ?, marital_status = ?, location = ?, vehicle_type = ?, local_import = ?, registration_number = ?, engine_number = ?, chassis_number = ?, insured_value = ?, vehicle_body = ?, vehicle_make = ?, vehicle_model = ?, manufacture_year = ?, engine_capacity = ? WHERE quotation_id = ?";
+            } else {
+                vehicleSql = "INSERT INTO vehicle (quotation_id, owner_name, owner_id, dob, gender, marital_status, location, vehicle_type, local_import, registration_number, engine_number, chassis_number, insured_value, vehicle_body, vehicle_make, vehicle_model, manufacture_year, engine_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            }
+            PreparedStatement vehiclePstmt = conn.prepareStatement(vehicleSql);
+            if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+                vehiclePstmt.setString(1, ownerName);
+                vehiclePstmt.setString(2, ownerId);
+                vehiclePstmt.setString(3, dob);
+                vehiclePstmt.setString(4, gender);
+                vehiclePstmt.setString(5, maritalStatus);
+                vehiclePstmt.setString(6, location);
+                vehiclePstmt.setString(7, vehicleType);
+                vehiclePstmt.setString(8, localImport);
+                vehiclePstmt.setString(9, registrationNumber);
+                vehiclePstmt.setString(10, engineNumber);
+                vehiclePstmt.setString(11, chassisNumber);
+                vehiclePstmt.setDouble(12, insuredValue);
+                vehiclePstmt.setString(13, vehicleBody);
+                vehiclePstmt.setString(14, vehicleMake);
+                vehiclePstmt.setString(15, vehicleModel);
+                vehiclePstmt.setString(16, manufactureYear);
+                vehiclePstmt.setInt(17, engineCapacity);
+                vehiclePstmt.setInt(18, Integer.parseInt(request.getParameter("quotationId")));
+            } else {
                 vehiclePstmt.setInt(1, quotationId);
                 vehiclePstmt.setString(2, ownerName);
                 vehiclePstmt.setString(3, ownerId);
@@ -99,53 +145,62 @@
                 vehiclePstmt.setString(16, vehicleModel);
                 vehiclePstmt.setString(17, manufactureYear);
                 vehiclePstmt.setInt(18, engineCapacity);
-                vehiclePstmt.executeUpdate();
+            }
+            vehiclePstmt.executeUpdate();
 
-                // Prepare SQL statement for Addons Table
-                String addonsSql = "INSERT INTO addons (quotation_id, windscreen_cost, all_driver_cost, special_perils_cost, legal_liability_cost) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement addonsPstmt = conn.prepareStatement(addonsSql);
+            // Prepare SQL statement for Addons Table
+            String addonsSql = "";
+            if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+                addonsSql = "UPDATE addons SET windscreen_cost = ?, all_driver_cost = ?, special_perils_cost = ?, legal_liability_cost = ? WHERE quotation_id = ?";
+            } else {
+                addonsSql = "INSERT INTO addons (quotation_id, windscreen_cost, all_driver_cost, special_perils_cost, legal_liability_cost) VALUES (?, ?, ?, ?, ?)";
+            }
+            PreparedStatement addonsPstmt = conn.prepareStatement(addonsSql);
+            if (request.getParameter("quotationId") != null && !request.getParameter("quotationId").isEmpty()) {
+                addonsPstmt.setDouble(1, windscreenAddon != null ? Double.parseDouble(windscreenPriceStr) : 0.0);
+                addonsPstmt.setDouble(2, allDriverAddon != null ? 20.0 : 0.0);
+                addonsPstmt.setDouble(3, specialPerilsAddon != null ? 0.0025 * insuredValue : 0.0);
+                addonsPstmt.setDouble(4, legalLiabilityAddon != null ? 7.50 : 0.0);
+                addonsPstmt.setInt(5, Integer.parseInt(request.getParameter("quotationId")));
+            } else {
                 addonsPstmt.setInt(1, quotationId);
                 addonsPstmt.setDouble(2, windscreenAddon != null ? Double.parseDouble(windscreenPriceStr) : 0.0);
                 addonsPstmt.setDouble(3, allDriverAddon != null ? 20.0 : 0.0);
                 addonsPstmt.setDouble(4, specialPerilsAddon != null ? 0.0025 * insuredValue : 0.0);
                 addonsPstmt.setDouble(5, legalLiabilityAddon != null ? 7.50 : 0.0);
-                addonsPstmt.executeUpdate();
+            }
+            addonsPstmt.executeUpdate();
 
-                // Set attributes to pass to the redirected page
-                request.setAttribute("quotationId", quotationId);
-                request.setAttribute("vehicleType", vehicleType);
-                request.setAttribute("coverage", coverage);
+            // Set attributes to pass to the redirected page
+            request.setAttribute("quotationId", quotationId);
+            request.setAttribute("vehicleType", vehicleType);
+            request.setAttribute("coverage", coverage);
 
-                // Redirect to the appropriate page based on vehicleType and coverage
-                String redirectUrl = "";
-                switch (vehicleType) {
-                    case "Car":
-                        redirectUrl = coverage.equals("comprehensive") ? "carComprehensive.jsp"
-                                : coverage.equals("third-party-fire-theft") ? "carTPFT.jsp" : "";
-                        break;
-                    case "Motorcycle":
-                        redirectUrl = coverage.equals("comprehensive") ? "motoComprehensive.jsp"
-                                : coverage.equals("third-party-motorcycle") ? "motoTP.jsp" : "";
-                        break;
-                    case "Van":
-                        redirectUrl = coverage.equals("comprehensive") ? "vanComprehensive.jsp"
-                                : coverage.equals("third-party-fire-theft") ? "vanTPFT.jsp" : "";
-                        break;
-                    case "Lorry":
-                        redirectUrl = coverage.equals("comprehensive") ? "lorryComprehensive.jsp"
-                                : coverage.equals("third-party-fire-theft") ? "lorryTPFT.jsp" : "";
-                        break;
-                    default:
-                        break;
-                }
-                if (!redirectUrl.isEmpty()) {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(redirectUrl);
-                    dispatcher.forward(request, response);
-                } else {
-                    // Set error message
-                    session.setAttribute("message", errorMessage);
-                    response.sendRedirect("error.jsp");
-                }
+            // Redirect to the appropriate page based on vehicleType and coverage
+            String redirectUrl = "";
+            switch (vehicleType) {
+                case "Car":
+                    redirectUrl = coverage.equals("comprehensive") ? "carComprehensive.jsp"
+                            : coverage.equals("third-party-fire-theft") ? "carTPFT.jsp" : "";
+                    break;
+                case "Motorcycle":
+                    redirectUrl = coverage.equals("comprehensive") ? "motorComprehensive.jsp"
+                            : coverage.equals("third-party-motorcycle") ? "motorTP.jsp" : "";
+                    break;
+                case "Van":
+                    redirectUrl = coverage.equals("comprehensive") ? "vanComprehensive.jsp"
+                            : coverage.equals("third-party-fire-theft") ? "vanTPFT.jsp" : "";
+                    break;
+                case "Lorry":
+                    redirectUrl = coverage.equals("comprehensive") ? "lorryComprehensive.jsp"
+                            : coverage.equals("third-party-fire-theft") ? "lorryTPFT.jsp" : "";
+                    break;
+                default:
+                    break;
+            }
+            if (!redirectUrl.isEmpty()) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher(redirectUrl);
+                dispatcher.forward(request, response);
             } else {
                 // Set error message
                 session.setAttribute("message", errorMessage);
@@ -159,10 +214,14 @@
 
         // Close resources
         quotationPstmt.close();
-    } catch (Exception e) {
-        // Handle any errors
+    } catch (SQLException e) {
+        // Handle SQL exception
         e.printStackTrace();
-        // Set error message
+        session.setAttribute("message", errorMessage);
+        response.sendRedirect("error.jsp");
+    } catch (Exception e) {
+        // Handle any other exceptions
+        e.printStackTrace();
         session.setAttribute("message", errorMessage);
         response.sendRedirect("error.jsp");
     } finally {

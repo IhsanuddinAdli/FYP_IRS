@@ -1,4 +1,5 @@
 <%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.Date"%>
 <%@page import="com.dao.DBConnection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -8,7 +9,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Calculate Quotation</title>
+        <title>Quotation Details</title>
     </head>
     <body>
         <%
@@ -38,6 +39,10 @@
             double allDriverCost = 0.0;
             double specialPerilsCost = 0.0;
             double legalLiabilityCost = 0.0;
+            Date policyCommencementDate = null;
+            int policyDuration = 0;
+            Date policyExpiryDate = null;
+            String selectedNcd = ""; // Changed to String
 
             // Initialize connection and prepared statement
             Connection conn = null;
@@ -88,6 +93,10 @@
                     allDriverCost = rs.getDouble("all_driver_cost");
                     specialPerilsCost = rs.getDouble("special_perils_cost");
                     legalLiabilityCost = rs.getDouble("legal_liability_cost");
+                    policyCommencementDate = rs.getDate("policy_commencement_date");
+                    policyDuration = rs.getInt("policy_duration");
+                    policyExpiryDate = rs.getDate("policy_expiry_date");
+                    selectedNcd = rs.getString("selected_ncd"); // Changed to String
                 } else {
                     // Handle case where no data is found for the given quotation ID
                     out.println("No data found for the given quotation ID.");
@@ -117,9 +126,16 @@
             }
 
             // Set attributes to pass to the redirected page
+            // Quotation table attributes
             request.setAttribute("quotationId", quotationId);
-            request.setAttribute("vehicleType", vehicleType);
             request.setAttribute("coverage", coverage);
+            request.setAttribute("policyCommencementDate", policyCommencementDate);
+            request.setAttribute("policyDuration", policyDuration);
+            request.setAttribute("policyExpiryDate", policyExpiryDate);
+            request.setAttribute("selectedNcd", selectedNcd);
+
+            // Vehicle table attributes
+            request.setAttribute("vehicleType", vehicleType);
             request.setAttribute("ownerName", ownerName);
             request.setAttribute("ownerId", ownerId);
             request.setAttribute("dob", dob);
@@ -136,43 +152,18 @@
             request.setAttribute("vehicleModel", vehicleModel);
             request.setAttribute("manufactureYear", manufactureYear);
             request.setAttribute("engineCapacity", engineCapacity);
+
+            // Addons table attributes
             request.setAttribute("windscreenCost", windscreenCost);
             request.setAttribute("allDriverCost", allDriverCost);
             request.setAttribute("specialPerilsCost", specialPerilsCost);
             request.setAttribute("legalLiabilityCost", legalLiabilityCost);
 
-// Redirect to the appropriate page based on vehicleType and coverage
-            String redirectUrl = "";
-            switch (vehicleType) {
-                case "Car":
-                    redirectUrl = coverage.equals("comprehensive") ? "carComprehensive.jsp"
-                            : coverage.equals("third-party-fire-theft") ? "carTPFT.jsp" : "";
-                    break;
-                case "Motorcycle":
-                    redirectUrl = coverage.equals("comprehensive") ? "motoComprehensive.jsp"
-                            : coverage.equals("third-party-motorcycle") ? "motoTP.jsp" : "";
-                    break;
-                case "Van":
-                    redirectUrl = coverage.equals("comprehensive") ? "vanComprehensive.jsp"
-                            : coverage.equals("third-party-fire-theft") ? "vanTPFT.jsp" : "";
-                    break;
-                case "Lorry":
-                    redirectUrl = coverage.equals("comprehensive") ? "lorryComprehensive.jsp"
-                            : coverage.equals("third-party-fire-theft") ? "lorryTPFT.jsp" : "";
-                    break;
-                default:
-                    break;
-            }
-
-// Check if redirect URL is not empty
-            if (!redirectUrl.isEmpty()) {
-                // Dispatch the request to the redirected page
-                RequestDispatcher dispatcher = request.getRequestDispatcher(redirectUrl);
-                dispatcher.forward(request, response);
-            } else {
-                // Handle case where redirect URL is empty
-                out.println("Invalid vehicle type or coverage.");
-            }
+            // Redirect to the customerFormQuo.jsp page
+            String redirectUrl = "customerQuoForm.jsp";
+            // Dispatch the request to the redirected page
+            RequestDispatcher dispatcher = request.getRequestDispatcher(redirectUrl);
+            dispatcher.forward(request, response);
         %>
     </body>
 </html>

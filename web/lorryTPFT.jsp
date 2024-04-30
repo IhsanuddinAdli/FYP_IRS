@@ -10,6 +10,8 @@
     </head>
     <body>
         <%
+            String userID = (String) session.getAttribute("userID");
+            Integer quotationId = (Integer) request.getAttribute("quotationId");
             String ownerName = request.getParameter("owner-name");
             String ownerId = request.getParameter("owner-id");
             String dob = request.getParameter("dob");
@@ -128,6 +130,8 @@
         %>
 
         <h1>Insurance Quotation</h1>
+        <input type="hidden" name="userID" value="<%= userID%>">
+        <input type="hidden" name="quotationId" value="<%= quotationId%>">
 
         <h2>Personal Information</h2>
         <p>Owner Name: <%= ownerName%></p>
