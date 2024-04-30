@@ -848,8 +848,7 @@ $(document).ready(function () {
                 $('#vehicle-model').append('<option value="Toyota Hiace SLWB">Toyota Hiace SLWB </option>');
                 break;
             case 'Nissan (Van)':
-                $('#vehicle-model').append('<option value="Toyota Hiace">Toyota Hiace </option>');
-                $('#vehicle-model').append('<option value="Toyota Hiace SLWB">Toyota Hiace SLWB </option>');
+                $('#vehicle-model').append('<option value="Nissan NV200">Nissan NV200</option>');
                 break;
             case 'Daihatsu':
                 $('#vehicle-model').append('<option value="Daihatsu Gran Max ">Gran Max</option>');

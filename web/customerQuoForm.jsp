@@ -386,18 +386,61 @@
                                             $("#sidebar,.body-overlay").toggleClass('show-nav');
                                         });
                                     });
-                                    // Function to retrieve and display vehicle value
-                                    window.onload = function () {
-                                        // Retrieve vehicle value from URL query parameter
-                                        const urlParams = new URLSearchParams(window.location.search);
-                                        const vehicle = urlParams.get('vehicle');
+</script>
+<script>
+    // Function to update NCD options based on vehicle type
+    function updateNcdOptions() {
+        const vehicleType = document.getElementById('vehicle-type').value;
+        const ncdSelect = document.getElementById('ncd');
 
-                                        // Display vehicle value in the input box
-                                        if (vehicle) {
-                                            const inputElement = document.getElementById('vehicle-type');
-                                            inputElement.value = vehicle;
-                                        }
-                                    };
+        // Clear existing options
+        ncdSelect.innerHTML = '';
+
+        // Define NCD options based on vehicle type
+        let ncdOptions = [];
+        switch (vehicleType) {
+            case 'Car':
+                ncdOptions = ['0%', '30%', '38.33%', '45%', '55%'];
+                break;
+            case 'Motorcycle':
+                ncdOptions = ['0%', '15%', '20%', '25%'];
+                break;
+            case 'Van':
+                ncdOptions = ['0%', '30%', '38.33%', '45%', '55%'];
+                break;
+            case 'Lorry':
+                ncdOptions = ['0%', '15%', '20%', '25%'];
+                break;
+            default:
+                break;
+        }
+
+        // Populate NCD options
+        ncdOptions.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option;
+            optionElement.textContent = option;
+            ncdSelect.appendChild(optionElement);
+        });
+    }
+
+// Call the function on page load
+    window.onload = function () {
+        // Retrieve vehicle value from URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const vehicle = urlParams.get('vehicle');
+
+        // Display vehicle value in the input box
+        if (vehicle) {
+            const inputElement = document.getElementById('vehicle-type');
+            inputElement.value = vehicle;
+            // Update NCD options based on the initial vehicle type
+            updateNcdOptions();
+        }
+    };
+
+// Attach event listener to vehicle type select element
+    document.getElementById('vehicle-type').addEventListener('change', updateNcdOptions);
 </script>
 <script>
     function submitForm() {
@@ -471,37 +514,49 @@
         $("#policy-commencement-date").attr('min', minDate);
     });
 
-    //for disable add-ons
-    // Function to disable add-ons based on selected coverage
+    // Function to toggle add-ons state based on selected coverage and vehicle type
     function toggleAddonsState() {
         var coverage = document.getElementById("coverage").value;
+        var urlParams = new URLSearchParams(window.location.search);
+        var vehicleType = urlParams.get('vehicle');
         var addonsCheckboxes = document.querySelectorAll("#add-ons-section input[type='checkbox']");
         var addonsSelects = document.querySelectorAll("#add-ons-section select");
 
-        // Check if the selected coverage is "Comprehensive"
-        if (coverage === "comprehensive") {
-            // Enable all checkboxes and select elements
-            addonsCheckboxes.forEach(function (checkbox) {
-                checkbox.disabled = false;
-            });
-            addonsSelects.forEach(function (select) {
-                select.disabled = false;
-            });
-        } else {
-            // Disable all checkboxes and select elements
+        // Check if the selected vehicle type is Motorcycle
+        if (vehicleType === "Motorcycle") {
+            // Disable all add-ons checkboxes and select elements
             addonsCheckboxes.forEach(function (checkbox) {
                 checkbox.disabled = true;
             });
             addonsSelects.forEach(function (select) {
                 select.disabled = true;
             });
+        } else {
+            // Check if the selected coverage is "Comprehensive"
+            if (coverage === "comprehensive") {
+                // Enable all add-ons checkboxes and select elements
+                addonsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+                addonsSelects.forEach(function (select) {
+                    select.disabled = false;
+                });
+            } else {
+                // Disable all add-ons checkboxes and select elements
+                addonsCheckboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+                addonsSelects.forEach(function (select) {
+                    select.disabled = true;
+                });
+            }
         }
     }
 
 // Add event listener to the coverage select element
     document.getElementById("coverage").addEventListener("change", toggleAddonsState);
 
-// Call the function initially to set the initial state based on the selected coverage
+// Call the function initially to set the initial state based on the selected coverage and vehicle type
     toggleAddonsState();
 
     function toggleCoverageOptions() {
@@ -532,9 +587,9 @@
 <script>
     var originalVehicleMakes = [
         "Perodua", "Proton", "Honda (Car)", "Toyota (Car)", "Nissan (Car)", "Mini Cooper", "Mitsubishi",
-        "Peugoet", "Volkswagen", "Subaru", "Ssangyong", "Kia", "Naza", "Isuzu (Car)", "Suzuki (Car)",
+        "Peugeot", "Volkswagen", "Subaru", "Ssangyong", "Kia", "Isuzu (Car)", "Suzuki (Car)",
         "Mazda", "McLaren", "Chevrolet", "Hyundai", "BMW (Car)", "Chery", "Volvo", "Ford",
-        "Mercedes Benz", "Lexus", "Rolls Royce", "Bentley", "Porsche",
+        "Mercedes-Benz", "Lexus", "Rolls Royce", "Bentley", "Porsche",
         "Jaguar", "Landrover Range Rover", "Infiniti", "Audi", "Citroen"
     ];
 

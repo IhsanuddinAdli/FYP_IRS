@@ -7,10 +7,49 @@
     <head>
         <meta charset="UTF-8">
         <title>Van Insurance Third Party Fire And Theft Quotation</title>
+        <style>
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgba(0,0,0,0.4); /* Black with opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 40%; /* Could be more or less, depending on screen size */
+                text-align: center;
+            }
+
+            /* Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        </style>
+
     </head>
     <body>
         <%
-            
             String userID = (String) session.getAttribute("userID");
             Integer quotationId = (Integer) request.getAttribute("quotationId");
             String ownerName = request.getParameter("owner-name");
@@ -265,13 +304,21 @@
                         out.println("<p>SST (10%): RM " + formattedSST + "</p>");
                         out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
                         out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
-                        // Add buttons for Details and Purchase
-                        out.println("<form action='purchase.jsp' method='post'>");
-                        out.println("<input type='hidden' name='companyName' value='" + companyName + "'>");
-                        out.println("<input type='hidden' name='premium' value='" + formattedFinalTotalPremium + "'>");
-                        out.println("<button type='submit' name='action' value='details'>Details</button>");
-                        out.println("<button type='submit' name='action' value='purchase'>Purchase</button>");
-                        out.println("</form>");
+        %>
+        <form id="purchaseForm" method="post" action="">
+            <input type="hidden" id="purchaseOption" name="purchaseOption">
+            <input type="hidden" id="companyName" name="companyName">
+        </form>
+        <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
+        <div id="<%= companyName%>Modal" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="<%= companyName%>Modal">&times;</span>
+                <p>Choose your purchase option:</p>
+                <button onclick="selectPurchaseOption('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
+                <button onclick="selectPurchaseOption('<%= companyName%>', 'QR')">QR Code</button>
+            </div>
+        </div>
+        <%
                     } else {
                         // If percentage not found for the selected make, display a message
                         out.println("<h3>" + companyName + "</h3>");
@@ -284,6 +331,49 @@
                 }
             }
         %>
+        <script>
+// Function to display modal
+            function purchaseOption(companyName) {
+                var modal = document.getElementById(companyName + "Modal");
+                modal.style.display = "block";
+            }
 
+            // Function to close modal
+            function closeModal(modalId) {
+                var modal = document.getElementById(modalId);
+                modal.style.display = "none";
+            }
+
+            // Event listener for close buttons
+            var closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+
+            // Function to select purchase option and set action URL
+            function selectPurchaseOption(companyName, option) {
+                // Set the action URL of the form based on the selected option
+                var form = document.getElementById("purchaseForm");
+                if (option === "COD") {
+                    form.action = "cod_page.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
+                } else if (option === "QR") {
+                    form.action = "qr_page.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
+                }
+                // Submit the form
+                form.submit();
+            }
+
+            // Trigger modal display when the "Purchase" button is clicked
+            var purchaseButtons = document.querySelectorAll('.purchaseButton');
+            purchaseButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var companyName = this.getAttribute('data-company');
+                    purchaseOption(companyName);
+                });
+            });
+        </script>
     </body>
 </html>

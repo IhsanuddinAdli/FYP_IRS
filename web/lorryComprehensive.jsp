@@ -360,13 +360,21 @@
                     out.println("<p>SST (10%): RM " + formattedSST + "</p>");
                     out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
                     out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
-                    // Add buttons for Details and Purchase
-                    out.println("<form action='purchase.jsp' method='post'>");
-                    out.println("<input type='hidden' name='companyName' value='" + companyName + "'>");
-                    out.println("<input type='hidden' name='premium' value='" + formattedFinalTotalPremium + "'>");
-                    out.println("<button type='submit' name='action' value='details'>Details</button>");
-                    out.println("<button type='submit' name='action' value='purchase'>Purchase</button>");
-                    out.println("</form>");
+        %>
+        <form id="purchaseForm" method="post" action="">
+            <input type="hidden" id="purchaseOption" name="purchaseOption">
+            <input type="hidden" id="companyName" name="companyName">
+        </form>
+        <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
+        <div id="<%= companyName%>Modal" class="modal">
+            <div class="modal-content">
+                <span class="close" data-modal="<%= companyName%>Modal">&times;</span>
+                <p>Choose your purchase option:</p>
+                <button onclick="selectPurchaseOption('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
+                <button onclick="selectPurchaseOption('<%= companyName%>', 'QR')">QR Code</button>
+            </div>
+        </div>
+        <%
                 } else {
                     // If percentage not found for the selected make, display a message
                     out.println("<h3>" + companyName + "</h3>");
@@ -374,14 +382,49 @@
                 }
             }
         %>
+        <script>
+// Function to display modal
+            function purchaseOption(companyName) {
+                var modal = document.getElementById(companyName + "Modal");
+                modal.style.display = "block";
+            }
 
+            // Function to close modal
+            function closeModal(modalId) {
+                var modal = document.getElementById(modalId);
+                modal.style.display = "none";
+            }
+
+            // Event listener for close buttons
+            var closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+
+            // Function to select purchase option and set action URL
+            function selectPurchaseOption(companyName, option) {
+                // Set the action URL of the form based on the selected option
+                var form = document.getElementById("purchaseForm");
+                if (option === "COD") {
+                    form.action = "cod_page.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
+                } else if (option === "QR") {
+                    form.action = "qr_page.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
+                }
+                // Submit the form
+                form.submit();
+            }
+
+            // Trigger modal display when the "Purchase" button is clicked
+            var purchaseButtons = document.querySelectorAll('.purchaseButton');
+            purchaseButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var companyName = this.getAttribute('data-company');
+                    purchaseOption(companyName);
+                });
+            });
+        </script>
     </body>
-</html>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSP Page</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
 </html>
