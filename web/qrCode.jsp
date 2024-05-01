@@ -20,6 +20,10 @@
     </head>
 
     <body>
+        <%
+            String userID = (String) session.getAttribute("userID");
+            Integer quotationId = (Integer) request.getAttribute("quotationId");
+        %>
         <div class="wrapper">
 
             <div class="body-overlay"></div>
@@ -147,11 +151,23 @@
                                 <div class="transaction-details">
                                     <h3>Transaction Details</h3>
                                     <!-- Display Transaction Details here -->
-                                    <p>Transaction ID: ABC123</p>
-                                    <p>Date: March 23, 2024</p>
-                                    <p>Product: Product Name</p>
-                                    <p>Price: $100</p>
-                                    <!-- Add more details as needed -->
+                                    <input type="hidden" id="userID" name="userID" value="<%= userID%>">
+                                    <input type="hidden" id="quotationId" name="quotationId" value="<%= quotationId%>">
+                                    <p>Registration Number: <%= request.getParameter("registrationNumber")%></p>
+                                    <%
+                                        // Get the current date and time
+                                        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+                                        // Format date
+                                        String formattedDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                                        // Format time
+                                        String formattedTime = now.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+                                    %>
+                                    <p>Date of Transaction: <%= formattedDate%></p>
+                                    <p>Time of Transaction: <%= formattedTime%></p>
+                                    <p>Policy Commencement Date: <%= request.getParameter("policyCommencementDate")%></p>
+                                    <p>Policy Duration: <%= request.getParameter("policyDuration")%> years</p>
+                                    <p>Policy Expiry Date: <%= request.getParameter("policyExpiryDate")%></p>
+                                    <p>Your insurance price is: RM <%= request.getParameter("finalTotalPremium")%></p>
                                 </div>
                             </div>
                         </div>

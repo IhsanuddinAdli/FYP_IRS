@@ -308,6 +308,13 @@
         <form id="purchaseForm" method="post" action="">
             <input type="hidden" id="purchaseOption" name="purchaseOption">
             <input type="hidden" id="companyName" name="companyName">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" id="userID" name="userID" value="<%= userID%>">
+            <input type="hidden" id="quotationId" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" id="registrationNumber" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" id="policyCommencementDate" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" id="policyDuration" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" id="policyExpiryDate" name="policyExpiryDate" value="<%= policyExpiryDate%>">
         </form>
         <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
         <div id="<%= companyName%>Modal" class="modal">
@@ -358,9 +365,9 @@
                 // Set the action URL of the form based on the selected option
                 var form = document.getElementById("purchaseForm");
                 if (option === "COD") {
-                    form.action = "cod_page.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
+                    form.action = "cod.jsp";
                 } else if (option === "QR") {
-                    form.action = "qr_page.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
+                    form.action = "qrCode.jsp";
                 }
                 // Submit the form
                 form.submit();
@@ -371,7 +378,17 @@
             purchaseButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
                     var companyName = this.getAttribute('data-company');
-                    purchaseOption(companyName);
+                    var option = this.getAttribute('data-option');
+                    var finalTotalPremium = this.getAttribute('data-final-total-premium');
+                    var userID = this.getAttribute('data-user-id');
+                    var quotationId = this.getAttribute('data-quotation-id');
+                    var registrationNumber = this.getAttribute('data-registration-number');
+                    var policyCommencementDate = this.getAttribute('data-policy-commencement-date');
+                    var policyDuration = this.getAttribute('data-policy-duration');
+                    var policyExpiryDate = this.getAttribute('data-policy-expiry-date');
+
+                    // Call purchaseOption function with all the necessary data
+                    purchaseOption(companyName, option, finalTotalPremium, userID, quotationId, registrationNumber, policyCommencementDate, policyDuration, policyExpiryDate);
                 });
             });
         </script>

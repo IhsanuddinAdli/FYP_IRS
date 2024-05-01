@@ -418,9 +418,9 @@
                 // Set the action URL of the form based on the selected option
                 var form = document.getElementById("purchaseForm");
                 if (option === "COD") {
-                    form.action = "cod_page.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
+                    form.action = "cod.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
                 } else if (option === "QR") {
-                    form.action = "qr_page.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
+                    form.action = "qrCode.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
                 }
                 // Submit the form
                 form.submit();
