@@ -22,6 +22,14 @@ public class Payment {
         this.timeSubmitted = timeSubmitted;
     }
 
+    public Payment(int quotationId, String paymentMethod, double price, LocalDate dateSubmitted, LocalTime timeSubmitted) {
+        this.quotationId = quotationId;
+        this.paymentMethod = paymentMethod;
+        this.price = price;
+        this.dateSubmitted = dateSubmitted;
+        this.timeSubmitted = timeSubmitted;
+    }
+
     // Getters and setters
     public int getQuotationId() {
         return quotationId;
