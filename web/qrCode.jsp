@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,18 +19,10 @@
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-
     <body>
-        <%
-            String userID = (String) session.getAttribute("userID");
-            Integer quotationId = (Integer) request.getAttribute("quotationId");
-        %>
         <div class="wrapper">
-
             <div class="body-overlay"></div>
-
             <!-------sidebar--design------------>
-
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
@@ -56,13 +49,9 @@
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
-
             <!-------page-content start----------->
-
             <div id="content">
-
                 <!------top-navbar-start----------->
-
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -71,9 +60,7 @@
                                     <span class="material-icons text-white">signal_cellular_alt</span>
                                 </div>
                             </div>
-
                             <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
-
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
@@ -90,13 +77,11 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#">
                                                     <span class="material-icons">question_answer</span>
                                                 </a>
                                             </li>
-
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
@@ -108,9 +93,8 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Payment</h4>
+                            <h4 class="page-title">Qr Code</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
@@ -119,7 +103,6 @@
                     </div>
                 </div>
                 <!------top-navbar-end----------->
-
                 <!-- Main content start -->
                 <div id="main-content-image">
                     <div class="container">
@@ -127,84 +110,64 @@
                         <div id="payment-page" class="row">
                             <!-- Left Section for Payment Submission -->
                             <div id="left-section" class="col-md-6">
-                                <div class="payment-details">
-                                    <h3>Payment Submission</h3>
-                                    <!-- Form for Payment Submission -->
-                                    <div class="account-number">
-                                        <h4>7632754905</h4>
-                                        <p>Muhammad Ihsanuddin Bin Adli</p>
-                                        <p>CIMB</p>
-                                        <!-- Display Account Number Image -->
-                                        <img src="IMG/qr_bank.jpeg" alt="QR Code">
-                                    </div>
-                                </div>
-                                <form action="customerQuo.jsp" method="POST" enctype="multipart/form-data">
-                                    <label for="receipt">Upload Receipt:</label>
-                                    <input type="file" id="receipt" name="receipt" accept="image/*" required>
-
-                                    <button type="submit">Submit Payment</button>
-                                </form>
-                            </div>
-
-                            <!-- Right Section for Transaction Details and Price -->
-                            <div id="right-section" class="col-md-6">
                                 <div class="transaction-details">
                                     <h3>Transaction Details</h3>
                                     <!-- Display Transaction Details here -->
-                                    <input type="hidden" id="userID" name="userID" value="<%= userID%>">
-                                    <input type="hidden" id="quotationId" name="quotationId" value="<%= quotationId%>">
+                                    <p>Quotation ID : <%=request.getParameter("quotationId")%></p>
                                     <p>Registration Number: <%= request.getParameter("registrationNumber")%></p>
                                     <%
-                                        // Get the current date and time
                                         java.time.LocalDateTime now = java.time.LocalDateTime.now();
-                                        // Format date
                                         String formattedDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                                        // Format time
                                         String formattedTime = now.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
                                     %>
                                     <p>Date of Transaction: <%= formattedDate%></p>
                                     <p>Time of Transaction: <%= formattedTime%></p>
                                     <p>Policy Commencement Date: <%= request.getParameter("policyCommencementDate")%></p>
-                                    <p>Policy Duration: <%= request.getParameter("policyDuration")%> years</p>
+                                    <p>Policy Duration: <%= request.getParameter("policyDuration")%> months</p>
                                     <p>Policy Expiry Date: <%= request.getParameter("policyExpiryDate")%></p>
                                     <p>Your insurance price is: RM <%= request.getParameter("finalTotalPremium")%></p>
+                                    <p>Engine : <%= request.getParameter("engineCapacity")%></p>
+                                    <!-- Add other transaction details here -->
                                 </div>
+                            </div>
+                            <!-- Right Section for Transaction Details and Price -->
+                            <div id="right-section" class="col-md-6">
+                                <div class="payment-details">
+                                    <h3>Payment Submission</h3>
+                                    <!-- Display QR code for payment -->
+                                    <img src="IMG/qr_bank.jpeg" alt="QR Code">
+                                </div>
+                                <form action="paymentSubmit" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getParameter("quotationId")%>">
+                                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="QR Code">
+                                    <input type="hidden" id="formattedDate" name="formattedDate" value="<%= formattedDate%>">
+                                    <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
+                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
+                                    
+                                    <input type="file" name="receiptImage" accept="image/*">
+                                    <button type="submit" class="btn btn-primary">Submit Payment</button>
+                                </form>
                             </div>
                         </div>
                         <!-- Payment Page End -->
                     </div>
                 </div>
                 <!-- Main content end -->
-
-                <!----footer-design------------->
-
+                <!----footer-design------------>
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                $(".xp-menubar").on('click', function () {
-                    $("#sidebar").toggleClass('active');
-                    $("#content").toggleClass('active');
-                });
-                $('.xp-menubar,.body-overlay').on('click', function () {
-                    $("#sidebar,.body-overlay").toggleClass('show-nav');
-                });
-            });
-        </script>
     </body>
 </html>

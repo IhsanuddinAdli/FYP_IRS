@@ -315,6 +315,7 @@
             <input type="hidden" id="policyCommencementDate" name="policyCommencementDate" value="<%= policyCommencementDate%>">
             <input type="hidden" id="policyDuration" name="policyDuration" value="<%= policyDuration%>">
             <input type="hidden" id="policyExpiryDate" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" id="engineCapacity" name="engineCapacity" value="<%=engineCapacity%>">
         </form>
         <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
         <div id="<%= companyName%>Modal" class="modal">
