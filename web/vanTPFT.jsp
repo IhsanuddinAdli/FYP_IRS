@@ -297,35 +297,35 @@
                         String formattedSST = df.format(sst);
                         String formattedStampDuty = df.format(stampDuty);
                         String formattedFinalTotalPremium = df.format(finalTotalPremium);
-
-                        // Display insurance price for the current company
-                        out.println("<h3>" + companyName + "</h3>");
-                        out.println("<p>Insurance Price: RM " + formattedCompanyTotalPremium + "</p>");
-                        out.println("<p>SST (10%): RM " + formattedSST + "</p>");
-                        out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
-                        out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
         %>
-        <form id="purchaseForm" method="post" action="">
-            <input type="hidden" id="purchaseOption" name="purchaseOption">
-            <input type="hidden" id="companyName" name="companyName">
+        <h3><%= companyName%></h3>
+        <p>Insurance Price: RM <%= formattedCompanyTotalPremium%></p>
+        <p>SST (10%): RM <%= formattedSST%></p>
+        <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
+        <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
+        <!-- Add COD and QR buttons for each company -->
+        <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp">
             <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
-            <input type="hidden" id="userID" name="userID" value="<%= userID%>">
-            <input type="hidden" id="quotationId" name="quotationId" value="<%= quotationId%>">
-            <input type="hidden" id="registrationNumber" name="registrationNumber" value="<%= registrationNumber%>">
-            <input type="hidden" id="policyCommencementDate" name="policyCommencementDate" value="<%= policyCommencementDate%>">
-            <input type="hidden" id="policyDuration" name="policyDuration" value="<%= policyDuration%>">
-            <input type="hidden" id="policyExpiryDate" name="policyExpiryDate" value="<%= policyExpiryDate%>">
-            <input type="hidden" id="engineCapacity" name="engineCapacity" value="<%=engineCapacity%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="QR">QR Code</button>
         </form>
-        <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
-        <div id="<%= companyName%>Modal" class="modal">
-            <div class="modal-content">
-                <span class="close" data-modal="<%= companyName%>Modal">&times;</span>
-                <p>Choose your purchase option:</p>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'QR')">QR Code</button>
-            </div>
-        </div>
+        <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
+        </form>
         <%
                     } else {
                         // If percentage not found for the selected make, display a message
@@ -340,56 +340,28 @@
             }
         %>
         <script>
-// Function to display modal
-            function purchaseOption(companyName) {
-                var modal = document.getElementById(companyName + "Modal");
-                modal.style.display = "block";
+            // Function to submit the form for COD or QR
+            function submitForm(companyName, option) {
+                var form = document.getElementById('purchaseForm_' + companyName);
+                form.querySelector('input[name="purchaseOption"]').value = option; // Set the purchase option
+                form.submit(); // Submit the form
             }
 
-            // Function to close modal
-            function closeModal(modalId) {
-                var modal = document.getElementById(modalId);
-                modal.style.display = "none";
-            }
+            // Event listeners for COD and QR buttons
+            var codButtons = document.querySelectorAll('.codButton');
+            var qrButtons = document.querySelectorAll('.qrButton');
 
-            // Event listener for close buttons
-            var closeButtons = document.querySelectorAll('.close');
-            closeButtons.forEach(function (button) {
+            codButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    var modalId = this.getAttribute('data-modal');
-                    closeModal(modalId);
+                    var companyName = this.getAttribute('data-company');
+                    submitForm(companyName, 'COD');
                 });
             });
 
-            // Function to select purchase option and set action URL
-            function selectPurchaseOption(companyName, option) {
-                // Set the action URL of the form based on the selected option
-                var form = document.getElementById("purchaseForm");
-                if (option === "COD") {
-                    form.action = "cod.jsp";
-                } else if (option === "QR") {
-                    form.action = "qrCode.jsp";
-                }
-                // Submit the form
-                form.submit();
-            }
-
-            // Trigger modal display when the "Purchase" button is clicked
-            var purchaseButtons = document.querySelectorAll('.purchaseButton');
-            purchaseButtons.forEach(function (button) {
+            qrButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
                     var companyName = this.getAttribute('data-company');
-                    var option = this.getAttribute('data-option');
-                    var finalTotalPremium = this.getAttribute('data-final-total-premium');
-                    var userID = this.getAttribute('data-user-id');
-                    var quotationId = this.getAttribute('data-quotation-id');
-                    var registrationNumber = this.getAttribute('data-registration-number');
-                    var policyCommencementDate = this.getAttribute('data-policy-commencement-date');
-                    var policyDuration = this.getAttribute('data-policy-duration');
-                    var policyExpiryDate = this.getAttribute('data-policy-expiry-date');
-
-                    // Call purchaseOption function with all the necessary data
-                    purchaseOption(companyName, option, finalTotalPremium, userID, quotationId, registrationNumber, policyCommencementDate, policyDuration, policyExpiryDate);
+                    submitForm(companyName, 'QR');
                 });
             });
         </script>
