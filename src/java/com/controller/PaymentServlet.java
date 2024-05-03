@@ -32,10 +32,12 @@ public class PaymentServlet extends HttpServlet {
         LocalDate formattedDate = LocalDate.parse(request.getParameter("formattedDate"));
         LocalTime formattedTime = LocalTime.parse(request.getParameter("formattedTime"));
 
-        // Get the receipt image
+        // Get the receipt image if available
         Part filePart = request.getPart("receiptImage");
-        String fileName = filePart.getSubmittedFileName();
-        byte[] receiptImage = filePart.getInputStream().readAllBytes();
+        byte[] receiptImage = null;
+        if (filePart != null && filePart.getSize() > 0) {
+            receiptImage = filePart.getInputStream().readAllBytes();
+        }
 
         // Create Payment object
         Payment payment = new Payment(quotationId, paymentMethod, price, receiptImage, formattedDate, formattedTime);
