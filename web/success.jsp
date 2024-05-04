@@ -8,14 +8,13 @@
     <body>
         <h1>Payment Successful!</h1>
         <p>Your payment has been successfully processed. Thank you for your purchase!</p>
-        <button onclick="redirectToServlet()">View the purchase list</button>
-
+        <p>Quotation ID: <%= request.getAttribute("quotationId")%></p>
+        <button onclick="redirectToDataTransferServlet()">View the purchase list</button>
         <script>
-            function redirectToServlet() {
-                // Redirect to the servlet with the quotationId parameter
-                window.location.href = "transferData?quotationId=<%= request.getAttribute("quotationId")%>";
+            function redirectToDataTransferServlet() {
+                var quotationId = <%= request.getAttribute("quotationId")%>;
+                window.location.href = "transferData?quotationId=" + quotationId;
             }
         </script>
-        <p>Quotation ID: <%= request.getAttribute("quotationId")%></p>
     </body>
 </html>

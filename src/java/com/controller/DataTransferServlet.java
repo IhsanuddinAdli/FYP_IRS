@@ -5,9 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,31 +19,28 @@ public class DataTransferServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve quotationId from the request
-        Integer quotationId = (Integer) request.getAttribute("quotationId");
+        // Retrieve quotationId from the request parameter
+        int quotationId = Integer.parseInt(request.getParameter("quotationId"));
 
         // Retrieve userID from session
         HttpSession session = request.getSession();
         String userID = (String) session.getAttribute("userID");
 
-        // Retrieve data related to quotationId from original tables
+        // Retrieve and transfer data related to quotationId from original tables
         try {
             Connection conn = DBConnection.getConnection();
             retrieveAndTransferData(conn, quotationId, userID);
             conn.close();
+            // Redirect to a confirmation page
+            response.sendRedirect("customerHistory.jsp");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            // Handle exception appropriately
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing request");
             return;
         }
-
-        // Redirect to a confirmation page
-        response.sendRedirect("customerHistory.jsp");
     }
 
     private void retrieveAndTransferData(Connection conn, int quotationId, String userID) throws SQLException, ClassNotFoundException {
-        // Retrieve data from original tables
         String selectQuotationSQL = "SELECT * FROM Quotation WHERE quotation_id = ?";
         String selectAddonsSQL = "SELECT * FROM Addons WHERE quotation_id = ?";
         String selectVehicleSQL = "SELECT * FROM Vehicle WHERE quotation_id = ?";
@@ -67,24 +61,20 @@ public class DataTransferServlet extends HttpServlet {
             ResultSet rsVehicle = psVehicle.executeQuery();
             ResultSet rsPayment = psPayment.executeQuery();
 
-            // Transfer data to history tables
-            transferToHistoryTables(rsQuotation, rsAddons, rsVehicle, rsPayment, userID);
-
-            // Delete data from original tables
+            transferToHistoryTables(conn, rsQuotation, rsAddons, rsVehicle, rsPayment, userID);
             deleteFromOriginalTables(conn, quotationId);
         }
     }
 
-    private void transferToHistoryTables(ResultSet rsQuotation, ResultSet rsAddons, ResultSet rsVehicle,
-            ResultSet rsPayment, String userID) throws SQLException, ClassNotFoundException {
+    private void transferToHistoryTables(Connection conn, ResultSet rsQuotation, ResultSet rsAddons, ResultSet rsVehicle,
+            ResultSet rsPayment, String userID) throws SQLException {
         // Prepare insert statements for history tables
         String insertQuotationHistorySQL = "INSERT INTO QuotationHistory (quotation_id, userID, coverage, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String insertAddonsHistorySQL = "INSERT INTO AddonsHistory (quotation_id, windscreen_cost, all_driver_cost, special_perils_cost, legal_liability_cost) VALUES (?, ?, ?, ?, ?)";
         String insertVehicleHistorySQL = "INSERT INTO VehicleHistory (quotation_id, owner_name, owner_id, dob, gender, marital_status, location, vehicle_type, local_import, registration_number, engine_number, chassis_number, insured_value, vehicle_body, vehicle_make, vehicle_model, manufacture_year, engine_capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String insertPaymentHistorySQL = "INSERT INTO PaymentHistory (quotation_id, payment_method, price, receipt_image)";
 
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement psInsertQuotationHistory = conn.prepareStatement(insertQuotationHistorySQL);
+        try (PreparedStatement psInsertQuotationHistory = conn.prepareStatement(insertQuotationHistorySQL);
                 PreparedStatement psInsertAddonsHistory = conn.prepareStatement(insertAddonsHistorySQL);
                 PreparedStatement psInsertVehicleHistory = conn.prepareStatement(insertVehicleHistorySQL);
                 PreparedStatement psInsertPaymentHistory = conn.prepareStatement(insertPaymentHistorySQL)) {
@@ -147,26 +137,25 @@ public class DataTransferServlet extends HttpServlet {
     }
 
     private void deleteFromOriginalTables(Connection conn, int quotationId) throws SQLException {
-        // Delete data from original tables
         String deleteQuotationSQL = "DELETE FROM Quotation WHERE quotation_id = ?";
         String deleteAddonsSQL = "DELETE FROM Addons WHERE quotation_id = ?";
         String deleteVehicleSQL = "DELETE FROM Vehicle WHERE quotation_id = ?";
         String deletePaymentSQL = "DELETE FROM Payment WHERE quotation_id = ?";
 
-        try (PreparedStatement psQuotation = conn.prepareStatement(deleteQuotationSQL);
-                PreparedStatement psAddons = conn.prepareStatement(deleteAddonsSQL);
-                PreparedStatement psVehicle = conn.prepareStatement(deleteVehicleSQL);
-                PreparedStatement psPayment = conn.prepareStatement(deletePaymentSQL)) {
+        try (PreparedStatement psDeleteQuotation = conn.prepareStatement(deleteQuotationSQL);
+                PreparedStatement psDeleteAddons = conn.prepareStatement(deleteAddonsSQL);
+                PreparedStatement psDeleteVehicle = conn.prepareStatement(deleteVehicleSQL);
+                PreparedStatement psDeletePayment = conn.prepareStatement(deletePaymentSQL)) {
 
-            psQuotation.setInt(1, quotationId);
-            psAddons.setInt(1, quotationId);
-            psVehicle.setInt(1, quotationId);
-            psPayment.setInt(1, quotationId);
+            psDeleteQuotation.setInt(1, quotationId);
+            psDeleteAddons.setInt(1, quotationId);
+            psDeleteVehicle.setInt(1, quotationId);
+            psDeletePayment.setInt(1, quotationId);
 
-            psQuotation.executeUpdate();
-            psAddons.executeUpdate();
-            psVehicle.executeUpdate();
-            psPayment.executeUpdate();
+            psDeleteQuotation.executeUpdate();
+            psDeleteAddons.executeUpdate();
+            psDeleteVehicle.executeUpdate();
+            psDeletePayment.executeUpdate();
         }
     }
 }

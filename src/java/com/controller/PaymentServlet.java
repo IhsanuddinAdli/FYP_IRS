@@ -47,7 +47,9 @@ public class PaymentServlet extends HttpServlet {
             Connection conn = DBConnection.getConnection();
             PaymentDAO.insertPayment(conn, payment);
             conn.close();
-            response.sendRedirect("success.jsp"); // Redirect to success page
+            // After inserting payment into database
+            request.setAttribute("quotationId", quotationId);
+            request.getRequestDispatcher("success.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Handle exception appropriately
         }
