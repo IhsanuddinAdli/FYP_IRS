@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="com.dao.DBConnection"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -116,52 +120,94 @@
                 </div>
                 <!------top-navbar-end----------->
 
-                <!----main-content--->
+                <!-- Main content start -->
                 <div id="main-content-image">
                     <div class="container">
                         <h2>History of Vehicle Insurance Purchases</h2>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Policy Number</th>
-                                    <th>Vehicle</th>
-                                    <th>Insurance Type</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Amount Paid</th>
-                                    <th>Action</th>
+                                    <th>Registration Number</th>
+                                    <th>Vehicle Make</th>
+                                    <th>Vehicle Model</th>
+                                    <th>Coverage</th>
+                                    <th>Policy Expiry Date</th>
+                                    <th>Payment Method</th>
+                                    <th>Price</th>
+                                    <th>Date Submitted</th>
+                                    <th>Time Submitted</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Sample data, replace with actual data -->
-                                <tr>
-                                    <td>ABC123</td>
-                                    <td>Toyota Corolla</td>
-                                    <td>Comprehensive</td>
-                                    <td>2023-01-01</td>
-                                    <td>2024-01-01</td>
-                                    <td>$500</td>
-                                    <td><button class="btn btn-primary renew-btn">Renew</button></td> <!-- Add the renew button -->
-                                </tr>
-                                <tr>
-                                    <td>DEF456</td>
-                                    <td>Honda Civic</td>
-                                    <td>Third Party</td>
-                                    <td>2022-05-15</td>
-                                    <td>2023-05-15</td>
-                                    <td>$300</td>
-                                    <td><button class="btn btn-primary renew-btn">Renew</button></td> <!-- Add the renew button -->
-                                </tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
+                                <!-- Retrieve and display data from QuotationHistory, VehicleHistory, and PaymentHistory tables -->
+                                <%
+                                    try {
+                                        Connection conn = DBConnection.getConnection();
 
+                                        // Query to retrieve data from QuotationHistory table
+                                        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM QuotationHistory");
+                                        ResultSet rs1 = stmt1.executeQuery();
+
+                                        // Iterate through the result set and display data in table rows
+                                        while (rs1.next()) {
+                                            int quotationId = rs1.getInt("quotation_id");
+                                            String coverage = rs1.getString("coverage");
+                                            String policyExpiryDate = rs1.getString("policy_expiry_date");
+
+                                            // Query to retrieve data from VehicleHistory table based on quotationId
+                                            PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM VehicleHistory WHERE quotation_id = ?");
+                                            stmt2.setInt(1, quotationId);
+                                            ResultSet rs2 = stmt2.executeQuery();
+
+                                            // Iterate through the result set and display data in table rows
+                                            while (rs2.next()) {
+                                                String registrationNumber = rs2.getString("registration_number");
+                                                String vehicleMake = rs2.getString("vehicle_make");
+                                                String vehicleModel = rs2.getString("vehicle_model");
+
+                                                // Query to retrieve data from PaymentHistory table based on quotationId
+                                                PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM PaymentHistory WHERE quotation_id = ?");
+                                                stmt3.setInt(1, quotationId);
+                                                ResultSet rs3 = stmt3.executeQuery();
+
+                                                // Iterate through the result set and display data in table rows
+                                                while (rs3.next()) {
+                                                    String paymentMethod = rs3.getString("payment_method");
+                                                    double price = rs3.getDouble("price");
+                                                    String dateSubmitted = rs3.getString("date_submitted");
+                                                    String timeSubmitted = rs3.getString("time_submitted");
+                                %>
+                                <tr>
+                                    <td><%= registrationNumber%></td>
+                                    <td><%= vehicleMake%></td>
+                                    <td><%= vehicleModel%></td>
+                                    <td><%= coverage%></td>
+                                    <td><%= policyExpiryDate%></td>
+                                    <td><%= paymentMethod%></td>
+                                    <td><%= price%></td>
+                                    <td><%= dateSubmitted%></td>
+                                    <td><%= timeSubmitted%></td>
+                                </tr>
+                                <%
+                                                }
+                                                rs3.close();
+                                                stmt3.close();
+                                            }
+                                            rs2.close();
+                                            stmt2.close();
+                                        }
+                                        rs1.close();
+                                        stmt1.close();
+                                        conn.close();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                %>
+                            </tbody>
                         </table>
                     </div>
-
                 </div>
-                <!----main-content-end--->
-
-
+                <!-- Main content end -->
 
                 <!----footer-design------------->
 
