@@ -1,49 +1,47 @@
 package com.controller;
 
-import com.dao.FeedbackDAO;
-import com.model.Feedback;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dao.FeedbackDAO;
+import com.model.Feedback;
+
 @WebServlet("/submitFeedback")
 public class FeedbackServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve form data
-        String feedback = request.getParameter("feedback");
-        int rating = Integer.parseInt(request.getParameter("rating"));
-        int userID = Integer.parseInt(request.getParameter("userID"));
+        String userIDStr = request.getParameter("userID");
+        String quotationIdStr = request.getParameter("quotationId");
+        String feedbackStr = request.getParameter("feedback");
+        String ratingStr = request.getParameter("rating");
 
-        // Create Feedback object
-        Feedback feedbackObj = new Feedback();
-        feedbackObj.setFeedback(feedback);
-        feedbackObj.setRating(rating);
-        feedbackObj.setUserID(userID);
-
-        // Call DAO method to store feedback
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
-        boolean success = false;
         try {
-            success = feedbackDAO.saveFeedback(feedbackObj);
-        } catch (SQLException ex) {
-            Logger.getLogger(FeedbackServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FeedbackServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            int userID = Integer.parseInt(userIDStr);
+            int quotationId = Integer.parseInt(quotationIdStr);
+            int rating = Integer.parseInt(ratingStr);
 
-        if (success) {
-            // Redirect to success page or show a success message
-            response.sendRedirect("feedbackSuccess.jsp");
-        } else {
-            // Redirect to error page or show an error message
-            response.sendRedirect("feedbackError.jsp");
+            Feedback feedback = new Feedback(userID, quotationId, feedbackStr, rating);
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            feedbackDAO.insertFeedback(feedback);
+
+            response.sendRedirect("feedbackSuccess.jsp?quotationId=" + quotationId + "&status=success");
+        } catch (NumberFormatException e) {
+            response.sendRedirect("customerFeedback.jsp?status=error&message=Invalid+number+format");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("customerFeedback.jsp?status=error&message=" + e.getMessage().replace(" ", "+"));
+        } catch (ClassNotFoundException e) {
+            response.sendRedirect("customerFeedback.jsp?status=error&message=Class+Not+Found");
+        } catch (Exception e) {
+            response.sendRedirect("customerFeedback.jsp?status=error&message=Unexpected+Error");
         }
     }
 }

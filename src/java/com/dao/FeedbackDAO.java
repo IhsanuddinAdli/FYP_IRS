@@ -10,18 +10,15 @@ import java.util.List;
 
 public class FeedbackDAO {
 
-    public boolean saveFeedback(Feedback feedback) throws SQLException, ClassNotFoundException {
-        try (Connection con = DBConnection.getConnection();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO feedback (feedback, rating, userID) VALUES (?, ?, ?)")) {
-            ps.setString(1, feedback.getFeedback());
-            ps.setInt(2, feedback.getRating());
-            ps.setInt(3, feedback.getUserID());
-
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+    public void insertFeedback(Feedback feedback) throws SQLException, ClassNotFoundException {
+        String sql = "INSERT INTO feedback (userID, quotation_id, feedback, rating) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, feedback.getUserID());
+            ps.setInt(2, feedback.getQuotationId());
+            ps.setString(3, feedback.getFeedback());
+            ps.setInt(4, feedback.getRating());
+            ps.executeUpdate();
         }
     }
 

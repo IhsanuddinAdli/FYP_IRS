@@ -7,100 +7,60 @@
     <head>
         <meta charset="UTF-8">
         <title>Van Insurance Comprehensive Quotation</title>
+        <link rel="stylesheet" href="CSS/quotation.css">
     </head>
     <body>
         <%
-            double ncdPercentage = 0.0;
-
             double windscreenCost = 0.0;
             double specialPerilsCost = 0.0;
             double allDriverCost = 0.0;
             double legalLiabilityCost = 0.0;
 
             String userID = (String) session.getAttribute("userID");
-            Integer quotationId = null;
-            String ownerName = "";
-            String ownerId = "";
-            String dob = "";
-            String gender = "";
-            String maritalStatus = "";
-            String location = "";
-            String vehicleType = "";
-            String localImport = "";
-            String registrationNumber = "";
-            String engineNumber = "";
-            String chassisNumber = "";
-            String coverage = "";
-            double insuredValue = 0.0;
-            int engineCapacity = 0;
-            String vehicleBody = "";
-            String vehicleMake = "";
-            String vehicleModel = "";
-            String policyCommencementDate = "";
-            String policyDuration = "";
-            String policyExpiryDate = "";
-            String selectedNCD = "";
-            String manufactureYear = "";
+            Integer quotationId = (Integer) request.getAttribute("quotationId");
+            String ownerName = request.getParameter("owner-name");
+            String ownerId = request.getParameter("owner-id");
+            String dob = request.getParameter("dob");
+            String gender = request.getParameter("gender");
+            String maritalStatus = request.getParameter("marital-status");
+            String location = request.getParameter("location");
+            String vehicleType = request.getParameter("vehicle-type");
+            String localImport = request.getParameter("local-import");
+            String registrationNumber = request.getParameter("registration-number");
+            String engineNumber = request.getParameter("engine-number");
+            String chassisNumber = request.getParameter("chassis-number");
+            String coverage = request.getParameter("coverage");
 
-            if ("calculateQuotation.jsp".equals(request.getAttribute("source"))) {
-                quotationId = (Integer) request.getAttribute("quotationId");
-                ownerName = (String) request.getAttribute("ownerName");
-                ownerId = (String) request.getAttribute("ownerId");
-                dob = (String) request.getAttribute("dob");
-                gender = (String) request.getAttribute("gender");
-                maritalStatus = (String) request.getAttribute("maritalStatus");
-                location = (String) request.getAttribute("location");
-                vehicleType = (String) request.getAttribute("vehicleType");
-                localImport = (String) request.getAttribute("localImport");
-                registrationNumber = (String) request.getAttribute("registrationNumber");
-                engineNumber = (String) request.getAttribute("engineNumber");
-                chassisNumber = (String) request.getAttribute("chassisNumber");
-                coverage = (String) request.getAttribute("coverage");
-                insuredValue = Double.parseDouble(request.getParameter("insured-value"));
-                engineCapacity = Integer.parseInt(request.getParameter("engine-capacity"));
-                vehicleBody = request.getParameter("vehicle-body");
-                vehicleMake = request.getParameter("vehicle-make");
-                vehicleModel = request.getParameter("vehicle-model");
-                policyCommencementDate = request.getParameter("policy-commencement-date");
-                policyDuration = request.getParameter("policy-duration");
-                policyExpiryDate = request.getParameter("policy-expiry-date");
-                selectedNCD = (String) request.getAttribute("selectedNCD");
-                manufactureYear = request.getParameter("manufacture-year");
-
-                // Processing NCD from getAttribute
-                selectedNCD = (String) request.getAttribute("ncd");
-                if (selectedNCD != null && !selectedNCD.isEmpty()) {
-                    ncdPercentage = Double.parseDouble(selectedNCD.replaceAll("[^0-9.]", "")) / 100;
+            String insuredValueStr = request.getParameter("insured-value");
+            double insuredValue = 0.0; // Default value
+            if (insuredValueStr != null && !insuredValueStr.isEmpty()) {
+                try {
+                    insuredValue = Double.parseDouble(insuredValueStr);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
-            } else if ("customerQuoForm.jsp".equals(request.getAttribute("source"))) {
-                quotationId = Integer.parseInt(request.getParameter("quotationId"));
-                ownerName = request.getParameter("owner-name");
-                ownerId = request.getParameter("owner-id");
-                dob = request.getParameter("dob");
-                gender = request.getParameter("gender");
-                maritalStatus = request.getParameter("marital-status");
-                location = request.getParameter("location");
-                vehicleType = request.getParameter("vehicle-type");
-                localImport = request.getParameter("local-import");
-                registrationNumber = request.getParameter("registration-number");
-                engineNumber = request.getParameter("engine-number");
-                chassisNumber = request.getParameter("chassis-number");
-                coverage = request.getParameter("coverage");
-                insuredValue = Double.parseDouble(request.getParameter("insured-value"));
-                engineCapacity = Integer.parseInt(request.getParameter("engine-capacity"));
-                vehicleBody = request.getParameter("vehicle-body");
-                vehicleMake = request.getParameter("vehicle-make");
-                vehicleModel = request.getParameter("vehicle-model");
-                policyCommencementDate = request.getParameter("policy-commencement-date");
-                policyDuration = request.getParameter("policy-duration");
-                policyExpiryDate = request.getParameter("policy-expiry-date");
-                manufactureYear = request.getParameter("manufacture-year");
+            }
 
-                // Processing NCD from getAttribute
-                selectedNCD = (String) request.getAttribute("ncd");
-                if (selectedNCD != null && !selectedNCD.isEmpty()) {
-                    ncdPercentage = Double.parseDouble(selectedNCD.replaceAll("[^0-9.]", "")) / 100;
-                }
+            String vehicleBody = request.getParameter("vehicle-body");
+            String vehicleMake = request.getParameter("vehicle-make");
+            String vehicleModel = request.getParameter("vehicle-model");
+            String manufactureYear = request.getParameter("manufacture-year");
+            String policyCommencementDate = request.getParameter("policy-commencement-date");
+            String policyDuration = request.getParameter("policy-duration");
+            String policyExpiryDate = request.getParameter("policy-expiry-date");
+
+            String selectedNCD = request.getParameter("ncd");
+            // Convert the selected NCD value to a double for calculations
+            double ncdPercentage = 0.0;
+            if (selectedNCD != null && !selectedNCD.isEmpty()) {
+                // Convert percentage to decimal
+                ncdPercentage = Double.parseDouble(selectedNCD.replaceAll("[^0-9.]", "")) / 100;
+            }
+
+            String engineCapacityStr = request.getParameter("engine-capacity");
+            int engineCapacity = 0; // Default value
+            if (engineCapacityStr != null && !engineCapacityStr.isEmpty()) {
+                engineCapacity = Integer.parseInt(engineCapacityStr.replaceAll("[^0-9]", ""));
             }
 
             double[] peninsulaBaseValues = {
@@ -362,25 +322,41 @@
                     String formattedSST = df.format(sst);
                     String formattedStampDuty = df.format(stampDuty);
                     String formattedFinalTotalPremium = df.format(finalTotalPremium);
-
-                    // Display insurance price for the current company including SST and stamp duty
-                    out.println("<h3>" + companyName + "</h3>");
-                    out.println("<p>Insurance Price: RM " + formattedCompanyTotalPremium + "</p>");
-                    out.println("<p>SST (10%): RM " + formattedSST + "</p>");
-                    out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
-                    out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
         %>
-        <form id="purchaseForm" method="post" action="">
-            <input type="hidden" id="purchaseOption" name="purchaseOption">
-            <input type="hidden" id="companyName" name="companyName">
+        <h3><%= companyName%></h3>
+        <p>Insurance Price: RM <%= formattedCompanyTotalPremium%></p>
+        <p>SST (10%): RM <%= formattedSST%></p>
+        <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
+        <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
+        <!-- Add COD and QR buttons for each company -->
+        <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="QR">QR Code</button>
         </form>
-        <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
-        <div id="<%= companyName%>Modal" class="modal">
+        <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
+        </form>
+        <div id="modal_<%= companyName%>" class="modal" style="display: none;">
             <div class="modal-content">
-                <span class="close" data-modal="<%= companyName%>Modal">&times;</span>
-                <p>Choose your purchase option:</p>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'QR')">QR Code</button>
+                <span class="close" data-modal="modal_<%= companyName%>">&times;</span>
+                <p>Choose your purchase option for <%= companyName%>:</p>
+                <button onclick="submitForm('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
+                <button onclick="submitForm('<%= companyName%>', 'QR')">QR Code</button>
             </div>
         </div>
         <%
@@ -392,46 +368,28 @@
             }
         %>
         <script>
-// Function to display modal
-            function purchaseOption(companyName) {
-                var modal = document.getElementById(companyName + "Modal");
-                modal.style.display = "block";
+            // Function to submit the form for COD or QR
+            function submitForm(companyName, option) {
+                var form = document.getElementById('purchaseForm_' + companyName);
+                form.querySelector('input[name="purchaseOption"]').value = option; // Set the purchase option
+                form.submit(); // Submit the form
             }
 
-            // Function to close modal
-            function closeModal(modalId) {
-                var modal = document.getElementById(modalId);
-                modal.style.display = "none";
-            }
+            // Event listeners for COD and QR buttons
+            var codButtons = document.querySelectorAll('.codButton');
+            var qrButtons = document.querySelectorAll('.qrButton');
 
-            // Event listener for close buttons
-            var closeButtons = document.querySelectorAll('.close');
-            closeButtons.forEach(function (button) {
+            codButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    var modalId = this.getAttribute('data-modal');
-                    closeModal(modalId);
+                    var companyName = this.getAttribute('data-company');
+                    submitForm(companyName, 'COD');
                 });
             });
 
-            // Function to select purchase option and set action URL
-            function selectPurchaseOption(companyName, option) {
-                // Set the action URL of the form based on the selected option
-                var form = document.getElementById("purchaseForm");
-                if (option === "COD") {
-                    form.action = "cod.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
-                } else if (option === "QR") {
-                    form.action = "qrCode.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
-                }
-                // Submit the form
-                form.submit();
-            }
-
-            // Trigger modal display when the "Purchase" button is clicked
-            var purchaseButtons = document.querySelectorAll('.purchaseButton');
-            purchaseButtons.forEach(function (button) {
+            qrButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
                     var companyName = this.getAttribute('data-company');
-                    purchaseOption(companyName);
+                    submitForm(companyName, 'QR');
                 });
             });
         </script>

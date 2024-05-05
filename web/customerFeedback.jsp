@@ -3,29 +3,31 @@
 
 <%
     String userID = (String) session.getAttribute("userID");
+    String quotationIdStr = request.getParameter("quotationId");
+    int quotationId = quotationIdStr != null ? Integer.parseInt(quotationIdStr) : -1;
 
     if (userID != null) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ?");
             ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                // Customer data retrieved successfully...
             }
         } catch (SQLException e) {
             e.printStackTrace();
             out.println("An error occurred while fetching customer data. Please try again later.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            out.println("An error occurred while loading database driver.");
+            out.println("An error occurred while loading the database driver.");
         }
     } else {
         out.println("User not logged in.");
     }
 %>
-
 
 <!DOCTYPE html>
 <html>
@@ -175,6 +177,8 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
+                                            <input type="hidden" class="form-control" id="quotationId" name="quotationId" value="<%= quotationId %>">
+                                            <p>Quotation : <%=quotationId%></p>
                                             <button type="submit" class="btn btn-primary">Submit Feedback</button>
                                         </form>
                                     </div>

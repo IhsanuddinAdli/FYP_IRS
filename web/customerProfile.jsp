@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-
 <%
     String userID = (String) session.getAttribute("userID");
     String firstname = "";
@@ -46,10 +45,8 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html lang=" en">
-
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -67,13 +64,10 @@
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-
             <!-------sidebar--design------------>
-
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
@@ -85,11 +79,14 @@
                     <li class="active">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-                    <li class="">
-                        <a href="customerQuo.jsp" class=""><i class="material-icons">border_color</i>Quotation</a>
-                    </li>
-                    <li class="">
-                        <a href="customerFeedback.jsp" class=""><i class="material-icons">library_books</i>Feedback</a>
+                    <li class="dropdown">
+                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">border_color</i>Quotation <b class="caret"></b>
+                        </a>
+                        <ul class="collapse list-unstyled menu" id="quotationMenu">
+                            <li class=""><a href="customerQuo.jsp"><i class="material-icons">list</i> Quotation Form</a></li>
+                            <li class=""><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i> Quotations List</a></li>
+                        </ul>
                     </li>
                     <li class="">
                         <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
@@ -100,13 +97,9 @@
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
-
             <!-------page-content start----------->
-
             <div id="content">
-
                 <!------top-navbar-start----------->
-
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -115,9 +108,7 @@
                                     <span class="material-icons text-white">signal_cellular_alt</span>
                                 </div>
                             </div>
-
                             <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
-
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
@@ -134,13 +125,11 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#">
                                                     <span class="material-icons">question_answer</span>
                                                 </a>
                                             </li>
-
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
@@ -152,9 +141,7 @@
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="xp-breadcrumbbar text-center">
                             <h4 class="page-title">Profile</h4>
                             <ol class="breadcrumb">
@@ -162,8 +149,6 @@
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
-
-
                     </div>
                 </div>
                 <!------top-navbar-end----------->
@@ -254,11 +239,7 @@
                                                 <label for="state">State</label>
                                                 <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
                                             </div>
-                                            <!-- Add more fields as needed -->
-
-                                            <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
                                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
-
                                         </form>
                                     </div>
                                 </div>
@@ -267,20 +248,17 @@
                     </div>
                 </div>
                 <!----footer-design------------->
-
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
         <!--</div>-->
-
         <!----main-content-end--->
-
         <!-- Modal for Updating Profile -->
         <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -295,7 +273,6 @@
                         <form id="updateProfileForm" action="updateCustomerProfile.jsp" method="post">
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="userID" name="userID" value="<%= userID%>">
-
                                 <label for="firstname">Firstname</label>
                                 <input type="text" class="form-control" id="firstname" name="firstname" required value="<%= firstname%>">
                             </div>
@@ -323,7 +300,6 @@
                                 <label for="residence">Residence</label>
                                 <input type="text" class="form-control" id="residence" name="residence" required value="<%= residence%>">
                             </div>
-
                             <div class="form-group">
                                 <label for="zipcode">Zipcode</label>
                                 <input type="text" class="form-control" id="zipcode" name="zipcode" required value="<%= zipcode%>">
@@ -347,17 +323,12 @@
                 </div>
             </div>
         </div>
-
-
-        <!-------complete html----------->
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
         <script>
             $(document).ready(function () {
                 $(".xp-menubar").on('click', function () {
@@ -370,7 +341,6 @@
                 });
             });
         </script>
-
         <script>
             // Trigger the modal when the "Update Profile" button is clicked
             $(document).ready(function () {
@@ -379,8 +349,5 @@
                 });
             });
         </script>
-
-
     </body>
-
 </html>

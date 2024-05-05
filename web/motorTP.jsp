@@ -6,7 +6,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Car Insurance Third Party Fire And Theft Quotation</title>
+        <title>Motorcycle Insurance Third Party Fire And Theft Quotation</title>
+        <link rel="stylesheet" href="CSS/quotation.css">
     </head>
     <body>
         <%
@@ -340,46 +341,66 @@
                 String companyName = entry.getKey();
                 Map<String, Double> percentagesForCompany = entry.getValue();
 
-                // Find the percentage for the selected vehicle make for this company
-                Double companyPercentage = percentagesForCompany.get(vehicleMake);
+                // Check if the year of manufacture meets the conditions for Takaful Ikhlas and other companies
+                if (("Takaful Ikhlas".equals(companyName) && Integer.parseInt(manufactureYear) < (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10))
+                        || (!"Takaful Ikhlas".equals(companyName) && Integer.parseInt(manufactureYear) < (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 1))) {
 
-                // If the percentage is found for the selected make, calculate the insurance price for this company
-                if (companyPercentage != null) {
-                    double companyTotalPremium = totalPremium * (1 + companyPercentage);
+                    // Find the percentage for the selected vehicle make for this company
+                    Double companyPercentage = percentagesForCompany.get(vehicleMake);
 
-                    // Apply SST (SST is 10%)
-                    double sst = 0.10 * companyTotalPremium;
+                    // If the percentage is found for the selected make, calculate the insurance price for this company
+                    if (companyPercentage != null) {
+                        double companyTotalPremium = totalPremium * (1 + companyPercentage);
 
-                    // Add stamp duty (stamp duty is RM10)
-                    double stampDuty = 10.0;
+                        // Apply SST (SST is 10%)
+                        double sst = 0.10 * totalPremium;
 
-                    // Calculate final total premium after applying SST and adding stamp duty
-                    double finalTotalPremium = companyTotalPremium + sst + stampDuty;
+                        // Add stamp duty (stamp duty is RM10)
+                        double stampDuty = 10.0;
 
-                    // Format the insurance price
-                    String formattedCompanyTotalPremium = df.format(companyTotalPremium);
-                    String formattedSST = df.format(sst);
-                    String formattedStampDuty = df.format(stampDuty);
-                    String formattedFinalTotalPremium = df.format(finalTotalPremium);
+                        // Calculate final total premium after applying SST and adding stamp duty
+                        double finalTotalPremium = companyTotalPremium + sst + stampDuty;
 
-                    // Display insurance price for the current company including SST and stamp duty
-                    out.println("<h3>" + companyName + "</h3>");
-                    out.println("<p>Insurance Price: RM " + formattedCompanyTotalPremium + "</p>");
-                    out.println("<p>SST (10%): RM " + formattedSST + "</p>");
-                    out.println("<p>Stamp Duty (RM10): RM " + formattedStampDuty + "</p>");
-                    out.println("<p>Final Total Premium: RM " + formattedFinalTotalPremium + "</p>");
+                        // Format the insurance price
+                        String formattedCompanyTotalPremium = df.format(companyTotalPremium);
+                        String formattedSST = df.format(sst);
+                        String formattedStampDuty = df.format(stampDuty);
+                        String formattedFinalTotalPremium = df.format(finalTotalPremium);
         %>
-        <form id="purchaseForm" method="post" action="">
-            <input type="hidden" id="purchaseOption" name="purchaseOption">
-            <input type="hidden" id="companyName" name="companyName">
+        <h3><%= companyName%></h3>
+        <p>Insurance Price: RM <%= formattedCompanyTotalPremium%></p>
+        <p>SST (10%): RM <%= formattedSST%></p>
+        <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
+        <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
+        <!-- Add COD and QR buttons for each company -->
+        <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="QR">QR Code</button>
         </form>
-        <button class="purchaseButton" data-company="<%= companyName%>" type="button">Purchase</button>
-        <div id="<%= companyName%>Modal" class="modal">
+        <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp">
+            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+            <input type="hidden" name="userID" value="<%= userID%>">
+            <input type="hidden" name="quotationId" value="<%= quotationId%>">
+            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
+        </form>
+        <div id="modal_<%= companyName%>" class="modal" style="display: none;">
             <div class="modal-content">
-                <span class="close" data-modal="<%= companyName%>Modal">&times;</span>
-                <p>Choose your purchase option:</p>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
-                <button onclick="selectPurchaseOption('<%= companyName%>', 'QR')">QR Code</button>
+                <span class="close" data-modal="modal_<%= companyName%>">&times;</span>
+                <p>Choose your purchase option for <%= companyName%>:</p>
+                <button onclick="submitForm('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
+                <button onclick="submitForm('<%= companyName%>', 'QR')">QR Code</button>
             </div>
         </div>
         <%
@@ -388,54 +409,36 @@
                         out.println("<h3>" + companyName + "</h3>");
                         out.println("<p>No insurance price available for selected vehicle make.</p>");
                     }
-                }else {
+                } else {
                     // If the vehicle does not meet the conditions, display a message
                     out.println("<h3>" + companyName + "</h3>");
-                    out.println("<p>The vehicle cannot be covered by Third Party Fire And Theft. Please select Comprehensive coverage.</p>");
+                    out.println("<p>The vehicle cannot be covered by Third Party. Please select Comprehensive coverage.</p>");
                 }
             }
         %>
         <script>
-// Function to display modal
-            function purchaseOption(companyName) {
-                var modal = document.getElementById(companyName + "Modal");
-                modal.style.display = "block";
+            // Function to submit the form for COD or QR
+            function submitForm(companyName, option) {
+                var form = document.getElementById('purchaseForm_' + companyName);
+                form.querySelector('input[name="purchaseOption"]').value = option; // Set the purchase option
+                form.submit(); // Submit the form
             }
 
-            // Function to close modal
-            function closeModal(modalId) {
-                var modal = document.getElementById(modalId);
-                modal.style.display = "none";
-            }
+            // Event listeners for COD and QR buttons
+            var codButtons = document.querySelectorAll('.codButton');
+            var qrButtons = document.querySelectorAll('.qrButton');
 
-            // Event listener for close buttons
-            var closeButtons = document.querySelectorAll('.close');
-            closeButtons.forEach(function (button) {
+            codButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    var modalId = this.getAttribute('data-modal');
-                    closeModal(modalId);
+                    var companyName = this.getAttribute('data-company');
+                    submitForm(companyName, 'COD');
                 });
             });
 
-            // Function to select purchase option and set action URL
-            function selectPurchaseOption(companyName, option) {
-                // Set the action URL of the form based on the selected option
-                var form = document.getElementById("purchaseForm");
-                if (option === "COD") {
-                    form.action = "cod.jsp"; // Replace "cod_page.jsp" with your actual COD page URL
-                } else if (option === "QR") {
-                    form.action = "qrCode.jsp"; // Replace "qr_page.jsp" with your actual QR Code page URL
-                }
-                // Submit the form
-                form.submit();
-            }
-
-            // Trigger modal display when the "Purchase" button is clicked
-            var purchaseButtons = document.querySelectorAll('.purchaseButton');
-            purchaseButtons.forEach(function (button) {
+            qrButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
                     var companyName = this.getAttribute('data-company');
-                    purchaseOption(companyName);
+                    submitForm(companyName, 'QR');
                 });
             });
         </script>
