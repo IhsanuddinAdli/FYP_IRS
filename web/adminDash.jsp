@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang=" en">
-
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -19,11 +18,9 @@
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-            
             <!-------sidebar--design------------>
             <div id="sidebar">
                 <div class="sidebar-header">
@@ -46,30 +43,18 @@
                             <li><a href="managerList.jsp">Manager</a></li>
                         </ul>
                     </li>
-
                     <li class="">
                         <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
-
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
-
-                    <!-- <li class="">
-                            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-                        </li> -->
-
                 </ul>
             </div>
-
             <!-------sidebar--design- close----------->
-
             <!-------page-content start----------->
-
             <div id="content">
-
                 <!------top-navbar-start----------->
-
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -78,9 +63,7 @@
                                     <span class="material-icons text-white">signal_cellular_alt</span>
                                 </div>
                             </div>
-
                             <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
-
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
@@ -97,27 +80,22 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#">
                                                     <span class="material-icons">question_answer</span>
                                                 </a>
                                             </li>
-
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="adminProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
-
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="xp-breadcrumbbar text-center">
                             <h4 class="page-title">Dashboard</h4>
                             <ol class="breadcrumb">
@@ -125,18 +103,13 @@
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
-
-
                     </div>
                 </div>
                 <!------top-navbar-end----------->
-
                 <!----main-content--->
 
                 <!----main-content-end--->
-
                 <!----footer-design------------->
-
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
@@ -144,25 +117,15 @@
                         </div>
                     </div>
                 </footer>
-
-
-
-
             </div>
-
         </div>
-
-
-
         <!-------complete html----------->
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
         <script>
             $(document).ready(function () {
                 $(".xp-menubar").on('click', function () {
@@ -175,7 +138,5 @@
                 });
             });
         </script>
-
     </body>
-
 </html>

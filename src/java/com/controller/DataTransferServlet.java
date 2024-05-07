@@ -84,7 +84,7 @@ public class DataTransferServlet extends HttpServlet {
     }
 
     private void transferPaymentData(Connection conn, int quotationId) throws SQLException {
-        String sql = "INSERT INTO PaymentHistory (quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted) SELECT quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted FROM Payment WHERE quotation_id = ?";
+        String sql = "INSERT INTO PaymentHistory (quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted, paymentStatus) SELECT quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted, paymentStatus FROM Payment WHERE quotation_id = ?";
         executeInsert(conn, sql, quotationId);
     }
 

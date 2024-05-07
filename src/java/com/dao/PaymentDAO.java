@@ -8,7 +8,7 @@ import com.model.Payment;
 public class PaymentDAO {
 
     public static void insertPayment(Connection conn, Payment payment) throws SQLException {
-        String sql = "INSERT INTO Payment (quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Payment (quotation_id, payment_method, price, receipt_image, date_submitted, time_submitted, paymentStatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, payment.getQuotationId());
             stmt.setString(2, payment.getPaymentMethod());
@@ -16,6 +16,7 @@ public class PaymentDAO {
             stmt.setBytes(4, payment.getReceiptImage());
             stmt.setDate(5, java.sql.Date.valueOf(payment.getDateSubmitted()));
             stmt.setTime(6, java.sql.Time.valueOf(payment.getTimeSubmitted()));
+            stmt.setString(7, payment.getPaymentStatus());
             stmt.executeUpdate();
         }
     }

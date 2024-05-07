@@ -126,16 +126,16 @@
                                     <p>Policy Duration: <%= request.getParameter("policyDuration")%> months</p>
                                     <p>Policy Expiry Date: <%= request.getParameter("policyExpiryDate")%></p>
                                     <%
-                                        String finalTotalPremium = request.getParameter("finalTotalPremium");
-                                        double totalPremiumWithCOD = 0.0;
-                                        if (finalTotalPremium != null) {
+                                        String totalPremiumWithoutCOD = request.getParameter("finalTotalPremium");
+                                        double finalTotalPremium = 0.0;
+                                        if (totalPremiumWithoutCOD != null) {
                                             // Add RM10 for Cash on Delivery
-                                            totalPremiumWithCOD = Double.parseDouble(finalTotalPremium) + 10.0;
+                                            finalTotalPremium = Double.parseDouble(totalPremiumWithoutCOD) + 10.0;
                                     %>
-                                    <p>Your insurance price is: RM <%= finalTotalPremium%></p>
+                                    <p>Your insurance price is: RM <%= totalPremiumWithoutCOD%></p>
                                     <p>Additional RM10 for Cash on Delivery: RM 10.00</p>
-                                    <p>Total amount payable: RM <%= String.format("%.2f", totalPremiumWithCOD)%></p>
-                                    <input type="hidden" id="price" name="price" value="<%= totalPremiumWithCOD%>">
+                                    <p>Total amount payable: RM <%= String.format("%.2f", finalTotalPremium)%></p>
+                                    <input type="hidden" id="price" name="price" value="<%= finalTotalPremium%>">
                                     <% } else { %>
                                     <p>Unable to retrieve insurance price.</p>
                                     <% }%>
@@ -145,7 +145,8 @@
                                     <input type="hidden" id="paymentMethod" name="paymentMethod" value="Cash on Delivery">
                                     <input type="hidden" id="formattedDate" name="formattedDate" value="<%= formattedDate%>">
                                     <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
-                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
+                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= finalTotalPremium%>">
+                                    <input type="hidden" id="paymentStatus" name="paymentStatus" value="pending">
                                     <button type="submit" class="btn btn-primary">Confirm Payment</button>
                                 </form>
                             </div>

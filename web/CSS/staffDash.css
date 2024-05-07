@@ -488,21 +488,14 @@ input[type="search"] {
 /*---navbardesign -end-----*/
 
 /* main content */
-#main-content-image {
+.main-content {
     text-align: center;
     margin-top: 0;
-    height: 90vh; /* Set the container height */
-    overflow: hidden; /* Hide any overflowing content */
+    height: 75vh; 
+    overflow: auto;
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
 /* main content end */
 
 /*-------footer design start------*/

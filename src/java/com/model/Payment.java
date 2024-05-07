@@ -11,15 +11,17 @@ public class Payment {
     private byte[] receiptImage;
     private LocalDate dateSubmitted;
     private LocalTime timeSubmitted;
+    private String paymentStatus;
 
     // Constructor, getters, and setters
-    public Payment(int quotationId, String paymentMethod, double price, byte[] receiptImage, LocalDate dateSubmitted, LocalTime timeSubmitted) {
+    public Payment(int quotationId, String paymentMethod, double price, byte[] receiptImage, LocalDate dateSubmitted, LocalTime timeSubmitted, String paymentStatus) {
         this.quotationId = quotationId;
         this.paymentMethod = paymentMethod;
         this.price = price;
         this.receiptImage = receiptImage;
         this.dateSubmitted = dateSubmitted;
         this.timeSubmitted = timeSubmitted;
+        this.paymentStatus = paymentStatus;
     }
 
     // Getters and setters
@@ -69,5 +71,13 @@ public class Payment {
 
     public void setTimeSubmitted(LocalTime timeSubmitted) {
         this.timeSubmitted = timeSubmitted;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

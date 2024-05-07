@@ -488,18 +488,12 @@ input[type="search"] {
 /*---navbardesign -end-----*/
 
 /* main content */
-#main-content-image {
+.main-content {
     text-align: center;
     margin-top: 0;
-    height: 75vh; /* Set the container height to 80vh */
-    overflow: hidden; /* Hide any overflowing content */
+    height: 75vh; 
+    overflow: auto;
     background: url('background2.png') center/cover no-repeat; /* Add background image */
-}
-
-#main-content-image img {
-    width: auto;
-    height: 100%; /* Ensure the image takes 100% of the container height */
-    object-fit: contain; /* Maintain aspect ratio and fit the entire image within the container */
 }
 
 /* main content end */

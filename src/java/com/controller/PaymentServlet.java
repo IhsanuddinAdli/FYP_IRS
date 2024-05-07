@@ -31,6 +31,7 @@ public class PaymentServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("finalTotalPremium"));
         LocalDate formattedDate = LocalDate.parse(request.getParameter("formattedDate"));
         LocalTime formattedTime = LocalTime.parse(request.getParameter("formattedTime"));
+        String paymentStatus = request.getParameter("paymentStatus");
 
         // Get the receipt image if available
         Part filePart = request.getPart("receiptImage");
@@ -40,7 +41,7 @@ public class PaymentServlet extends HttpServlet {
         }
 
         // Create Payment object
-        Payment payment = new Payment(quotationId, paymentMethod, price, receiptImage, formattedDate, formattedTime);
+        Payment payment = new Payment(quotationId, paymentMethod, price, receiptImage, formattedDate, formattedTime, paymentStatus);
 
         // Insert into database
         try {
