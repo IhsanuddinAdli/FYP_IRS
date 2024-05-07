@@ -8,6 +8,10 @@
         <servlet-name>DataTransferServlet</servlet-name>
         <servlet-class>com.controller.DataTransferServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagePaymentServlet</servlet-name>
+        <servlet-class>com.controller.ManagePaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/PaymentServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>DataTransferServlet</servlet-name>
         <url-pattern>/DataTransferServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagePaymentServlet</servlet-name>
+        <url-pattern>/ManagePaymentServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
