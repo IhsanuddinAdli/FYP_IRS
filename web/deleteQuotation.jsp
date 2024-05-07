@@ -11,7 +11,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="CSS/customerQuoList.css">
+        <link rel="stylesheet" href="CSS/customerHistory.css">
     </head>
     <body>
         <%

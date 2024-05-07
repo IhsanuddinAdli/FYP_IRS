@@ -227,7 +227,8 @@
             generalyPercentages.put("Daihatsu", 0.036);
             generalyPercentages.put("Foton (Van)", 0.035);
             companyVehicleMakePercentages.put("Generaly", generalyPercentages);
-
+        %>
+        <%
             // Iterate over each company in companyVehicleMakePercentages
             for (Map.Entry<String, Map<String, Double>> entry : companyVehicleMakePercentages.entrySet()) {
                 String companyName = entry.getKey();
@@ -287,14 +288,6 @@
             <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
             <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
         </form>
-        <div id="modal_<%= companyName%>" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" data-modal="modal_<%= companyName%>">&times;</span>
-                <p>Choose your purchase option for <%= companyName%>:</p>
-                <button onclick="submitForm('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
-                <button onclick="submitForm('<%= companyName%>', 'QR')">QR Code</button>
-            </div>
-        </div>
         <%
                     } else {
                         // If percentage not found for the selected make, display a message

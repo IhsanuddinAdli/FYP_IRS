@@ -48,10 +48,8 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html lang=" en">
-
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -62,26 +60,17 @@
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
         <link rel="stylesheet" href="CSS/profile.css">
-
-
         <!--google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-
     <body>
-
         <div class="wrapper">
-
             <div class="body-overlay"></div>
-
             <!-------sidebar--design------------>
-
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
@@ -90,34 +79,21 @@
                     <li class="">
                         <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
                     </li>
-
                     <li class="active">
                         <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
-
                     <li class="">
                         <a href="#" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
                     </li>
-
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
-
-                    <!-- <li class="">
-                            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-                        </li> -->
-
                 </ul>
             </div>
-
             <!-------sidebar--design- close----------->
-
             <!-------page-content start----------->
-
             <div id="content">
-
                 <!------top-navbar-start----------->
-
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -126,9 +102,7 @@
                                     <span class="material-icons text-white">signal_cellular_alt</span>
                                 </div>
                             </div>
-
                             <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
-
                             <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
                                 <div class="xp-profilebar text-right">
                                     <nav class="navbar p-0">
@@ -145,27 +119,22 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#">
                                                     <span class="material-icons">question_answer</span>
                                                 </a>
                                             </li>
-
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="staffProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
-
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="xp-breadcrumbbar text-center">
                             <h4 class="page-title">Profile</h4>
                             <ol class="breadcrumb">
@@ -173,11 +142,36 @@
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
-
-
                     </div>
                 </div>
                 <!------top-navbar-end----------->
+                <!-- modal for updating profile image -->
+                <div class="modal fade" id="updateImageModal" tabindex="-1" role="dialog" aria-labelledby="updateImageModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form id="updateImageForm" action="uploadImage" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="updateImageModalLabel">Update Profile Image</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="imageFile">Choose Image:</label>
+                                        <input type="file" class="form-control-file" id="imageFile" name="imageFile">
+                                    </div>
+                                    <input type="hidden" name="userID" value="<%= userID%>">
+                                    <input type="hidden" name="roles" value="<%= roles %>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Upload Image</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!----main-content--->
                 <div class="main-content">
@@ -186,8 +180,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <img src="IMG/avatar.jpg" alt="Avatar" class="img-fluid rounded-circle mb-3"
-                                             style="width: 100px; height: 100px;">
+                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
@@ -241,10 +234,8 @@
                                                 <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
                                             </div>
                                             <!-- Add more fields as needed -->
-
                                             <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
                                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
-
                                         </form>
                                     </div>
                                 </div>
@@ -252,7 +243,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!----main-content-end--->
 
                 <!-- Modal for Updating Profile -->
@@ -298,7 +288,6 @@
                                         <label for="residence">Residence</label>
                                         <input type="text" class="form-control" id="residence" name="residence" required value="<%= residence%>">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="zipcode">Zipcode</label>
                                         <input type="text" class="form-control" id="zipcode" name="zipcode" required value="<%= zipcode%>">
@@ -324,9 +313,7 @@
                         </div>
                     </div>
                 </div>
-
                 <!----footer-design------------->
-
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
@@ -334,18 +321,9 @@
                         </div>
                     </div>
                 </footer>
-
-
-
-
             </div>
-
         </div>
-
-
-
         <!-------complete html----------->
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
@@ -374,8 +352,5 @@
                 });
             });
         </script>
-
-
     </body>
-
 </html>

@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%
     String userID = (String) session.getAttribute("userID");
+    String roles = (String) session.getAttribute("roles");
     String firstname = "";
     String lastname = "";
     String ICNumber = "";
@@ -22,6 +23,7 @@
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                roles = rs.getString("roles");
                 firstname = rs.getString("firstname");
                 lastname = rs.getString("lastname");
                 ICNumber = rs.getString("ICNumber");
@@ -169,6 +171,7 @@
                                         <input type="file" class="form-control-file" id="imageFile" name="imageFile">
                                     </div>
                                     <input type="hidden" name="userID" value="<%= userID%>">
+                                    <input type="hidden" name="roles" value="<%= roles %>">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -178,7 +181,8 @@
                         </div>
                     </div>
                 </div>
-
+                                
+                <!----main-content--->
                 <div id="main-content-image">
                     <div class="container-fluid">
                         <div class="row">
@@ -186,7 +190,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <!-- Display the customer's current profile image -->
-                                        <img src="getImage?userID=<%= userID%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
+                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <!-- Button to trigger the modal for updating the profile image -->

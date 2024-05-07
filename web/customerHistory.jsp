@@ -117,14 +117,12 @@
                             <thead>
                                 <tr>
                                     <th>Registration Number</th>
-                                    <th>Vehicle Make</th>
+                                    <th>Vehicle Type</th>
                                     <th>Vehicle Model</th>
                                     <th>Coverage</th>
                                     <th>Policy Expiry Date</th>
                                     <th>Payment Method</th>
                                     <th>Price</th>
-                                    <th>Date Submitted</th>
-                                    <th>Time Submitted</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -151,7 +149,7 @@
                                             // Iterate through the result set and display data in table rows
                                             while (rs2.next()) {
                                                 String registrationNumber = rs2.getString("registration_number");
-                                                String vehicleMake = rs2.getString("vehicle_make");
+                                                String vehicleType = rs2.getString("vehicle_type");
                                                 String vehicleModel = rs2.getString("vehicle_model");
 
                                                 // Query to retrieve data from PaymentHistory table based on quotationId
@@ -168,14 +166,12 @@
                                 %>
                                 <tr>
                                     <td><%= registrationNumber%></td>
-                                    <td><%= vehicleMake%></td>
+                                    <td><%= vehicleType%></td>
                                     <td><%= vehicleModel%></td>
                                     <td><%= coverage%></td>
                                     <td><%= policyExpiryDate%></td>
                                     <td><%= paymentMethod%></td>
                                     <td><%= price%></td>
-                                    <td><%= dateSubmitted%></td>
-                                    <td><%= timeSubmitted%></td>
                                 </tr>
                                 <%
                                                 }

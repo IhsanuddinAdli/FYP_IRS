@@ -493,7 +493,7 @@ input[type="search"] {
     text-align: center;
     margin-top: 0;
     height: 75vh; /* Set the container height */
-    overflow: hidden; /* Hide any overflowing content */
+    overflow: auto; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
 

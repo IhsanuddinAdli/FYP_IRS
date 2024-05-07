@@ -2,8 +2,8 @@
 <%@page import="java.util.List"%>
 <%@page import="com.model.Feedback"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="com.dao.CustomerDAO"%>
-<%@page import="com.model.Customer"%>
+<%@page import="com.dao.ProfileDAO"%>
+<%@page import="com.model.Profile"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.io.ByteArrayInputStream"%>
 <%@page import="java.util.Base64"%>
@@ -145,9 +145,9 @@
                         <div class="row">
                             <% for (int j = i * 3; j < Math.min((i + 1) * 3, feedbackList.size()); j++) {
                                     Feedback feedback = feedbackList.get(j);
-                                    Customer customer = CustomerDAO.getCustomerByID(feedback.getUserID());
-                                    if (customer != null) {
-                                        InputStream profileImageStream = customer.getProfileImage();
+                                    Profile profile = ProfileDAO.getCustomerByID(feedback.getUserID());
+                                    if (profile != null) {
+                                        InputStream profileImageStream = profile.getProfileImage();
                                         if (profileImageStream != null) {
                                             byte[] profileImageBytes = profileImageStream.readAllBytes();
                                             String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
@@ -157,7 +157,7 @@
                                     <div class="review-header">
                                         <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
                                              alt="Profile Picture" class="review-profile-img">
-                                        <h4 class="review-name"><%= customer.getFirstname() + " " + customer.getLastname()%></h4>
+                                        <h4 class="review-name"><%= profile.getFirstname() + " " + profile.getLastname()%></h4>
                                     </div>
                                     <p class="review-content">
                                         <%= feedback.getFeedback()%>
@@ -284,7 +284,7 @@
         <!-- Footer Section -->
         <footer>
             <div class="footer-container">
-                <p>&copy; 2024 GuardWheels. All Rights Reserved.</p>
+                <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
             </div>
         </footer>
     </body>

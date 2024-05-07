@@ -9,16 +9,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.dao.CustomerDAO;
+import com.dao.ProfileDAO;
 
 @WebServlet("/getImage")
 public class GetImageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userID = request.getParameter("userID");
+        String roles = request.getParameter("roles");
+        int userID = Integer.parseInt(request.getParameter("userID"));
 
         try {
-            InputStream imageStream = CustomerDAO.getProfileImage(userID);
+            InputStream imageStream = ProfileDAO.getProfileImage(userID, roles);
             if (imageStream != null) {
                 response.setContentType("image/jpeg");
                 OutputStream outputStream = response.getOutputStream();

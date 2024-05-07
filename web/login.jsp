@@ -47,6 +47,8 @@
                     </svg>
                     <input type="password" name="password" id="password" placeholder="Password">
                 </div>
+                
+                <input type="hidden" name="roles" id="roles" value="customer">
 
                 <div class="options">
                     <div class="remember-me">
@@ -84,6 +86,7 @@
                                 // User found, set session and redirect to home page
                                 HttpSession loginsession = request.getSession();
                                 session.setAttribute("userID", resultSet.getString("userID"));
+                                session.setAttribute("roles", resultSet.getString("roles"));
                                 response.sendRedirect("customerDash.jsp");
                             } else {
                                 // User not found, display error message

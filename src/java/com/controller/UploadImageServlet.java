@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.dao.CustomerDAO;
+import com.dao.ProfileDAO;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.servlet.ServletException;
@@ -16,15 +16,32 @@ import javax.servlet.http.Part;
 public class UploadImageServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userID = request.getParameter("userID");
-        Part filePart = request.getPart("imageFile"); // Retrieves <input type="file" name="imageFile">
+        String roles = request.getParameter("roles");
+        int userID = Integer.parseInt(request.getParameter("userID"));
+        Part filePart = request.getPart("imageFile");
 
         try (InputStream fileContent = filePart.getInputStream()) {
-            CustomerDAO.updateProfileImage(userID, fileContent);
-            // Redirect to customerProfile.jsp after successful upload
-            response.sendRedirect("customerProfile.jsp");
+            ProfileDAO.updateProfileImage(userID, fileContent, roles);
+            // Redirect to appropriate page after successful upload
+            response.sendRedirect(getRedirectURL(roles));
         } catch (Exception e) {
             response.getWriter().println("Error: " + e.getMessage());
+        }
+    }
+
+    private String getRedirectURL(String roles) {
+        // Determine the appropriate redirection URL based on the user's role
+        switch (roles) {
+            case "customer":
+                return "customerProfile.jsp";
+            case "staff":
+                return "staffProfile.jsp";
+            case "manager":
+                return "managerProfile.jsp";
+            case "admin":
+                return "adminProfile.jsp";
+            default:
+                throw new IllegalArgumentException("Invalid user role: " + roles);
         }
     }
 }

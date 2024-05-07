@@ -6,7 +6,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
-        <link rel="stylesheet" href="CSS/feedbackSuccess.css">
     </head>
     <body>
         <div class="container mt-5">
@@ -14,7 +13,8 @@
                 <h4 class="alert-heading">Feedback Submitted Successfully!</h4>
                 <p>Thank you for submitting your feedback. Your response has been recorded.</p>
                 <hr>
-                <p class="mb-0">Go back to <a href="customerHistory.jsp">Dashboard</a> 
+                <p class="mb-0">Go back to <a href="customerHistory.jsp">View quotation history list.</a> 
+            </div>
         </div>
     </body>
 </html>

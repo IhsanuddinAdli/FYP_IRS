@@ -2,7 +2,7 @@ package com.model;
 
 import java.io.InputStream;
 
-public class Customer {
+public class Profile {
 
     private int userID;
     private String firstname;
