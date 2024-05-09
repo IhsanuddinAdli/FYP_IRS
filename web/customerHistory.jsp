@@ -123,6 +123,7 @@
                                     <th>Policy Expiry Date</th>
                                     <th>Payment Method</th>
                                     <th>Price</th>
+                                    <th>Cover Note</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,6 +173,34 @@
                                     <td><%= policyExpiryDate%></td>
                                     <td><%= paymentMethod%></td>
                                     <td><%= price%></td>
+                                    <td>
+                                        <%
+                                            // Query to retrieve the cover_note from QuotationHistory table based on quotationId
+                                            PreparedStatement stmt4 = conn.prepareStatement("SELECT cover_note FROM QuotationHistory WHERE quotation_id = ?");
+                                            stmt4.setInt(1, quotationId);
+                                            ResultSet rs4 = stmt4.executeQuery();
+
+                                            // Check if the result set has data
+                                            if (rs4.next()) {
+                                                // Retrieve the cover_note binary data
+                                                byte[] coverNoteData = rs4.getBytes("cover_note");
+                                                // Check if coverNoteData is not null and has content
+                                                if (coverNoteData != null && coverNoteData.length > 0) {
+                                                    // Output a link to download or view the PDF
+%>
+                                        <a href="viewPDF?id=<%= quotationId%>" target="_blank">View PDF</a>
+                                        <%
+                                        } else {
+                                            // If cover_note is empty or null
+                                        %>
+                                        No file uploaded
+                                        <%
+                                                }
+                                            }
+                                            rs4.close();
+                                            stmt4.close();
+                                        %>
+                                    </td>
                                 </tr>
                                 <%
                                                 }
