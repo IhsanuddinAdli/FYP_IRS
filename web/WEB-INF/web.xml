@@ -12,6 +12,18 @@
         <servlet-name>ManagePaymentServlet</servlet-name>
         <servlet-class>com.controller.ManagePaymentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadCoverNoteServlet</servlet-name>
+        <servlet-class>com.controller.UploadCoverNoteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PDFServlet</servlet-name>
+        <servlet-class>com.controller.PDFServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCoverNoteServlet</servlet-name>
+        <servlet-class>com.controller.DeleteCoverNoteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/PaymentServlet</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>ManagePaymentServlet</servlet-name>
         <url-pattern>/ManagePaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadCoverNoteServlet</servlet-name>
+        <url-pattern>/UploadCoverNoteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PDFServlet</servlet-name>
+        <url-pattern>/PDFServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCoverNoteServlet</servlet-name>
+        <url-pattern>/DeleteCoverNoteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

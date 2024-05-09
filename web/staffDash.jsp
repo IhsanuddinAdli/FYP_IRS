@@ -28,16 +28,16 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="active">
-                        <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="">
                         <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
+                        <a href="manageQuotation.jsp" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">payment</i>Manage Payment</a>
+                        <a href="managePayment.jsp" class=""><i class="material-icons">payment</i>Manage Payment</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>

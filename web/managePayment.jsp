@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="com.dao.DBConnection"%>
+<%@page import="java.util.Base64"%>
+<%@page import="java.io.InputStream"%>
+<%@page import="java.sql.Blob"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,6 +26,7 @@
                         <th>Customer Name</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>Receipt Image</th> <!-- Header for the image column -->
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,12 +42,28 @@
                                 String customerName = rs.getString("payment_method");
                                 double amount = rs.getDouble("price");
                                 String status = rs.getString("paymentStatus");
+                                Blob blob = rs.getBlob("receipt_image"); // Fetch the blob data
+
+                                String base64Image = "";
+                                if (blob != null) {
+                                    InputStream inputStream = blob.getBinaryStream();
+                                    byte[] buffer = new byte[inputStream.available()];
+                                    inputStream.read(buffer);
+                                    base64Image = Base64.getEncoder().encodeToString(buffer);
+                                }
                     %>
                     <tr data-payment-id="<%= paymentId%>">
                         <td><%= paymentId%></td>
                         <td><%= customerName%></td>
                         <td>RM<%= amount%></td>
                         <td><%= status%></td>
+                        <td>
+                            <% if (!base64Image.isEmpty()) {%>
+                            <img src="data:image/jpeg;base64,<%= base64Image%>" alt="Receipt Image" width="100">
+                            <% } else { %>
+                            No Image
+                            <% }%>
+                        </td>
                         <td>
                             <form action="managePayment" method="post">
                                 <input type="hidden" name="paymentId" value="<%= paymentId%>">
