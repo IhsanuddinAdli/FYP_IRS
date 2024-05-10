@@ -30,20 +30,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% try {
+                    <%
+                        try {
                             Connection conn = DBConnection.getConnection();
                             Statement stmt = conn.createStatement();
                             ResultSet rs = stmt.executeQuery("SELECT qh.quotation_id, c.firstname, qh.policy_commencement_date, qh.policy_duration, qh.policy_expiry_date, qh.selected_ncd, ph.paymentStatus, qh.cover_note FROM QuotationHistory qh JOIN Customer c ON qh.userID = c.userID LEFT JOIN PaymentHistory ph ON qh.quotation_id = ph.quotation_id");
-                            while (rs.next()) {
-                                int quotationId = rs.getInt("quotation_id");
-                                String customerName = rs.getString("firstname");
-                                Date commencementDate = rs.getDate("policy_commencement_date");
-                                int duration = rs.getInt("policy_duration");
-                                Date expiryDate = rs.getDate("policy_expiry_date");
-                                String ncd = rs.getString("selected_ncd");
-                                String paymentStatus = rs.getString("paymentStatus");
-                                String coverNotePath = rs.getString("cover_note");
-                                boolean isUploadable = !"Pending".equals(paymentStatus) && !"Rejected".equals(paymentStatus);
+                            if (!rs.isBeforeFirst()) {
+                    %><tr><td colspan="9">No data found</td></tr><%
+                                }
+                                while (rs.next()) {
+                                    int quotationId = rs.getInt("quotation_id");
+                                    String customerName = rs.getString("firstname");
+                                    Date commencementDate = rs.getDate("policy_commencement_date");
+                                    int duration = rs.getInt("policy_duration");
+                                    Date expiryDate = rs.getDate("policy_expiry_date");
+                                    String ncd = rs.getString("selected_ncd");
+                                    String paymentStatus = rs.getString("paymentStatus");
+                                    String coverNotePath = rs.getString("cover_note");
+                                    boolean isUploadable = !"Pending".equals(paymentStatus) && !"Rejected".equals(paymentStatus);
                     %>
                     <tr data-quotation-id="<%= quotationId%>">
                         <td><%= quotationId%></td>
@@ -55,7 +59,6 @@
                         <td><%= paymentStatus%></td>
                         <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal<%= quotationId%>" <%= !isUploadable ? "disabled" : ""%>>Upload Cover Note</button>
-                            <!-- Updated Delete Button with disable condition -->
                             <button type="button" class="btn btn-danger" onclick="confirmDelete(<%= quotationId%>)" <%= !isUploadable ? "disabled" : ""%>>Delete Cover Note</button>
                         </td>
                         <td>
@@ -66,7 +69,7 @@
                             <% }%>
                         </td>
                     </tr>
-                    <!-- Modal -->
+                    <!-- Modal for Uploading Cover Note -->
                 <div class="modal fade" id="uploadModal<%= quotationId%>" tabindex="-1" role="dialog" aria-labelledby="modalLabel<%= quotationId%>" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -89,31 +92,31 @@
                         </div>
                     </div>
                 </div>
-                <% }
-                        rs.close();
-                        stmt.close();
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }%>
+                <%
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                %><tr><td colspan="9">Error retrieving data: <%= e.getMessage()%></td></tr><%
+                            }%>
                 </tbody>
             </table>
         </div>
         <!-- Optional JavaScript; choose one of the two! -->
-
         <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
-
         <%
             String message = request.getParameter("message");
             if (message != null && !message.isEmpty()) {
         %>
         <script>
-            $(document).ready(function () {
-                alert('<%= message%>');
-            });
+                                $(document).ready(function () {
+                                    alert('<%= message%>');
+                                });
         </script>
         <%
             }
@@ -121,11 +124,9 @@
         <script>
             function confirmDelete(quotationId) {
                 if (confirm('Are you sure you want to delete this cover note?')) {
-                    // If confirmed, redirect to the servlet that handles deletion
                     window.location.href = 'deleteCoverNote?quotationId=' + quotationId;
                 }
             }
         </script>
-
     </body>
 </html>
