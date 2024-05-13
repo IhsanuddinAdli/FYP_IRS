@@ -14,18 +14,14 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-
         <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/homePage.css">
         <title>Home Page</title>
     </head>
-
     <body>
-
         <section id="header">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark">
@@ -68,12 +64,10 @@
                                             <a class="dropdown-item" href="login.jsp">Login</a>
                                             <a class="dropdown-item" href="register.jsp">Sign Up</a>
                                         </li>
-
                                         <!-- Separator -->
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>
-
                                         <!-- Staff Section -->
                                         <li>
                                             <span class="dropdown-header">Staff</span>
@@ -82,9 +76,7 @@
                                     </ul>
                                 </li>
                                 <!-- ... -->
-
                             </ul>
-
                         </div>
                     </div>
                 </nav>
@@ -100,7 +92,6 @@
             </path>
             </svg>
         </section>
-
         <!-- Add content for the "About Us" section -->
         <section id="about" class="bg-light py-5">
             <div class="container">
@@ -121,12 +112,10 @@
                 <!-- Add more content as needed -->
             </div>
         </section>
-
         <!-- Add content for the "Review" section -->
         <section id="review" class="bg-light py-5">
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
-
                 <!-- Slideshow container -->
                 <div class="slideshow-container">
                     <!-- Iterate over feedback data and display -->
@@ -172,9 +161,9 @@
                                 </div>
                             </div>
                             <%
-                                }
-                            }
-                        } %>
+                                        }
+                                    }
+                                } %>
                         </div>
                     </div>
                     <%
@@ -237,15 +226,15 @@
         crossorigin="anonymous"></script>
 
         <script>
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        e.preventDefault();
+                        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                            anchor.addEventListener('click', function (e) {
+                                e.preventDefault();
 
-                        document.querySelector(this.getAttribute('href')).scrollIntoView({
-                            behavior: 'smooth'
+                                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            });
                         });
-                    });
-                });
         </script>
         <script>
             var slideIndex = 1;

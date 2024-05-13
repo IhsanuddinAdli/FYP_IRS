@@ -24,6 +24,14 @@
         <servlet-name>DeleteCoverNoteServlet</servlet-name>
         <servlet-class>com.controller.DeleteCoverNoteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationServlet</servlet-name>
+        <servlet-class>com.controller.NotifyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetNotifyServlet</servlet-name>
+        <servlet-class>com.controller.ResetNotifyServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/PaymentServlet</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>DeleteCoverNoteServlet</servlet-name>
         <url-pattern>/DeleteCoverNoteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationServlet</servlet-name>
+        <url-pattern>/NotificationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetNotifyServlet</servlet-name>
+        <url-pattern>/ResetNotifyServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

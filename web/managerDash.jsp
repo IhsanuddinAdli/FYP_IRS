@@ -34,7 +34,7 @@
                         <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
+                        <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
                     </li>
                     <li class="">
                         <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
