@@ -32,6 +32,10 @@
         <servlet-name>ResetNotifyServlet</servlet-name>
         <servlet-class>com.controller.ResetNotifyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmailUtility</servlet-name>
+        <servlet-class>com.controller.EmailUtility</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/PaymentServlet</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ResetNotifyServlet</servlet-name>
         <url-pattern>/ResetNotifyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailUtility</servlet-name>
+        <url-pattern>/EmailUtility</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
