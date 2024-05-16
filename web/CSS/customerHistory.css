@@ -492,7 +492,6 @@ input[type="search"] {
 #main-content-image {
     text-align: center;
     margin-top: 0;
-    height: 75vh; /* Set the container height */
     overflow: auto; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
@@ -503,6 +502,7 @@ input[type="search"] {
     justify-content: center;
     align-items: center;
     height: 100%;
+    margin-top: 25px;
 }
 
 table {

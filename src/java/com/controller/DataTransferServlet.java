@@ -69,7 +69,7 @@ public class DataTransferServlet extends HttpServlet {
     }
 
     private void transferQuotationData(Connection conn, int quotationId) throws SQLException {
-        String sql = "INSERT INTO QuotationHistory (quotation_id, userID, coverage, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd) SELECT quotation_id, userID, coverage, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd FROM Quotation WHERE quotation_id = ?";
+        String sql = "INSERT INTO QuotationHistory (quotation_id, userID, coverage, company, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd) SELECT quotation_id, userID, coverage, company, policy_commencement_date, policy_duration, policy_expiry_date, selected_ncd FROM Quotation WHERE quotation_id = ?";
         executeInsert(conn, sql, quotationId);
     }
 

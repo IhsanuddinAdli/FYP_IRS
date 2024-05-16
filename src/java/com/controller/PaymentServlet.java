@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import com.dao.DBConnection;
+import com.dao.QuotationDAO;
 import com.model.Payment;
 
 @WebServlet("/paymentSubmit")
@@ -32,6 +33,7 @@ public class PaymentServlet extends HttpServlet {
         LocalDate formattedDate = LocalDate.parse(request.getParameter("formattedDate"));
         LocalTime formattedTime = LocalTime.parse(request.getParameter("formattedTime"));
         String paymentStatus = request.getParameter("paymentStatus");
+        String companyName = request.getParameter("companyName");
 
         // Get the receipt image if available
         Part filePart = request.getPart("receiptImage");
@@ -47,6 +49,10 @@ public class PaymentServlet extends HttpServlet {
         try {
             Connection conn = DBConnection.getConnection();
             PaymentDAO.insertPayment(conn, payment);
+
+            // Update company name in quotation table
+            QuotationDAO.updateCompanyName(conn, quotationId, companyName);
+
             conn.close();
             // After inserting payment into database
             request.setAttribute("quotationId", quotationId);

@@ -370,6 +370,7 @@
             <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
             <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
             <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <input type="hidden" name="companyName" value="<%= companyName%>">
             <button type="submit" name="purchaseOption" value="QR">QR Code</button>
         </form>
         <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp">
@@ -381,6 +382,7 @@
             <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
             <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
             <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+            <input type="hidden" name="companyName" value="<%= companyName%>">
             <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
         </form>
         <div id="modal_<%= companyName%>" class="modal" style="display: none;">

@@ -113,6 +113,7 @@
                             <div class="col-md-12">
                                 <div class="transaction-details">
                                     <h3>Transaction Details</h3>
+                                    <p>Company Name: <%= request.getParameter("companyName")%></p>
                                     <p>Quotation ID : <%=request.getParameter("quotationId")%></p>
                                     <p>Registration Number: <%= request.getParameter("registrationNumber")%></p>
                                     <%
@@ -147,6 +148,7 @@
                                     <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
                                     <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= finalTotalPremium%>">
                                     <input type="hidden" id="paymentStatus" name="paymentStatus" value="pending">
+                                    <input type="hidden" id="companyName" name="companyName" value="<%= request.getParameter("companyName")%>">
                                     <button type="submit" class="btn btn-primary">Confirm Payment</button>
                                 </form>
                             </div>

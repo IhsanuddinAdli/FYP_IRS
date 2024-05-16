@@ -1,9 +1,34 @@
+<%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="com.dao.DBConnection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String userID = (String) session.getAttribute("userID");
+    String roles = (String) session.getAttribute("roles");
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
+            ps.setString(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                roles = rs.getString("roles");
+            }
+        } catch (SQLException e) {
+            // Handle SQLException (print or log the error)
+            e.printStackTrace();
+            out.println("An error occurred while fetching customer data. Please try again later.");
+        }
+    } else {
+        // Handle the case where customerID is not found in the session
+        out.println("CustomerID not found in the session.");
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,7 +57,7 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="">
-                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
@@ -90,7 +115,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -129,7 +154,7 @@
                             <tbody>
                                 <%
                                     // Retrieve userID from session
-                                    String userID = (String) session.getAttribute("userID");
+//                                    String userID = (String) session.getAttribute("userID");
 
                                     // Check if userID is not null
                                     if (userID != null && !userID.isEmpty()) {
@@ -151,7 +176,7 @@
                                                     String coverage = rs.getString("coverage");
 
                                                     // Display the quotation details in a table row
-                                %>
+%>
                                 <tr>
                                     <td><%= quotationId%></td>
                                     <td><%= regNumber%></td>
@@ -163,11 +188,11 @@
                                     <!-- Action buttons -->
                                     <td>
                                         <!--<a href="javascript:void(0);" onclick="confirmDelete(<%= quotationId%>)">Delete Quotation</a>-->
-                                        <button type="button" onclick="confirmDelete(<%= quotationId%>)">Delete</button>
                                         <form action="calculateQuotation.jsp" method="POST">
                                             <input type="hidden" name="quotationId" value="<%= quotationId%>">
-                                            <button type="submit">Calculate</button>
+                                            <button type="submit" class="btn btn-primary">Calculate</button>
                                         </form>
+                                        <button type="button" class="btn btn-danger"  onclick="confirmDelete(<%= quotationId%>)">Delete</button>
                                     </td>
                                 </tr>
                                 <%

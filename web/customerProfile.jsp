@@ -76,7 +76,7 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class=""> 
-                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="active">
                         <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
@@ -134,7 +134,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -190,7 +190,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <!-- Display the customer's current profile image -->
-                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
+                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <!-- Button to trigger the modal for updating the profile image -->

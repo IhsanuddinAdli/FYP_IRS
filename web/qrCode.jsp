@@ -147,6 +147,7 @@
                                     <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
                                     <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
                                     <input type="hidden" id="paymentStatus" name="paymentStatus" value="pending">
+                                    <input type="hidden" id="companyName" name="companyName" value="<%= request.getParameter("companyName")%>">
                                     
                                     <input type="file" name="receiptImage" accept="image/*">
                                     <button type="submit" class="btn btn-primary">Submit Payment</button>

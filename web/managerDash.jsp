@@ -37,17 +37,8 @@
                         <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
-                    <!--                    <li class="dropdown">
-                                            <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                                <i class="material-icons">border_color</i>Manage Feedback
-                                            </a>
-                                            <ul class="collapse list-unstyled menu" id="homeSubmenu1">
-                                                <li><a href="#">Company</a></li>
-                                                <li><a href="#">Show</a></li>
-                                            </ul>
-                                        </li>-->
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
