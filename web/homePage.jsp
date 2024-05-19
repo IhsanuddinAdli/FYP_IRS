@@ -7,6 +7,8 @@
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.io.ByteArrayInputStream"%>
 <%@page import="java.util.Base64"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.dao.GraphHome"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
@@ -44,6 +46,9 @@
                                     <a class="nav-link" href="#header">Home</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="#insurance" data-target="#insurance">Insurance Covered</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="#about" data-target="#about">About Us</a>
                                 </li>
                                 <li class="nav-item">
@@ -52,7 +57,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#contact" data-target="#contact">Contact Us</a>
                                 </li>
-                                <!-- ... -->
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,12 +80,10 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <!-- ... -->
                             </ul>
                         </div>
                     </div>
                 </nav>
-                <!-- navbar code -->
                 <div class="middle">
                     <h1 class="text-white display-3 fw-bold">Get Your Vehicle Quotation <span class="theme-text">For
                             FREE!</span>.</h1>
@@ -93,7 +95,20 @@
             </path>
             </svg>
         </section>
-        <!-- Add content for the "About Us" section -->
+
+        <!-- Company Insurance Covered section -->
+        <section id="insurance" class="bg-light py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Company Insurance Covered</h2>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <canvas id="insuranceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us section -->
         <section id="about" class="bg-light py-5">
             <div class="container">
                 <h2 class="text-center mb-4">About Us</h2>
@@ -110,11 +125,10 @@
                         </p>
                     </div>
                 </div>
-                <!-- Add more content as needed -->
             </div>
         </section>
 
-        <!-- Add content for the "Review" section -->
+        <!-- Customer Reviews section -->
         <section id="review" class="bg-light py-5">
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
@@ -124,7 +138,7 @@
                     <%
                         // Retrieve feedback data from the database
                         FeedbackDAO feedbackDAO = new FeedbackDAO();
-                        List<Feedback> feedbackList = feedbackDAO.getAllFeedback(); // Assuming you have a method to fetch all feedback
+                        List<Feedback> feedbackList = feedbackDAO.getAllFeedback();
 
                         // Determine the number of slides needed
                         int numSlides = (int) Math.ceil((double) feedbackList.size() / 3);
@@ -200,7 +214,6 @@
                     Thank you for getting in touch! We will get back to you soon.
                 </div>
                 <% }%>
-                <br><br>
                 <div class="row">
                     <div class="col-md-6">
                         <h2 class="mb-4">Get in Touch</h2>
@@ -230,16 +243,14 @@
                         </div>
                         <!-- Add Google Map here -->
                         <div class="map-container mt-4">
-                            <div class="map-container mt-4">
-                                <iframe 
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d318.5596442745392!2d103.1208991!3d5.3309589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31b7bff43eb03c85%3A0x73ace62a73ef9cac!2sRazWawasanEnterprise!5e0!3m2!1sen!2smy!4v1684520568727!5m2!1sen!2smy"
-                                    width="100%" 
-                                    height="300" 
-                                    style="border:0;" 
-                                    allowfullscreen="" 
-                                    loading="lazy">
-                                </iframe>
-                            </div>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d318.5596442745392!2d103.1208991!3d5.3309589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31b7bff43eb03c85%3A0x73ace62a73ef9cac!2sRazWawasanEnterprise!5e0!3m2!1sen!2smy!4v1684520568727!5m2!1sen!2smy"
+                                width="100%"
+                                height="300"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy">
+                            </iframe>
                         </div>
                     </div>
                 </div>
@@ -255,7 +266,63 @@
                 integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
         crossorigin="anonymous"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            // Fetch insurance data from the server
+            <%
+                GraphHome graphHome = new GraphHome();
+                Map<String, Integer> companyCounts = graphHome.getCompanyCounts();
+            %>
+            var insuranceData = {
+            <%
+                    for (Map.Entry<String, Integer> entry : companyCounts.entrySet()) {
+                        out.print("'" + entry.getKey() + "': " + entry.getValue() + ",");
+                    }
+            %>
+            };
+
+            // Chart.js setup
+            var ctx = document.getElementById('insuranceChart').getContext('2d');
+            var insuranceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(insuranceData),
+                    datasets: [{
+                            label: '# of Customers',
+                            data: Object.values(insuranceData),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(199, 199, 199, 0.2)',
+                                'rgba(83, 102, 255, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(199, 199, 199, 1)',
+                                'rgba(83, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Scroll to section smoothly
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -290,8 +357,7 @@
             function topFunction() {
                 window.scrollTo({top: 0, behavior: 'smooth'});
             }
-        </script>
-        <script>
+
             var slideIndex = 1;
             showSlides(slideIndex);
 
@@ -322,26 +388,7 @@
                 slides[slideIndex - 1].style.display = "block";
                 dots[slideIndex - 1].className += " active";
             }
-
         </script>
-        <!-- Smooth scrolling for navigation links -->
-        <script>
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-
-            // Scroll to the "Contact Us" section if the success parameter is present
-            if (window.location.search.includes('success=true')) {
-                document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
-            }
-        </script>
-
         <!-- Footer Section -->
         <footer>
             <div class="footer-container">

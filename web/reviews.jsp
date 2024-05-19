@@ -34,6 +34,7 @@
                                 <option value="1">1 Star</option>
                             </select>
                             <button type="submit" class="btn btn-primary">Filter</button>
+                            <a href="homePage.jsp" class="btn btn-secondary ms-2">Back to Home</a>
                         </div>
                     </form>
                 </div>
