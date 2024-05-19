@@ -18,6 +18,11 @@
 
 :root {
     --main-color: #b5d524;
+    --secondary-color: #6c757d;
+    --bg-color: #f8f9fa;
+    --review-bg-color: #ffffff;
+    --review-border-color: #e9ecef;
+    --star-color: #ffbc00;
 }
 
 .act,
@@ -84,13 +89,13 @@ svg.wave {
 }
 
 #review {
-    background-color: #f1f1f1f1;
+    background-color: var(--review-bg-color);
 }
 
 /* Slideshow container */
 .slideshow-container {
     position: relative;
-    background: #f1f1f1f1;
+    background: var(--bg-color);
 }
 
 /* Full-width slides */
@@ -118,7 +123,6 @@ svg.wave {
 
 /* Position the "next button" to the right */
 .next {
-    position: absolute;
     right: 0;
     border-radius: 3px 0 0 3px;
 }
@@ -164,6 +168,22 @@ q {
 }
 
 /* Additional Styles for Image in Review Section */
+.review-box {
+    border: 1px solid var(--review-border-color);
+    border-radius: 8px;
+    padding: 20px;
+    background-color: var(--review-bg-color);
+    transition: transform 0.2s;
+}
+
+.review-box:hover {
+    transform: translateY(-10px);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+}
 
 .review-profile-img {
     width: 80px; /* Adjust the width of the profile image */
@@ -171,6 +191,23 @@ q {
     border-radius: 50%; /* Make the profile image circular */
     object-fit: cover; /* Ensure the image covers the entire container */
     margin-right: 20px; /* Add some space between the profile image and the content */
+    border: 2px solid var(--main-color);
+}
+
+.review-name {
+    margin-bottom: 0;
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+.review-content {
+    margin-top: 15px;
+    color: var(--secondary-color);
+}
+
+.review-stars {
+    margin-top: 10px;
+    color: var(--star-color);
 }
 
 /* Footer Section */
@@ -184,4 +221,28 @@ footer {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Back to Top Button */
+#backToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #b5d524; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+}
+
+#backToTopBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}
+
+#backToTopBtn i {
+    font-size: 20px; /* Increase the size of the icon */
 }

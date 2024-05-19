@@ -143,4 +143,16 @@ input[type="hidden"] {
     }
 }
 
-/* Additional styles as needed */
+.card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-family: revert;
+}
+.card-body {
+    background-color: #ffffff;
+}
+.card-footer {
+    background-color: #f8f9fa;
+    text-align: right;
+}
+

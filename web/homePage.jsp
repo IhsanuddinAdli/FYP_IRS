@@ -19,6 +19,7 @@
               integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/homePage.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <title>Home Page</title>
     </head>
     <body>
@@ -112,6 +113,7 @@
                 <!-- Add more content as needed -->
             </div>
         </section>
+
         <!-- Add content for the "Review" section -->
         <section id="review" class="bg-light py-5">
             <div class="container">
@@ -142,18 +144,19 @@
                                             String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
                             %>
                             <div class="col-md-4">
-                                <div class="review-box">
-                                    <div class="review-header">
+                                <div class="review-box shadow-sm p-4 mb-4 bg-white rounded">
+                                    <div class="review-header d-flex align-items-center">
                                         <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
                                              alt="Profile Picture" class="review-profile-img">
-                                        <h4 class="review-name"><%= profile.getFirstname() + " " + profile.getLastname()%></h4>
+                                        <div>
+                                            <h4 class="review-name mb-0"><%= profile.getFirstname() + " " + profile.getLastname()%></h4>
+                                            <small class="text-muted">Customer</small>
+                                        </div>
                                     </div>
-                                    <p class="review-content">
+                                    <p class="review-content mt-3">
                                         <%= feedback.getFeedback()%>
                                     </p>
                                     <div class="review-stars">
-                                        <!-- Render star rating here if available -->
-                                        <%-- Example: ★★★★☆ for rating 4 --%>
                                         <% for (int k = 0; k < feedback.getRating(); k++) { %>
                                         <span class="star">&#9733;</span>
                                         <% } %>
@@ -181,26 +184,36 @@
                     <span class="dot" onclick="currentSlide(<%= i + 1%>)"></span>
                     <% }%>
                 </div>
+
+                <!-- View All Reviews Button -->
+                <div class="text-center mt-4">
+                    <a href="reviews.jsp" class="btn btn-primary">View All Reviews</a>
+                </div>
             </div>
         </section>
 
-
-        <!-- "Contact Us" section -->
+        <!-- Contact Us section -->
         <section id="contact" class="bg-light py-5">
             <div class="container">
+                <% if ("true".equals(request.getParameter("success"))) { %>
+                <div class="alert alert-success" role="alert">
+                    Thank you for getting in touch! We will get back to you soon.
+                </div>
+                <% }%>
+                <br><br>
                 <div class="row">
                     <div class="col-md-6">
                         <h2 class="mb-4">Get in Touch</h2>
                         <p>If you have any questions or inquiries, feel free to contact us. Our team is here to assist you.</p>
-                        <form>
+                        <form action="contactUs" method="post">
                             <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Your Name">
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control" placeholder="Your Email">
+                                <input type="email" name="email" class="form-control" placeholder="Your Email" required>
                             </div>
                             <div class="mb-3">
-                                <textarea class="form-control" rows="5" placeholder="Your Message"></textarea>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
@@ -208,11 +221,24 @@
                     <div class="col-md-6">
                         <div class="contact-info">
                             <h2 class="mb-4">Contact Information</h2>
-                            <p><i class="bi bi-geo-alt-fill"></i> 123 Street Name, City, Country</p>
+                            <p><i class="bi bi-geo-alt-fill"></i> Lot 822 B, Jalan Tengku Mizan Kg Duyong Besar, 21300 Kuala Terengganu</p>
                             <p><i class="bi bi-telephone-fill"></i> +0139816630</p>
                             <p><i class="bi bi-envelope-fill"></i> adliyong1974@yahoo.com</p>
                             <div class="social-links mt-4">
-                                <a href="https://wa.me/1234567890" class="whatsapp btn btn-primary" target="_blank"><i class="bi bi-whatsapp"></i> Chat on Whatsapp</a>
+                                <a href="https://wa.me/0139816630" class="whatsapp btn btn-primary" target="_blank"><i class="bi bi-whatsapp"></i> Chat on Whatsapp</a>
+                            </div>
+                        </div>
+                        <!-- Add Google Map here -->
+                        <div class="map-container mt-4">
+                            <div class="map-container mt-4">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d318.5596442745392!2d103.1208991!3d5.3309589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31b7bff43eb03c85%3A0x73ace62a73ef9cac!2sRazWawasanEnterprise!5e0!3m2!1sen!2smy!4v1684520568727!5m2!1sen!2smy"
+                                    width="100%" 
+                                    height="300" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
                             </div>
                         </div>
                     </div>
@@ -220,21 +246,50 @@
             </div>
         </section>
 
+        <button onclick="topFunction()" id="backToTopBtn" title="Go to top">
+            <i class="material-icons">arrow_upward</i>
+        </button>
+
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
         crossorigin="anonymous"></script>
 
         <script>
-                        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                            anchor.addEventListener('click', function (e) {
-                                e.preventDefault();
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
 
-                                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            });
-                        });
+            // Scroll to the "Contact Us" section if the success parameter is present
+            if (window.location.search.includes('success=true')) {
+                document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+            }
+
+            // Back to Top Button
+            var backToTopBtn = document.getElementById("backToTopBtn");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () {
+                scrollFunction()
+            };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopBtn.style.display = "block";
+                } else {
+                    backToTopBtn.style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
         </script>
         <script>
             var slideIndex = 1;
@@ -268,6 +323,23 @@
                 dots[slideIndex - 1].className += " active";
             }
 
+        </script>
+        <!-- Smooth scrolling for navigation links -->
+        <script>
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Scroll to the "Contact Us" section if the success parameter is present
+            if (window.location.search.includes('success=true')) {
+                document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+            }
         </script>
 
         <!-- Footer Section -->

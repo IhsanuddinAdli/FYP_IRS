@@ -98,21 +98,31 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
-                                                    <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
+                                                <%
+                                                    String userId = (String) session.getAttribute("userID");
+                                                    if (userId != null) {
+                                                        try {
+                                                            Connection conn = DBConnection.getConnection();
+                                                            PreparedStatement ps = conn.prepareStatement(
+                                                                    "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
+                                                            ps.setString(1, userId);
+                                                            ResultSet rs = ps.executeQuery();
+                                                            if (rs.next() && rs.getInt("count") > 0) {
+                                                                int notifications = rs.getInt("count");
+                                                                out.println("<a class='nav-link' href='#' data-toggle='dropdown'><span class='material-icons'>notifications</span><span class='notification'>" + notifications + "</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>You have " + notifications + " new notifications.</a></li></ul>");
+                                                            } else {
+                                                                out.println("<a class='nav-link' href='#'><span class='material-icons'>notifications</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>No new notifications.</a></li></ul>");
+                                                            }
+                                                            rs.close();
+                                                            ps.close();
+                                                            conn.close();
+                                                        } catch (SQLException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                %>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
@@ -212,7 +222,7 @@
                                                 // Check if coverNoteData is not null and has content
                                                 if (coverNoteData != null && coverNoteData.length > 0) {
                                                     // Output a link to download or view the PDF
-                                        %>
+%>
                                         <a href="viewPDF?id=<%= quotationId%>" class="btn btn-primary" target="_blank">View Cover Note</a>
                                         <%
                                         } else {
