@@ -90,15 +90,15 @@
                 </div>
             </div>
             <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#fff" fill-opacity="1"
+            <path fill="#E8E8E7" fill-opacity="1"
                   d="M0,192L60,181.3C120,171,240,149,360,133.3C480,117,600,107,720,106.7C840,107,960,117,1080,122.7C1200,128,1320,128,1380,128L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
             </path>
             </svg>
         </section>
 
         <!-- Company Insurance Covered section -->
-        <section id="insurance" class="bg-light py-5">
-            <div class="container">
+        <section id="insurance" style="background-color: #f0f8ff; padding: 0;">
+            <div class="container py-5">
                 <h2 class="text-center mb-4">Company Insurance Covered</h2>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
@@ -109,14 +109,14 @@
         </section>
 
         <!-- About Us section -->
-        <section id="about" class="bg-light py-5">
+        <section id="about" class="" style="background-color: #f8f9fa;">
             <div class="container">
                 <h2 class="text-center mb-4">About Us</h2>
                 <div class="row">
                     <div class="col-md-6">
                         <img src="IMG/kedai.jpg" class="img-fluid rounded" alt="About Us Image">
                     </div>
-                    <div class="col-md-6" style="background-color: #yourColorCode;">
+                    <div class="col-md-6" style="background-color: #ffffff;">
                         <p class="lead">
                             Welcome to GuardWheels, your trusted partner for hassle-free insurance renewal.
                             Our mission is to provide efficient and reliable services to ensure your vehicle is
@@ -129,7 +129,7 @@
         </section>
 
         <!-- Customer Reviews section -->
-        <section id="review" class="bg-light py-5">
+        <section id="review" class="" style="background-color: #fffaf0;">
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
                 <!-- Slideshow container -->
@@ -207,7 +207,7 @@
         </section>
 
         <!-- Contact Us section -->
-        <section id="contact" class="bg-light py-5">
+        <section id="contact" class="" style="background-color: #f0fff0;">
             <div class="container">
                 <% if ("true".equals(request.getParameter("success"))) { %>
                 <div class="alert alert-success" role="alert">
@@ -275,16 +275,16 @@
             %>
             var insuranceData = {
             <%
-                    for (Map.Entry<String, Integer> entry : companyCounts.entrySet()) {
-                        out.print("'" + entry.getKey() + "': " + entry.getValue() + ",");
-                    }
+                for (Map.Entry<String, Integer> entry : companyCounts.entrySet()) {
+                    out.print("'" + entry.getKey() + "': " + entry.getValue() + ",");
+                }
             %>
             };
 
             // Chart.js setup
             var ctx = document.getElementById('insuranceChart').getContext('2d');
             var insuranceChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'pie', // Change this line from 'bar' to 'pie'
                 data: {
                     labels: Object.keys(insuranceData),
                     datasets: [{
@@ -314,9 +314,22 @@
                         }]
                 },
                 options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    var label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += context.raw;
+                                    return label;
+                                }
+                            }
                         }
                     }
                 }
@@ -382,11 +395,13 @@
                 for (i = 0; i < slides.length; i++) {
                     slides[i].style.display = "none";
                 }
-                for (i = 0; i < dots.length; i++) {
+                for (i = 0; dots && i < dots.length; i++) {
                     dots[i].className = dots[i].className.replace(" active", "");
                 }
                 slides[slideIndex - 1].style.display = "block";
-                dots[slideIndex - 1].className += " active";
+                if (dots && dots.length > 0) {
+                    dots[slideIndex - 1].className += " active";
+                }
             }
         </script>
         <!-- Footer Section -->

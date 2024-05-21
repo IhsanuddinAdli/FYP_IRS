@@ -3,7 +3,6 @@ html {
     line-height: 1.8;
     font-family: 'Poppins', sans-serif;
     color: #555e58;
-    text-transform: capitalize;
     font-weight: 400;
     margin: 0px;
     padding: 0px;
@@ -492,7 +491,7 @@ input[type="search"] {
 #main-content-image {
     text-align: center;
     margin-top: auto; /* Adjust as needed */
-    min-height: 90vh; /* Ensure the container takes up at least the height of the viewport */
+    min-height: 95vh; /* Ensure the container takes up at least the height of the viewport */
     background-image: url('background2.png'); /* Set background image */
     background-size: cover; /* Cover the entire container */
     background-position: center; /* Center the background image */
@@ -505,7 +504,8 @@ input[type="search"] {
     flex-direction: column;
     align-items: center;
     margin: 50px auto 0; /* Set margin to auto to horizontally center the container and add 50px margin on top */
-    max-width: 600px; /* Optionally set a maximum width for the container */
+    max-width: 800px; /* Optionally set a maximum width for the container */
+    margin-bottom: 50px;
     background-color: #ffffff; /* White background color */
     padding: 20px; /* Add padding for spacing */
     border-radius: 5px; /* Add border radius for rounded corners */

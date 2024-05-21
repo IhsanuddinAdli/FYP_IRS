@@ -12,8 +12,9 @@
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    height: 115vh;
     position: relative;
+    overflow: hidden;
 }
 
 :root {
@@ -37,7 +38,10 @@
 
 svg.wave {
     position: absolute;
-    bottom: -100px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
 }
 
 .middle {
@@ -83,18 +87,28 @@ svg.wave {
     align-items: center;
 }
 
+#insurance {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+    position: relative;
+    z-index: 2;
+}
+
+#insurance .container {
+    padding: 50px 0; /* Add padding to the container */
+}
+
 #about {
-    background-color: #e9ecef;
-    height: 120vh;
-    /* Change the background color as needed */
+    background-color: #f8f9fa; /* Light gray */
 }
 
 #review {
-    background-color: var(--review-bg-color);
+    background-color: #fffaf0; /* Light yellow */
 }
 
-#insurance {
-    background-color: #f8f9fa;
+#contact {
+    background-color: #f0fff0; /* Light green */
 }
 
 #insurance h2 {
@@ -222,7 +236,7 @@ q {
 
 .review-stars {
     margin-top: 10px;
-    color: var (--star-color);
+    color: var(--star-color);
 }
 
 /* Footer Section */

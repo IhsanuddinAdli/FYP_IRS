@@ -1,22 +1,44 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*, com.dao.DBConnection" %>
 <!DOCTYPE html>
 <html>
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Payment Page</title>
+        <title>Invoice - Cash on Delivery (COD)</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
-        <!----css3---->
+        <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/customerPayment.css">
-        <!--google fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- Google fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
+        <!-- Google material icon -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            .invoice-container {
+                padding: 30px;
+                border: 1px solid #dee2e6;
+                border-radius: 5px;
+                background-color: #ffffff;
+                width: 100%;
+                margin: 0;
+            }
+            .invoice-header .company-details,
+            .invoice-header .invoice-details {
+                text-align: right;
+            }
+            .invoice-header .company-details h5,
+            .invoice-header .invoice-details h5 {
+                margin-top: 0;
+            }
+            .invoice-body .table thead th {
+                border-bottom: 2px solid #dee2e6;
+            }
+            .invoice-footer {
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -27,27 +49,17 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="">
-                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
-                    </li>
-                    <li class="">
-                        <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
-                    </li>
+                    <li><a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                    <li><a href="customerProfile.jsp"><i class="material-icons">account_circle</i>Profile</a></li>
                     <li class="dropdown">
-                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i>Quotation <b class="caret"></b>
-                        </a>
+                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="material-icons">border_color</i>Quotation <b class="caret"></b></a>
                         <ul class="collapse list-unstyled menu" id="quotationMenu">
-                            <li class=""><a href="customerQuo.jsp"><i class="material-icons">list</i> Quotation Form</a></li>
-                            <li class=""><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i> Quotations List</a></li>
+                            <li><a href="customerQuo.jsp"><i class="material-icons">list</i>Quotation Form</a></li>
+                            <li><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i>Quotations List</a></li>
                         </ul>
                     </li>
-                    <li class="">
-                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
-                    </li>
-                    <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                    <li><a href="customerHistory.jsp"><i class="material-icons">date_range</i>History</a></li>
+                    <li><a href="homePage.jsp"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
@@ -68,25 +80,36 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
-                                                    <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
+                                                <%
+                                                    String userID = (String) session.getAttribute("userID");
+                                                    String roles = (String) session.getAttribute("roles");
+                                                    if (userID != null) {
+                                                        try {
+                                                            Connection conn = DBConnection.getConnection();
+                                                            PreparedStatement ps = conn.prepareStatement(
+                                                                    "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
+                                                            ps.setString(1, userID);
+                                                            ResultSet rs = ps.executeQuery();
+                                                            if (rs.next() && rs.getInt("count") > 0) {
+                                                                int notifications = rs.getInt("count");
+                                                                out.println("<a class='nav-link' href='#' data-toggle='dropdown'><span class='material-icons'>notifications</span><span class='notification'>" + notifications + "</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>You have " + notifications + " new notifications.</a></li></ul>");
+                                                            } else {
+                                                                out.println("<a class='nav-link' href='#'><span class='material-icons'>notifications</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>No new notifications.</a></li></ul>");
+                                                            }
+                                                            rs.close();
+                                                            ps.close();
+                                                            conn.close();
+                                                        } catch (SQLException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                %>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -99,7 +122,6 @@
                             <h4 class="page-title">Cash on Delivery (COD)</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
@@ -107,53 +129,141 @@
                 <!------top-navbar-end----------->
                 <!-- Main content start -->
                 <div id="main-content-image">
-                    <div class="container">
-                        <!-- Payment Page -->
-                        <div id="payment-page" class="row">
-                            <div class="col-md-12">
-                                <div class="transaction-details">
-                                    <h3>Transaction Details</h3>
-                                    <p>Company Name: <%= request.getParameter("companyName")%></p>
-                                    <p>Quotation ID : <%=request.getParameter("quotationId")%></p>
-                                    <p>Registration Number: <%= request.getParameter("registrationNumber")%></p>
-                                    <%
-                                        java.time.LocalDateTime now = java.time.LocalDateTime.now();
-                                        String formattedDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                                        String formattedTime = now.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
-                                    %>
-                                    <p>Date of Transaction: <%= formattedDate%></p>
-                                    <p>Time of Transaction: <%= formattedTime%></p>
-                                    <p>Policy Commencement Date: <%= request.getParameter("policyCommencementDate")%></p>
-                                    <p>Policy Duration: <%= request.getParameter("policyDuration")%> months</p>
-                                    <p>Policy Expiry Date: <%= request.getParameter("policyExpiryDate")%></p>
-                                    <%
-                                        String totalPremiumWithoutCOD = request.getParameter("finalTotalPremium");
-                                        double finalTotalPremium = 0.0;
-                                        if (totalPremiumWithoutCOD != null) {
-                                            // Add RM10 for Cash on Delivery
-                                            finalTotalPremium = Double.parseDouble(totalPremiumWithoutCOD) + 10.0;
-                                    %>
-                                    <p>Your insurance price is: RM <%= totalPremiumWithoutCOD%></p>
-                                    <p>Additional RM10 for Cash on Delivery: RM 10.00</p>
-                                    <p>Total amount payable: RM <%= String.format("%.2f", finalTotalPremium)%></p>
-                                    <input type="hidden" id="price" name="price" value="<%= finalTotalPremium%>">
-                                    <% } else { %>
-                                    <p>Unable to retrieve insurance price.</p>
-                                    <% }%>
+                    <div class="container mt-5">
+                        <!-- Invoice -->
+                        <div class="invoice-container">
+                            <div class="invoice-header">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h3>GuardWheels : IRS</h3>
+                                        <address>
+                                            Lot 822 B, Jalan Tengku Mizan, <br>
+                                            Kg Duyong Besar<br>
+                                            21300 Kuala Terengganu<br>
+                                            Phone: 013-9816630<br>
+                                            Email: <span class="no-transform">adliyong1974@yahoo.com</span>
+                                        </address>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <h3>Invoice</h3>
+                                        <strong>Invoice Date:</strong> <%= java.time.LocalDate.now()%><br>
+                                        <strong>Invoice Number:</strong> INV-<%= request.getParameter("quotationId")%>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="invoice-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <%
+                                            Connection conn = null;
+                                            PreparedStatement stmt = null;
+                                            ResultSet rs = null;
+                                            String customerName = "";
+
+                                            try {
+                                                conn = DBConnection.getConnection();
+                                                String sql = "SELECT firstname, lastname FROM customer WHERE userID = ?";
+                                                stmt = conn.prepareStatement(sql);
+                                                stmt.setInt(1, Integer.parseInt(userID));
+                                                rs = stmt.executeQuery();
+
+                                                if (rs.next()) {
+                                                    customerName = rs.getString("firstname") + " " + rs.getString("lastname");
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            } finally {
+                                                if (rs != null) try {
+                                                    rs.close();
+                                                } catch (SQLException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if (stmt != null) try {
+                                                    stmt.close();
+                                                } catch (SQLException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if (conn != null) try {
+                                                    conn.close();
+                                                } catch (SQLException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        %>
+                                        <%
+                                            java.time.LocalDateTime now = java.time.LocalDateTime.now();
+                                            String formattedDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                                            String formattedTime = now.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+                                        %>
+                                        <h5>Customer:</h5>
+                                        <p><strong><%= customerName%></strong></p>
+                                        <table class="table table-striped text-left">
+                                            <thead>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Company Name</td>
+                                                    <td><%= request.getParameter("companyName")%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Registration Number</td>
+                                                    <td><%= request.getParameter("registrationNumber")%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Date of Transaction</td>
+                                                    <td><%= formattedDate%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Time of Transaction</td>
+                                                    <td><%= formattedTime%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Policy Commencement Date</td>
+                                                    <td><%= request.getParameter("policyCommencementDate")%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Policy Duration</td>
+                                                    <td><%= request.getParameter("policyDuration")%> months</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Policy Expiry Date</td>
+                                                    <td><%= request.getParameter("policyExpiryDate")%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Insurance Price</td>
+                                                    <td>RM <%= request.getParameter("finalTotalPremium")%></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Additional Charge for COD</td>
+                                                    <td>RM 10.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total Amount Payable</td>
+                                                    <td>RM <%= String.format("%.2f", Double.parseDouble(request.getParameter("finalTotalPremium")) + 10.0)%></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoice-footer">
                                 <form action="paymentSubmit" method="post" enctype="multipart/form-data">
                                     <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getParameter("quotationId")%>">
                                     <input type="hidden" id="paymentMethod" name="paymentMethod" value="Cash on Delivery">
                                     <input type="hidden" id="formattedDate" name="formattedDate" value="<%= formattedDate%>">
                                     <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
-                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= finalTotalPremium%>">
-                                    <input type="hidden" id="paymentStatus" name="paymentStatus" value="pending">
+                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
+                                    <input type="hidden" id="paymentStatus" name="paymentStatus" value="Pending">
                                     <input type="hidden" id="companyName" name="companyName" value="<%= request.getParameter("companyName")%>">
                                     <button type="submit" class="btn btn-primary">Confirm Payment</button>
                                 </form>
                             </div>
                         </div>
-                        <!-- Payment Page End -->
+                        <!-- Invoice End -->
                     </div>
                 </div>
                 <!-- Main content end -->
@@ -173,5 +283,16 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".xp-menubar").on('click', function () {
+                    $("#sidebar").toggleClass('active');
+                    $("#content").toggleClass('active');
+                });
+                $('.xp-menubar,.body-overlay').on('click', function () {
+                    $("#sidebar,.body-overlay").toggleClass('show-nav');
+                });
+            });
+        </script>
     </body>
 </html>

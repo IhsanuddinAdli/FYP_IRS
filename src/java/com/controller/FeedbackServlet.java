@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -34,14 +36,18 @@ public class FeedbackServlet extends HttpServlet {
 
             response.sendRedirect("feedbackSuccess.jsp?quotationId=" + quotationId + "&status=success");
         } catch (NumberFormatException e) {
-            response.sendRedirect("customerFeedback.jsp?status=error&message=Invalid+number+format");
+            String errorMessage = URLEncoder.encode("Invalid number format", StandardCharsets.UTF_8.toString());
+            response.sendRedirect("customerFeedback.jsp?status=error&message=" + errorMessage);
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("customerFeedback.jsp?status=error&message=" + e.getMessage().replace(" ", "+"));
+            String errorMessage = URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8.toString());
+            response.sendRedirect("customerFeedback.jsp?status=error&message=" + errorMessage);
         } catch (ClassNotFoundException e) {
-            response.sendRedirect("customerFeedback.jsp?status=error&message=Class+Not+Found");
+            String errorMessage = URLEncoder.encode("Class Not Found", StandardCharsets.UTF_8.toString());
+            response.sendRedirect("customerFeedback.jsp?status=error&message=" + errorMessage);
         } catch (Exception e) {
-            response.sendRedirect("customerFeedback.jsp?status=error&message=Unexpected+Error");
+            String errorMessage = URLEncoder.encode("Unexpected Error", StandardCharsets.UTF_8.toString());
+            response.sendRedirect("customerFeedback.jsp?status=error&message=" + errorMessage);
         }
     }
 }

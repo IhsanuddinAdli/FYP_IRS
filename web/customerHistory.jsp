@@ -25,8 +25,8 @@
             out.println("An error occurred while fetching customer data. Please try again later.");
         }
     } else {
-        // Handle the case where customerID is not found in the session
-        out.println("CustomerID not found in the session.");
+        // Handle the case where userID is not found in the session
+        out.println("UserID not found in the session.");
     }
 %>
 <!DOCTYPE html>
@@ -99,13 +99,12 @@
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
                                                 <%
-                                                    String userId = (String) session.getAttribute("userID");
-                                                    if (userId != null) {
+                                                    if (userID != null) {
                                                         try {
                                                             Connection conn = DBConnection.getConnection();
                                                             PreparedStatement ps = conn.prepareStatement(
                                                                     "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
-                                                            ps.setString(1, userId);
+                                                            ps.setString(1, userID);
                                                             ResultSet rs = ps.executeQuery();
                                                             if (rs.next() && rs.getInt("count") > 0) {
                                                                 int notifications = rs.getInt("count");
@@ -164,41 +163,41 @@
                             <tbody>
                                 <!-- Retrieve and display data from QuotationHistory, VehicleHistory, and PaymentHistory tables -->
                                 <%
-                                    try {
-                                        Connection conn = DBConnection.getConnection();
+                                    if (userID != null) {
+                                        try {
+                                            Connection conn = DBConnection.getConnection();
 
-                                        // Query to retrieve data from QuotationHistory table
-                                        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM QuotationHistory");
-                                        ResultSet rs1 = stmt1.executeQuery();
-
-                                        // Iterate through the result set and display data in table rows
-                                        while (rs1.next()) {
-                                            int quotationId = rs1.getInt("quotation_id");
-                                            String coverage = rs1.getString("coverage");
-                                            String company = rs1.getString("company");
-                                            String policyExpiryDate = rs1.getString("policy_expiry_date");
-
-                                            // Query to retrieve data from VehicleHistory table based on quotationId
-                                            PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM VehicleHistory WHERE quotation_id = ?");
-                                            stmt2.setInt(1, quotationId);
-                                            ResultSet rs2 = stmt2.executeQuery();
+                                            // Query to retrieve data from QuotationHistory table based on userID
+                                            PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM QuotationHistory WHERE userID = ?");
+                                            stmt1.setString(1, userID);
+                                            ResultSet rs1 = stmt1.executeQuery();
 
                                             // Iterate through the result set and display data in table rows
-                                            while (rs2.next()) {
-                                                String registrationNumber = rs2.getString("registration_number");
-                                                String vehicleType = rs2.getString("vehicle_type");
-                                                String vehicleModel = rs2.getString("vehicle_model");
+                                            while (rs1.next()) {
+                                                int quotationId = rs1.getInt("quotation_id");
+                                                String coverage = rs1.getString("coverage");
+                                                String company = rs1.getString("company");
+                                                String policyExpiryDate = rs1.getString("policy_expiry_date");
 
-                                                // Query to retrieve data from PaymentHistory table based on quotationId
-                                                PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM PaymentHistory WHERE quotation_id = ?");
-                                                stmt3.setInt(1, quotationId);
-                                                ResultSet rs3 = stmt3.executeQuery();
+                                                // Query to retrieve data from VehicleHistory table based on quotationId
+                                                PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM VehicleHistory WHERE quotation_id = ?");
+                                                stmt2.setInt(1, quotationId);
+                                                ResultSet rs2 = stmt2.executeQuery();
 
                                                 // Iterate through the result set and display data in table rows
-                                                while (rs3.next()) {
-                                                    double price = rs3.getDouble("price");
-                                                    String dateSubmitted = rs3.getString("date_submitted");
-                                                    String timeSubmitted = rs3.getString("time_submitted");
+                                                while (rs2.next()) {
+                                                    String registrationNumber = rs2.getString("registration_number");
+                                                    String vehicleType = rs2.getString("vehicle_type");
+                                                    String vehicleModel = rs2.getString("vehicle_model");
+
+                                                    // Query to retrieve data from PaymentHistory table based on quotationId
+                                                    PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM PaymentHistory WHERE quotation_id = ?");
+                                                    stmt3.setInt(1, quotationId);
+                                                    ResultSet rs3 = stmt3.executeQuery();
+
+                                                    // Iterate through the result set and display data in table rows
+                                                    while (rs3.next()) {
+                                                        double price = rs3.getDouble("price");
                                 %>
                                 <tr>
                                     <td><%= registrationNumber%></td>
@@ -226,7 +225,6 @@
                                         <a href="viewPDF?id=<%= quotationId%>" class="btn btn-primary" target="_blank">View Cover Note</a>
                                         <%
                                         } else {
-                                            // If cover_note is empty or null
                                         %>
                                         No file uploaded
                                         <%
@@ -238,18 +236,21 @@
                                     </td>
                                 </tr>
                                 <%
+                                                    }
+                                                    rs3.close();
+                                                    stmt3.close();
                                                 }
-                                                rs3.close();
-                                                stmt3.close();
+                                                rs2.close();
+                                                stmt2.close();
                                             }
-                                            rs2.close();
-                                            stmt2.close();
+                                            rs1.close();
+                                            stmt1.close();
+                                            conn.close();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-                                        rs1.close();
-                                        stmt1.close();
-                                        conn.close();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                                    } else {
+                                        out.println("UserID not found in the session.");
                                     }
                                 %>
                             </tbody>

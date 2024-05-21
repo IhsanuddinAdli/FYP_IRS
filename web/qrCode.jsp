@@ -1,3 +1,4 @@
+<%@page import="com.dao.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <!DOCTYPE html>
@@ -6,8 +7,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-        <title>Payment Page</title>
+        <title>QR Code Payment Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
@@ -28,27 +28,17 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="">
-                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
-                    </li>
-                    <li class="">
-                        <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
-                    </li>
+                    <li class=""><a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a></li>
+                    <li class=""><a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a></li>
                     <li class="dropdown">
-                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i>Quotation <b class="caret"></b>
-                        </a>
+                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="material-icons">border_color</i>Quotation <b class="caret"></b></a>
                         <ul class="collapse list-unstyled menu" id="quotationMenu">
                             <li class=""><a href="customerQuo.jsp"><i class="material-icons">list</i> Quotation Form</a></li>
                             <li class=""><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i> Quotations List</a></li>
                         </ul>
                     </li>
-                    <li class="">
-                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
-                    </li>
-                    <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                    <li class=""><a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a></li>
+                    <li class=""><a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
@@ -69,25 +59,36 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
-                                                <a class="nav-link" href="#" data-toggle="dropdown">
-                                                    <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
+                                                <%
+                                                    String userID = (String) session.getAttribute("userID");
+                                                    String roles = (String) session.getAttribute("roles");
+                                                    if (userID != null) {
+                                                        try {
+                                                            Connection conn = DBConnection.getConnection();
+                                                            PreparedStatement ps = conn.prepareStatement(
+                                                                    "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
+                                                            ps.setString(1, userID);
+                                                            ResultSet rs = ps.executeQuery();
+                                                            if (rs.next() && rs.getInt("count") > 0) {
+                                                                int notifications = rs.getInt("count");
+                                                                out.println("<a class='nav-link' href='#' data-toggle='dropdown'><span class='material-icons'>notifications</span><span class='notification'>" + notifications + "</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>You have " + notifications + " new notifications.</a></li></ul>");
+                                                            } else {
+                                                                out.println("<a class='nav-link' href='#'><span class='material-icons'>notifications</span></a>");
+                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>No new notifications.</a></li></ul>");
+                                                            }
+                                                            rs.close();
+                                                            ps.close();
+                                                            conn.close();
+                                                        } catch (SQLException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                %>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -97,10 +98,9 @@
                             </div>
                         </div>
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Qr Code</h4>
+                            <h4 class="page-title">QR Code Payment</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
@@ -115,43 +115,43 @@
                             <div id="left-section" class="col-md-6">
                                 <div class="transaction-details">
                                     <h3>Transaction Details</h3>
-                                    <!-- Display Transaction Details here -->
-                                    <p>Quotation ID : <%=request.getParameter("quotationId")%></p>
-                                    <p>Registration Number: <%= request.getParameter("registrationNumber")%></p>
+                                    <p><strong>Company Name:</strong> <%= request.getParameter("companyName")%></p>
+                                    <p><strong>Quotation ID:</strong> <%=request.getParameter("quotationId")%></p>
+                                    <p><strong>Registration Number:</strong> <%= request.getParameter("registrationNumber")%></p>
                                     <%
                                         java.time.LocalDateTime now = java.time.LocalDateTime.now();
                                         String formattedDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                                         String formattedTime = now.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
                                     %>
-                                    <p>Date of Transaction: <%= formattedDate%></p>
-                                    <p>Time of Transaction: <%= formattedTime%></p>
-                                    <p>Policy Commencement Date: <%= request.getParameter("policyCommencementDate")%></p>
-                                    <p>Policy Duration: <%= request.getParameter("policyDuration")%> months</p>
-                                    <p>Policy Expiry Date: <%= request.getParameter("policyExpiryDate")%></p>
-                                    <p>Your insurance price is: RM <%= request.getParameter("finalTotalPremium")%></p>
-                                    <p>Engine : <%= request.getParameter("engineCapacity")%></p>
-                                    <!-- Add other transaction details here -->
+                                    <p><strong>Date of Transaction:</strong> <%= formattedDate%></p>
+                                    <p><strong>Time of Transaction:</strong> <%= formattedTime%></p>
+                                    <p><strong>Policy Commencement Date:</strong> <%= request.getParameter("policyCommencementDate")%></p>
+                                    <p><strong>Policy Duration:</strong> <%= request.getParameter("policyDuration")%> months</p>
+                                    <p><strong>Policy Expiry Date:</strong> <%= request.getParameter("policyExpiryDate")%></p>
+                                    <p><strong>Your insurance price is:</strong> RM <%= request.getParameter("finalTotalPremium")%></p>
                                 </div>
                             </div>
-                            <!-- Right Section for Transaction Details and Price -->
+                            <!-- Right Section for QR Code and Payment Submission -->
                             <div id="right-section" class="col-md-6">
                                 <div class="payment-details">
                                     <h3>Payment Submission</h3>
                                     <!-- Display QR code for payment -->
-                                    <img src="IMG/qr_bank.jpeg" alt="QR Code">
+                                    <img src="IMG/qr_bank.jpeg" alt="QR Code" class="img-fluid mb-4">
+                                    <form action="paymentSubmit" method="POST" enctype="multipart/form-data" class="mt-4">
+                                        <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getParameter("quotationId")%>">
+                                        <input type="hidden" id="paymentMethod" name="paymentMethod" value="QR Code">
+                                        <input type="hidden" id="formattedDate" name="formattedDate" value="<%= formattedDate%>">
+                                        <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
+                                        <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
+                                        <input type="hidden" id="paymentStatus" name="paymentStatus" value="Pending">
+                                        <input type="hidden" id="companyName" name="companyName" value="<%= request.getParameter("companyName")%>">
+                                        <div class="form-group">
+                                            <label for="receiptImage">Upload Payment Receipt</label>
+                                            <input type="file" class="form-control-file" id="receiptImage" name="receiptImage" accept="image/*">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2">Submit Payment</button>
+                                    </form>
                                 </div>
-                                <form action="paymentSubmit" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getParameter("quotationId")%>">
-                                    <input type="hidden" id="paymentMethod" name="paymentMethod" value="QR Code">
-                                    <input type="hidden" id="formattedDate" name="formattedDate" value="<%= formattedDate%>">
-                                    <input type="hidden" id="formattedTime" name="formattedTime" value="<%= formattedTime%>">
-                                    <input type="hidden" id="finalTotalPremium" name="finalTotalPremium" value="<%= request.getParameter("finalTotalPremium")%>">
-                                    <input type="hidden" id="paymentStatus" name="paymentStatus" value="pending">
-                                    <input type="hidden" id="companyName" name="companyName" value="<%= request.getParameter("companyName")%>">
-                                    
-                                    <input type="file" name="receiptImage" accept="image/*">
-                                    <button type="submit" class="btn btn-primary">Submit Payment</button>
-                                </form>
                             </div>
                         </div>
                         <!-- Payment Page End -->
@@ -174,5 +174,16 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".xp-menubar").on('click', function () {
+                    $("#sidebar").toggleClass('active');
+                    $("#content").toggleClass('active');
+                });
+                $('.xp-menubar,.body-overlay').on('click', function () {
+                    $("#sidebar,.body-overlay").toggleClass('show-nav');
+                });
+            });
+        </script>
     </body>
 </html>

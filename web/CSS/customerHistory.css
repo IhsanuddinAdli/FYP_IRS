@@ -494,6 +494,7 @@ input[type="search"] {
     margin-top: 0;
     overflow: auto; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
+    min-height: 73vh;
 }
 
 .container {

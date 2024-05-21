@@ -7,6 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Lorry Insurance Comprehensive Quotation</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="CSS/quotation.css">
     </head>
     <body>
@@ -179,253 +180,239 @@
             String formattedTotalAddOnsCost = df.format(totalAddOnsCost);
             String formattedTotalPremium = df.format(totalPremium);
         %>
+        <div class="container mt-5">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h1 class="mb-4">Insurance Quotation</h1>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" name="userID" value="<%= userID%>">
+                    <input type="hidden" name="quotationId" value="<%= quotationId%>">
 
-        <h1>Insurance Quotation</h1>
-        <input type="hidden" name="userID" value="<%= userID%>">
-        <input type="hidden" name="quotationId" value="<%= quotationId%>">
+                    <h2>Personal Information</h2>
+                    <p>Owner Name: <%= ownerName%></p>
+                    <p>Owner ID: <%= ownerId%></p>
+                    <p>Date of Birth: <%= dob%></p>
+                    <p>Gender: <%= gender%></p>
+                    <p>Marital Status: <%= maritalStatus%></p>
 
-        <h2>Personal Information</h2>
-        <p>Owner Name: <%= ownerName%></p>
-        <p>Owner ID: <%= ownerId%></p>
-        <p>Date of Birth: <%= dob%></p>
-        <p>Gender: <%= gender%></p>
-        <p>Marital Status: <%= maritalStatus%></p>
+                    <h2>Vehicle Information</h2>
+                    <p>Location: <%= location%></p>
+                    <p>Vehicle Type: <%= vehicleType%></p>
+                    <p>Local/Import: <%= localImport%></p>
+                    <p>Registration Number: <%= registrationNumber%></p>
+                    <p>Engine Number: <%= engineNumber%></p>
+                    <p>Chassis Number: <%= chassisNumber%></p>
+                    <p>Coverage: <%= coverage%></p>
+                    <p>Insured Value: RM <%= formattedInsuredValue%></p>
+                    <p>Engine Capacity: <%= engineCapacity%> cc</p>
+                    <p>Vehicle Body: <%= vehicleBody%></p>
+                    <p>Vehicle Make: <%= vehicleMake%></p>
+                    <p>Vehicle Model: <%= vehicleModel%></p>
+                    <p>Manufacture Year: <%= manufactureYear%></p>
 
-        <h2>Vehicle Information</h2>
-        <p>Location: <%= location%></p>
-        <p>Vehicle Type: <%= vehicleType%></p>
-        <p>Local/Import: <%= localImport%></p>
-        <p>Registration Number: <%= registrationNumber%></p>
-        <p>Engine Number: <%= engineNumber%></p>
-        <p>Chassis Number: <%= chassisNumber%></p>
-        <p>Coverage: <%= coverage%></p>
-        <p>Insured Value: RM <%= formattedInsuredValue%></p>
-        <p>Engine Capacity: <%= engineCapacity%> cc</p>
-        <p>Vehicle Body: <%= vehicleBody%></p>
-        <p>Vehicle Make: <%= vehicleMake%></p>
-        <p>Vehicle Model: <%= vehicleModel%></p>
-        <p>Manufacture Year: <%= manufactureYear%></p>
+                    <h2>Policy Information</h2>
+                    <p>Policy Commencement Date: <%= policyCommencementDate%></p>
+                    <p>Policy Duration: <%= policyDuration%> years</p>
+                    <p>Policy Duration: <%= policyExpiryDate%></p>
 
-        <h2>Policy Information</h2>
-        <p>Policy Commencement Date: <%= policyCommencementDate%></p>
-        <p>Policy Duration: <%= policyDuration%> years</p>
-        <p>Policy Duration: <%= policyExpiryDate%></p>
+                    <h2>Gross Premium Calculation</h2>
+                    <p>Gross Premium: RM <%= formattedGrossPremium%></p>
 
-        <h2>Gross Premium Calculation</h2>
-        <p>Gross Premium: RM <%= formattedGrossPremium%></p>
+                    <%-- Add-ons --%>
+                    <% if (totalAddOnsCost > 0) { %>
+                    <h2>Add-ons</h2>
+                    <% if ("true".equals(request.getParameter("windscreen-addon"))) {%>
+                    <p>Windscreen: RM <%= df.format(windscreenCost)%></p>
+                    <% } %>
+                    <% if ("true".equals(request.getParameter("all-driver-addon"))) {%>
+                    <p>All Driver: RM <%= df.format(allDriverCost)%></p>
+                    <% } %>
+                    <% if ("true".equals(request.getParameter("special-perils-addon"))) {%>
+                    <p>Special Perils (Flood): RM <%= df.format(specialPerilsCost)%></p>
+                    <% } %>
+                    <% if ("true".equals(request.getParameter("legal-liability-addon"))) {%>
+                    <p>Legal Liability of Passengers: RM <%= df.format(legalLiabilityCost)%></p>
+                    <% } %>
+                    <% }%>
 
-        <%-- Add-ons --%>
-        <% if (totalAddOnsCost > 0) { %>
-        <h2>Add-ons</h2>
-        <% if ("true".equals(request.getParameter("windscreen-addon"))) {%>
-        <p>Windscreen: RM <%= df.format(windscreenCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("all-driver-addon"))) {%>
-        <p>All Driver: RM <%= df.format(allDriverCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("special-perils-addon"))) {%>
-        <p>Special Perils (Flood): RM <%= df.format(specialPerilsCost)%></p>
-        <% } %>
-        <% if ("true".equals(request.getParameter("legal-liability-addon"))) {%>
-        <p>Legal Liability of Passengers: RM <%= df.format(legalLiabilityCost)%></p>
-        <% } %>
-        <% }%>
+                    <h2>Additional Calculations</h2>
+                    <p>NCD: RM <%= formattedNCD%></p>
+                    <p>Total Add-ons Cost: RM <%= formattedTotalAddOnsCost%></p>
+                    <p>Total Premium after NCD and Add-ons: RM <%= formattedTotalPremium%></p>
+                </div>
+            </div>
+            <%
+                // Define percentages based on vehicle make for each company
+                Map<String, Map<String, Double>> companyVehicleMakePercentages = new HashMap<>();
 
-        <h2>Additional Calculations</h2>
-        <p>NCD: RM <%= formattedNCD%></p>
-        <p>Total Add-ons Cost: RM <%= formattedTotalAddOnsCost%></p>
-        <p>Total Premium after NCD and Add-ons: RM <%= formattedTotalPremium%></p>
+                Map<String, Double> takafulIkhlasPercentages = new HashMap<>();
+                takafulIkhlasPercentages.put("Hino", 0.033);
+                takafulIkhlasPercentages.put("Fuso", 0.035);
+                takafulIkhlasPercentages.put("Isuzu (Lorry)", 0.037);
+                takafulIkhlasPercentages.put("UD Trucks", 0.039);
+                takafulIkhlasPercentages.put("Volvo", 0.041);
+                takafulIkhlasPercentages.put("CAMC", 0.043);
+                takafulIkhlasPercentages.put("Foton (Lorry)", 0.045);
+                takafulIkhlasPercentages.put("JMC", 0.047);
+                companyVehicleMakePercentages.put("Takaful Ikhlas", takafulIkhlasPercentages);
 
-        <%
-            // Define percentages based on vehicle make for each company
-            Map<String, Map<String, Double>> companyVehicleMakePercentages = new HashMap<>();
+                Map<String, Double> takafulMalaysiaPercentages = new HashMap<>();
+                takafulMalaysiaPercentages.put("Hino", 0.037);
+                takafulMalaysiaPercentages.put("Fuso", 0.038);
+                takafulMalaysiaPercentages.put("Isuzu (Lorry)", 0.039);
+                takafulMalaysiaPercentages.put("UD Trucks", 0.040);
+                takafulMalaysiaPercentages.put("Volvo", 0.041);
+                takafulMalaysiaPercentages.put("CAMC", 0.042);
+                takafulMalaysiaPercentages.put("Foton (Lorry)", 0.043);
+                takafulMalaysiaPercentages.put("JMC", 0.044);
+                companyVehicleMakePercentages.put("Takaful Malaysia", takafulMalaysiaPercentages);
 
-            Map<String, Double> takafulIkhlasPercentages = new HashMap<>();
-            takafulIkhlasPercentages.put("Hino", 0.033);
-            takafulIkhlasPercentages.put("Fuso", 0.035);
-            takafulIkhlasPercentages.put("Isuzu (Lorry)", 0.037);
-            takafulIkhlasPercentages.put("UD Truck", 0.039);
-            takafulIkhlasPercentages.put("Volvo", 0.041);
-            takafulIkhlasPercentages.put("CAMC", 0.043);
-            takafulIkhlasPercentages.put("Foton (Lorry)", 0.045);
-            takafulIkhlasPercentages.put("JMC", 0.047);
-            companyVehicleMakePercentages.put("Takaful Ikhlas", takafulIkhlasPercentages);
+                Map<String, Double> etiqaPercentages = new HashMap<>();
+                etiqaPercentages.put("Hino", 0.025);
+                etiqaPercentages.put("Fuso", 0.026);
+                etiqaPercentages.put("Isuzu (Lorry)", 0.027);
+                etiqaPercentages.put("UD Trucks", 0.028);
+                etiqaPercentages.put("Volvo", 0.029);
+                etiqaPercentages.put("CAMC", 0.030);
+                etiqaPercentages.put("Foton (Lorry)", 0.031);
+                etiqaPercentages.put("JMC", 0.032);
+                companyVehicleMakePercentages.put("Etiqa", etiqaPercentages);
 
-            Map<String, Double> takafulMalaysiaPercentages = new HashMap<>();
-            takafulMalaysiaPercentages.put("Hino", 0.037);
-            takafulMalaysiaPercentages.put("Fuso", 0.038);
-            takafulMalaysiaPercentages.put("Isuzu (Lorry)", 0.039);
-            takafulMalaysiaPercentages.put("UD Truck", 0.040);
-            takafulMalaysiaPercentages.put("Volvo", 0.041);
-            takafulMalaysiaPercentages.put("CAMC", 0.042);
-            takafulMalaysiaPercentages.put("Foton (Lorry)", 0.043);
-            takafulMalaysiaPercentages.put("JMC", 0.044);
-            companyVehicleMakePercentages.put("Takaful Malaysia", takafulMalaysiaPercentages);
+                Map<String, Double> allianzPercentages = new HashMap<>();
+                allianzPercentages.put("Hino", 0.032);
+                allianzPercentages.put("Fuso", 0.033);
+                allianzPercentages.put("Isuzu (Lorry)", 0.034);
+                allianzPercentages.put("UD Trucks", 0.035);
+                allianzPercentages.put("Volvo", 0.036);
+                allianzPercentages.put("CAMC", 0.037);
+                allianzPercentages.put("Foton (Lorry)", 0.038);
+                allianzPercentages.put("JMC", 0.039);
+                companyVehicleMakePercentages.put("Allianz", allianzPercentages);
 
-            Map<String, Double> etiqaPercentages = new HashMap<>();
-            etiqaPercentages.put("Hino", 0.025);
-            etiqaPercentages.put("Fuso", 0.026);
-            etiqaPercentages.put("Isuzu (Lorry)", 0.027);
-            etiqaPercentages.put("UD Truck", 0.028);
-            etiqaPercentages.put("Volvo", 0.029);
-            etiqaPercentages.put("CAMC", 0.030);
-            etiqaPercentages.put("Foton (Lorry)", 0.031);
-            etiqaPercentages.put("JMC", 0.032);
-            companyVehicleMakePercentages.put("Etiqa", etiqaPercentages);
+                Map<String, Double> pacificPercentages = new HashMap<>();
+                pacificPercentages.put("Hino", 0.023);
+                pacificPercentages.put("Fuso", 0.024);
+                pacificPercentages.put("Isuzu (Lorry)", 0.025);
+                pacificPercentages.put("UD Trucks", 0.026);
+                pacificPercentages.put("Volvo", 0.027);
+                pacificPercentages.put("CAMC", 0.028);
+                pacificPercentages.put("Foton (Lorry)", 0.029);
+                pacificPercentages.put("JMC", 0.030);
+                companyVehicleMakePercentages.put("Pacific", pacificPercentages);
 
-            Map<String, Double> allianzPercentages = new HashMap<>();
-            allianzPercentages.put("Hino", 0.032);
-            allianzPercentages.put("Fuso", 0.033);
-            allianzPercentages.put("Isuzu (Lorry)", 0.034);
-            allianzPercentages.put("UD Truck", 0.035);
-            allianzPercentages.put("Volvo", 0.036);
-            allianzPercentages.put("CAMC", 0.037);
-            allianzPercentages.put("Foton (Lorry)", 0.038);
-            allianzPercentages.put("JMC", 0.039);
-            companyVehicleMakePercentages.put("Allianz", allianzPercentages);
+                Map<String, Double> libertyPercentages = new HashMap<>();
+                libertyPercentages.put("Hino", 0.028);
+                libertyPercentages.put("Fuso", 0.029);
+                libertyPercentages.put("Isuzu (Lorry)", 0.030);
+                libertyPercentages.put("UD Trucks", 0.031);
+                libertyPercentages.put("Volvo", 0.032);
+                libertyPercentages.put("CAMC", 0.033);
+                libertyPercentages.put("Foton (Lorry)", 0.034);
+                libertyPercentages.put("JMC", 0.035);
+                companyVehicleMakePercentages.put("Liberty", libertyPercentages);
 
-            Map<String, Double> pacificPercentages = new HashMap<>();
-            pacificPercentages.put("Hino", 0.023);
-            pacificPercentages.put("Fuso", 0.024);
-            pacificPercentages.put("Isuzu (Lorry)", 0.025);
-            pacificPercentages.put("UD Truck", 0.026);
-            pacificPercentages.put("Volvo", 0.027);
-            pacificPercentages.put("CAMC", 0.028);
-            pacificPercentages.put("Foton (Lorry)", 0.029);
-            pacificPercentages.put("JMC", 0.030);
-            companyVehicleMakePercentages.put("Pacific", pacificPercentages);
+                Map<String, Double> zurichPercentages = new HashMap<>();
+                zurichPercentages.put("Hino", 0.034);
+                zurichPercentages.put("Fuso", 0.035);
+                zurichPercentages.put("Isuzu (Lorry)", 0.036);
+                zurichPercentages.put("UD Trucks", 0.037);
+                zurichPercentages.put("Volvo", 0.038);
+                zurichPercentages.put("CAMC", 0.039);
+                zurichPercentages.put("Foton (Lorry)", 0.040);
+                zurichPercentages.put("JMC", 0.041);
+                companyVehicleMakePercentages.put("Zurich", zurichPercentages);
 
-            Map<String, Double> libertyPercentages = new HashMap<>();
-            libertyPercentages.put("Hino", 0.028);
-            libertyPercentages.put("Fuso", 0.029);
-            libertyPercentages.put("Isuzu (Lorry)", 0.030);
-            libertyPercentages.put("UD Truck", 0.031);
-            libertyPercentages.put("Volvo", 0.032);
-            libertyPercentages.put("CAMC", 0.033);
-            libertyPercentages.put("Foton (Lorry)", 0.034);
-            libertyPercentages.put("JMC", 0.035);
-            companyVehicleMakePercentages.put("Liberty", libertyPercentages);
+                Map<String, Double> generalyPercentages = new HashMap<>();
+                generalyPercentages.put("Hino", 0.038);
+                generalyPercentages.put("Fuso", 0.039);
+                generalyPercentages.put("Isuzu (Lorry)", 0.040);
+                generalyPercentages.put("UD Trucks", 0.041);
+                generalyPercentages.put("Volvo", 0.042);
+                generalyPercentages.put("CAMC", 0.043);
+                generalyPercentages.put("Foton (Lorry)", 0.044);
+                generalyPercentages.put("JMC", 0.045);
+                companyVehicleMakePercentages.put("Generaly", generalyPercentages);
+            %>
+            <div class="row">
+                <%
+                    // Iterate over each company in companyVehicleMakePercentages
+                    for (Map.Entry<String, Map<String, Double>> entry : companyVehicleMakePercentages.entrySet()) {
+                        String companyName = entry.getKey();
+                        Map<String, Double> percentagesForCompany = entry.getValue();
 
-            Map<String, Double> zurichPercentages = new HashMap<>();
-            zurichPercentages.put("Hino", 0.034);
-            zurichPercentages.put("Fuso", 0.035);
-            zurichPercentages.put("Isuzu (Lorry)", 0.036);
-            zurichPercentages.put("UD Truck", 0.037);
-            zurichPercentages.put("Volvo", 0.038);
-            zurichPercentages.put("CAMC", 0.039);
-            zurichPercentages.put("Foton (Lorry)", 0.040);
-            zurichPercentages.put("JMC", 0.041);
-            companyVehicleMakePercentages.put("Zurich", zurichPercentages);
+                        // Find the percentage for the selected vehicle make for this company
+                        Double companyPercentage = percentagesForCompany.get(vehicleMake);
 
-            Map<String, Double> generalyPercentages = new HashMap<>();
-            generalyPercentages.put("Hino", 0.038);
-            generalyPercentages.put("Fuso", 0.039);
-            generalyPercentages.put("Isuzu (Lorry)", 0.040);
-            generalyPercentages.put("UD Truck", 0.041);
-            generalyPercentages.put("Volvo", 0.042);
-            generalyPercentages.put("CAMC", 0.043);
-            generalyPercentages.put("Foton (Lorry)", 0.044);
-            generalyPercentages.put("JMC", 0.045);
-            companyVehicleMakePercentages.put("Generaly", generalyPercentages);
+                        // If the percentage is found for the selected make, calculate the insurance price for this company
+                        if (companyPercentage != null) {
+                            double companyTotalPremium = totalPremium * (1 + companyPercentage);
 
-            // Iterate over each company in companyVehicleMakePercentages
-            for (Map.Entry<String, Map<String, Double>> entry : companyVehicleMakePercentages.entrySet()) {
-                String companyName = entry.getKey();
-                Map<String, Double> percentagesForCompany = entry.getValue();
+                            // Apply SST (SST is 10%)
+                            double sst = 0.10 * companyTotalPremium;
 
-                // Find the percentage for the selected vehicle make for this company
-                Double companyPercentage = percentagesForCompany.get(vehicleMake);
+                            // Add stamp duty (stamp duty is RM10)
+                            double stampDuty = 10.0;
 
-                // If the percentage is found for the selected make, calculate the insurance price for this company
-                if (companyPercentage != null) {
-                    double companyTotalPremium = totalPremium * (1 + companyPercentage);
+                            // Calculate final total premium after applying SST and adding stamp duty
+                            double finalTotalPremium = companyTotalPremium + sst + stampDuty;
 
-                    // Apply SST (SST is 10%)
-                    double sst = 0.10 * companyTotalPremium;
-
-                    // Add stamp duty (stamp duty is RM10)
-                    double stampDuty = 10.0;
-
-                    // Calculate final total premium after applying SST and adding stamp duty
-                    double finalTotalPremium = companyTotalPremium + sst + stampDuty;
-
-                    // Format the insurance price
-                    String formattedCompanyTotalPremium = df.format(companyTotalPremium);
-                    String formattedSST = df.format(sst);
-                    String formattedStampDuty = df.format(stampDuty);
-                    String formattedFinalTotalPremium = df.format(finalTotalPremium);
-        %>
-        <h3><%= companyName%></h3>
-        <p>Insurance Price: RM <%= formattedCompanyTotalPremium%></p>
-        <p>SST (10%): RM <%= formattedSST%></p>
-        <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
-        <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
-        <!-- Add COD and QR buttons for each company -->
-        <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp">
-            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
-            <input type="hidden" name="userID" value="<%= userID%>">
-            <input type="hidden" name="quotationId" value="<%= quotationId%>">
-            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
-            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
-            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
-            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
-            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
-            <input type="hidden" name="companyName" value="<%= companyName%>">
-            <button type="submit" name="purchaseOption" value="QR">QR Code</button>
-        </form>
-        <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp">
-            <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
-            <input type="hidden" name="userID" value="<%= userID%>">
-            <input type="hidden" name="quotationId" value="<%= quotationId%>">
-            <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
-            <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
-            <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
-            <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
-            <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
-            <input type="hidden" name="companyName" value="<%= companyName%>">
-            <button type="submit" name="purchaseOption" value="COD">Cash on Delivery (COD)</button>
-        </form>
-        <div id="modal_<%= companyName%>" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" data-modal="modal_<%= companyName%>">&times;</span>
-                <p>Choose your purchase option for <%= companyName%>:</p>
-                <button onclick="submitForm('<%= companyName%>', 'COD')">Cash on Delivery (COD)</button>
-                <button onclick="submitForm('<%= companyName%>', 'QR')">QR Code</button>
+                            // Format the insurance price
+                            String formattedCompanyTotalPremium = df.format(companyTotalPremium);
+                            String formattedSST = df.format(sst);
+                            String formattedStampDuty = df.format(stampDuty);
+                            String formattedFinalTotalPremium = df.format(finalTotalPremium);
+                %>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <%= companyName%>
+                        </div>
+                        <div class="card-body">
+                            <p>Insurance Price: RM <%= formattedCompanyTotalPremium%></p>
+                            <p>SST (10%): RM <%= formattedSST%></p>
+                            <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
+                            <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
+                        </div>
+                        <div class="card-footer">
+                            <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp" class="d-inline">
+                                <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+                                <input type="hidden" name="userID" value="<%= userID%>">
+                                <input type="hidden" name="quotationId" value="<%= quotationId%>">
+                                <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+                                <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+                                <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+                                <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+                                <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+                                <input type="hidden" name="companyName" value="<%= companyName%>">
+                                <button type="submit" name="purchaseOption" value="QR" class="btn btn-primary">QR Code</button>
+                            </form>
+                            <form id="purchaseForm_<%= companyName%>" method="post" action="cod.jsp" class="d-inline">
+                                <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
+                                <input type="hidden" name="userID" value="<%= userID%>">
+                                <input type="hidden" name="quotationId" value="<%= quotationId%>">
+                                <input type="hidden" name="registrationNumber" value="<%= registrationNumber%>">
+                                <input type="hidden" name="policyCommencementDate" value="<%= policyCommencementDate%>">
+                                <input type="hidden" name="policyDuration" value="<%= policyDuration%>">
+                                <input type="hidden" name="policyExpiryDate" value="<%= policyExpiryDate%>">
+                                <input type="hidden" name="engineCapacity" value="<%= engineCapacity%>">
+                                <input type="hidden" name="companyName" value="<%= companyName%>">
+                                <button type="submit" name="purchaseOption" value="COD" class="btn btn-secondary">Cash on Delivery (COD)</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <%
+                        } else {
+                            // If percentage not found for the selected make, display a message
+                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header'>" + companyName + "</div><div class='card-body'><p>No insurance price available for selected vehicle make.</p></div></div></div>");
+                        }
+                    }
+                %>
             </div>
         </div>
-        <%
-                } else {
-                    // If percentage not found for the selected make, display a message
-                    out.println("<h3>" + companyName + "</h3>");
-                    out.println("<p>No insurance price available for selected vehicle make.</p>");
-                }
-            }
-        %>
-        <script>
-            // Function to submit the form for COD or QR
-            function submitForm(companyName, option) {
-                var form = document.getElementById('purchaseForm_' + companyName);
-                form.querySelector('input[name="purchaseOption"]').value = option; // Set the purchase option
-                form.submit(); // Submit the form
-            }
-
-            // Event listeners for COD and QR buttons
-            var codButtons = document.querySelectorAll('.codButton');
-            var qrButtons = document.querySelectorAll('.qrButton');
-
-            codButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var companyName = this.getAttribute('data-company');
-                    submitForm(companyName, 'COD');
-                });
-            });
-
-            qrButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var companyName = this.getAttribute('data-company');
-                    submitForm(companyName, 'QR');
-                });
-            });
-        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -9,6 +9,7 @@
 <%
     String userID = (String) session.getAttribute("userID");
     String roles = (String) session.getAttribute("roles");
+    String vehicleType = request.getParameter("vehicle");
     if (userID != null) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -202,7 +203,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="<%= request.getAttribute("vehicleType") != null ? request.getAttribute("vehicleType") : ""%>" readonly>
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="<%= vehicleType != null ? vehicleType : (request.getAttribute("vehicleType") != null ? request.getAttribute("vehicleType") : "") %>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
@@ -390,19 +391,14 @@
         // Define NCD options based on vehicle type
         let ncdOptions = [];
         switch (vehicleType) {
-            case 'Car':
-                ncdOptions = ['0%', '30%', '38.33%', '45%', '55%'];
-                break;
             case 'Motorcycle':
                 ncdOptions = ['0%', '15%', '20%', '25%'];
-                break;
-            case 'Van':
-                ncdOptions = ['0%', '30%', '38.33%', '45%', '55%'];
                 break;
             case 'Lorry':
                 ncdOptions = ['0%', '15%', '20%', '25%'];
                 break;
             default:
+                ncdOptions = ['0%', '30%', '38.33%', '45%', '55%'];
                 break;
         }
 
@@ -413,25 +409,59 @@
             optionElement.textContent = option;
             ncdSelect.appendChild(optionElement);
         });
+
+        // Set the selected NCD value if it exists
+        const selectedNcd = '<%= request.getAttribute("selectedNcd") != null ? request.getAttribute("selectedNcd") : ""%>';
+        if (selectedNcd) {
+            ncdSelect.value = selectedNcd;
+        }
     }
 
-// Call the function on page load
-    window.onload = function () {
-        // Retrieve vehicle value from URL query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const vehicle = urlParams.get('vehicle');
+    function updateCoverageOptions() {
+        const vehicleType = document.getElementById('vehicle-type').value;
+        const coverageSelect = document.getElementById('coverage');
 
-        // Display vehicle value in the input box
-        if (vehicle) {
-            const inputElement = document.getElementById('vehicle-type');
-            inputElement.value = vehicle;
-            // Update NCD options based on the initial vehicle type
-            updateNcdOptions();
+        // Clear existing options
+        coverageSelect.innerHTML = '';
+
+        // Define coverage options based on vehicle type
+        let coverageOptions = [];
+        if (vehicleType === 'Motorcycle') {
+            coverageOptions = [
+                {value: 'comprehensive', text: 'Comprehensive'},
+                {value: 'third-party-motorcycle', text: 'Third Party'}
+            ];
+        } else {
+            coverageOptions = [
+                {value: 'comprehensive', text: 'Comprehensive'},
+                {value: 'third-party-fire-theft', text: 'Third Party Fire and Theft'}
+            ];
         }
+
+        // Populate coverage options
+        coverageOptions.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            coverageSelect.appendChild(optionElement);
+        });
+
+        // Set the selected coverage value if it exists
+        const selectedCoverage = '<%= request.getAttribute("coverage") != null ? request.getAttribute("coverage") : ""%>';
+        if (selectedCoverage) {
+            coverageSelect.value = selectedCoverage;
+        }
+    }
+
+    window.onload = function () {
+        updateNcdOptions();
+        updateCoverageOptions();
     };
 
-// Attach event listener to vehicle type select element
-    document.getElementById('vehicle-type').addEventListener('change', updateNcdOptions);
+    document.getElementById('vehicle-type').addEventListener('change', function () {
+        updateNcdOptions();
+        updateCoverageOptions();
+    });
 </script>
 <script>
     function submitForm() {
@@ -598,7 +628,7 @@
         } else if (vehicleBody === "Van") {
             addOptions(vehicleMakeSelect, ["Toyota (Van)", "Nissan (Van)", "Daihatsu", "Foton (Van)"]);
         } else if (vehicleBody === "Lorry") {
-            addOptions(vehicleMakeSelect, ["Hino", "Fuso", "Isuzu (Lorry)", "UD Truck", "Volvo", "CAMC", "Foton (Lorry)", "JMC"]);
+            addOptions(vehicleMakeSelect, ["Hino", "Fuso", "Isuzu (Lorry)", "UD Trucks", "Volvo", "CAMC", "Foton (Lorry)", "JMC"]);
         } else {
             addOptions(vehicleMakeSelect, originalVehicleMakes);
         }
