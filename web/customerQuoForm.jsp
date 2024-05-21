@@ -203,7 +203,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehicle-type">Vehicle Type</label>
-                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="<%= vehicleType != null ? vehicleType : (request.getAttribute("vehicleType") != null ? request.getAttribute("vehicleType") : "") %>" readonly>
+                                    <input type="text" class="form-control wide-input" id="vehicle-type" name="vehicle-type" value="<%= vehicleType != null ? vehicleType : (request.getAttribute("vehicleType") != null ? request.getAttribute("vehicleType") : "")%>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="local-import">Local / Import Vehicle</label>
@@ -538,8 +538,7 @@
     // Function to toggle add-ons state based on selected coverage and vehicle type
     function toggleAddonsState() {
         var coverage = document.getElementById("coverage").value;
-        var urlParams = new URLSearchParams(window.location.search);
-        var vehicleType = urlParams.get('vehicle');
+        var vehicleType = document.getElementById('vehicle-type').value;
         var addonsCheckboxes = document.querySelectorAll("#add-ons-section input[type='checkbox']");
         var addonsSelects = document.querySelectorAll("#add-ons-section select");
 
@@ -548,9 +547,11 @@
             // Disable all add-ons checkboxes and select elements
             addonsCheckboxes.forEach(function (checkbox) {
                 checkbox.disabled = true;
+                checkbox.checked = false; // Uncheck the checkbox
             });
             addonsSelects.forEach(function (select) {
                 select.disabled = true;
+                select.value = ''; // Reset the select value
             });
         } else {
             // Check if the selected coverage is "Comprehensive"
@@ -566,23 +567,18 @@
                 // Disable all add-ons checkboxes and select elements
                 addonsCheckboxes.forEach(function (checkbox) {
                     checkbox.disabled = true;
+                    checkbox.checked = false; // Uncheck the checkbox
                 });
                 addonsSelects.forEach(function (select) {
                     select.disabled = true;
+                    select.value = ''; // Reset the select value
                 });
             }
         }
     }
 
-// Add event listener to the coverage select element
-    document.getElementById("coverage").addEventListener("change", toggleAddonsState);
-
-// Call the function initially to set the initial state based on the selected coverage and vehicle type
-    toggleAddonsState();
-
     function toggleCoverageOptions() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var vehicleType = urlParams.get('vehicle');
+        var vehicleType = document.getElementById('vehicle-type').value;
         var coverageSelect = document.getElementById("coverage");
         var thirdPartyOption = coverageSelect.querySelector("option[value='third-party-motorcycle']");
         var tpftOption = coverageSelect.querySelector("option[value='third-party-fire-theft']");
@@ -590,20 +586,40 @@
         // Check if the selected vehicle type is Motorcycle
         if (vehicleType === "Motorcycle") {
             // Hide the Third Party Fire and Theft option
-            tpftOption.style.display = "none";
+            if (tpftOption) {
+                tpftOption.style.display = "none";
+            }
             // Show the Third Party option
-            thirdPartyOption.style.display = "block";
+            if (thirdPartyOption) {
+                thirdPartyOption.style.display = "block";
+            }
         } else {
             // Show the Third Party Fire and Theft option
-            tpftOption.style.display = "block";
+            if (tpftOption) {
+                tpftOption.style.display = "block";
+            }
             // Hide the Third Party option
-            thirdPartyOption.style.display = "none";
+            if (thirdPartyOption) {
+                thirdPartyOption.style.display = "none";
+            }
         }
     }
 
-// Call the function initially to set the initial state based on the selected vehicle type
-    toggleCoverageOptions();
+    window.onload = function () {
+        updateNcdOptions();
+        updateCoverageOptions();
+        toggleAddonsState();
+    };
 
+    document.getElementById('vehicle-type').addEventListener('change', function () {
+        updateNcdOptions();
+        updateCoverageOptions();
+        toggleAddonsState();
+    });
+
+    document.getElementById('coverage').addEventListener('change', function () {
+        toggleAddonsState();
+    });
 </script>
 <script>
     var originalVehicleMakes = [
