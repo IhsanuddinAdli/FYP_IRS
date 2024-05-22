@@ -46,12 +46,10 @@ public class NotifyServlet extends HttpServlet {
     }
 
     private void sendEmailToAffectedUsers(Connection conn, int month, int year) throws SQLException {
-        // Create a map to hold user data, specifying String for both key and value in the List
         Map<String, List<String>> userEmailsAndPolicies = new HashMap<>();
 
-        // Prepare SQL query
         try (PreparedStatement ps = conn.prepareStatement(
-                "SELECT c.email, vh.registration_number, qh.policy_expiry_date "
+                "SELECT c.userID, c.email, vh.registration_number, qh.policy_expiry_date "
                 + "FROM Customer c "
                 + "JOIN QuotationHistory qh ON c.userID = qh.userID "
                 + "JOIN VehicleHistory vh ON qh.quotation_id = vh.quotation_id "
@@ -61,17 +59,24 @@ public class NotifyServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                int userID = rs.getInt("userID");
                 String email = rs.getString("email");
                 String registrationNumber = rs.getString("registration_number");
                 Date policyEndDate = rs.getDate("policy_expiry_date");
                 String messageDetail = "Vehicle " + registrationNumber + " policy ends on " + policyEndDate + ".";
 
-                // Check if the email already exists in the map and create a new List if it doesn't
                 userEmailsAndPolicies.putIfAbsent(email, new ArrayList<String>());
                 userEmailsAndPolicies.get(email).add(messageDetail);
+
+                // Insert notification into the database
+                try (PreparedStatement notificationPs = conn.prepareStatement(
+                        "INSERT INTO Notifications (userID, message) VALUES (?, ?)")) {
+                    notificationPs.setInt(1, userID);
+                    notificationPs.setString(2, messageDetail);
+                    notificationPs.executeUpdate();
+                }
             }
 
-            // Send an email for each user
             for (Map.Entry<String, List<String>> entry : userEmailsAndPolicies.entrySet()) {
                 String toEmail = entry.getKey();
                 String body = "Your insurance policies for the following vehicles are about to expire:\n" + String.join("\n", entry.getValue());

@@ -40,6 +40,10 @@
         <servlet-name>ContactUsServlet</servlet-name>
         <servlet-class>com.controller.ContactUsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClearNotificationsServlet</servlet-name>
+        <servlet-class>com.controller.ClearNotificationsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PaymentServlet</servlet-name>
         <url-pattern>/PaymentServlet</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ContactUsServlet</servlet-name>
         <url-pattern>/ContactUsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClearNotificationsServlet</servlet-name>
+        <url-pattern>/ClearNotificationsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
