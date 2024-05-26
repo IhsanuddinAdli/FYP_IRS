@@ -3,7 +3,6 @@ html {
     line-height: 1.8;
     font-family: 'Poppins', sans-serif;
     color: #555e58;
-    text-transform: capitalize;
     font-weight: 400;
     margin: 0px;
     padding: 0px;
@@ -82,11 +81,13 @@ a {
 
 }
 
+
 button:focus {
     box-shadow: none;
     outline: none;
     border: none;
 }
+
 
 button {
     cursor: pointer;
@@ -351,6 +352,7 @@ input[type="search"] {
     background-color: rgba(0, 0, 0, 0.09);
 }
 
+
 .xp-menubar span {
     margin: 9px;
     padding: 0px;
@@ -464,10 +466,10 @@ input[type="search"] {
 
 /* main content */
 .main-content {
+    padding: 30px;
     text-align: center;
     margin-top: 0;
-    height: 75vh; 
-    overflow: auto;
+    overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }
 

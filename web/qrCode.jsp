@@ -1,6 +1,48 @@
 <%@page import="com.dao.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
+<%@page import="java.util.*"%>
+<%
+    String userID = (String) session.getAttribute("userID");
+    String roles = (String) session.getAttribute("roles");
+
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
+            ps.setString(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                roles = rs.getString("roles");
+            }
+        } catch (SQLException e) {
+            // Handle SQLException (print or log the error)
+            e.printStackTrace();
+            out.println("An error occurred while fetching customer data. Please try again later.");
+        }
+    } else {
+        // Handle the case where userID is not found in the session
+        out.println("UserID not found in the session.");
+    }
+
+    List<String> notifications = new ArrayList<>();
+    if (userID != null) {
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(
+                        "SELECT message FROM Notifications WHERE userID = ? AND isRead = FALSE ORDER BY created_at DESC")) {
+            ps.setString(1, userID);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    notifications.add(rs.getString("message"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,6 +60,32 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+            .qr-details {
+                text-align: center;
+                margin-bottom: 20px;
+                padding: 20px;
+                border: 2px solid #000; /* Black border */
+                border-radius: 10px; /* Rounded corners */
+                background-color: #f8f9fa; /* Light background */
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for premium look */
+            }
+            .qr-details p {
+                margin: 0;
+                font-weight: bold;
+                color: #333; /* Darker text color */
+            }
+            .qr-image-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            .qr-image {
+                width: 150px; /* Adjust the width as needed */
+                height: auto;
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -59,32 +127,30 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
-                                                <%
-                                                    String userID = (String) session.getAttribute("userID");
-                                                    String roles = (String) session.getAttribute("roles");
-                                                    if (userID != null) {
-                                                        try {
-                                                            Connection conn = DBConnection.getConnection();
-                                                            PreparedStatement ps = conn.prepareStatement(
-                                                                    "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
-                                                            ps.setString(1, userID);
-                                                            ResultSet rs = ps.executeQuery();
-                                                            if (rs.next() && rs.getInt("count") > 0) {
-                                                                int notifications = rs.getInt("count");
-                                                                out.println("<a class='nav-link' href='#' data-toggle='dropdown'><span class='material-icons'>notifications</span><span class='notification'>" + notifications + "</span></a>");
-                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>You have " + notifications + " new notifications.</a></li></ul>");
-                                                            } else {
-                                                                out.println("<a class='nav-link' href='#'><span class='material-icons'>notifications</span></a>");
-                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>No new notifications.</a></li></ul>");
-                                                            }
-                                                            rs.close();
-                                                            ps.close();
-                                                            conn.close();
-                                                        } catch (SQLException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                %>
+                                                <% if (notifications.size() > 0) {%>
+                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                    <span class="material-icons">notifications</span>
+                                                    <span class="notification"><%= notifications.size()%></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <% for (String notification : notifications) {%>
+                                                    <li><a href="#"><%= notification%></a></li>
+                                                        <% } %>
+                                                    <li class="dropdown-divider"></li>
+                                                    <li>
+                                                        <form method="post" action="ClearNotificationsServlet">
+                                                            <button type="submit" class="btn btn-link" style="text-decoration: none;">Clear Notifications</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                                <% } else { %>
+                                                <a class="nav-link" href="#">
+                                                    <span class="material-icons">notifications</span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">No new notifications.</a></li>
+                                                </ul>
+                                                <% }%>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
@@ -135,8 +201,15 @@
                             <div id="right-section" class="col-md-6">
                                 <div class="payment-details">
                                     <h3>Payment Submission</h3>
+                                    <div class="qr-details">
+                                        <p>7632754905</p>
+                                        <p>CIMB</p>
+                                        <p>Muhammad Ihsanuddin bin Adli</p>
+                                    </div>
                                     <!-- Display QR code for payment -->
-                                    <img src="IMG/qr_bank.jpeg" alt="QR Code" class="img-fluid mb-4">
+                                    <div class="qr-image-container">
+                                        <img src="IMG/qr_bank.jpeg" alt="QR Code" class="qr-image">
+                                    </div>
                                     <form action="paymentSubmit" method="POST" enctype="multipart/form-data" class="mt-4">
                                         <input type="hidden" id="quotationId" name="quotationId" value="<%= request.getParameter("quotationId")%>">
                                         <input type="hidden" id="paymentMethod" name="paymentMethod" value="QR Code">

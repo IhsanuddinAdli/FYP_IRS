@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-
 <%
     String userID = (String) session.getAttribute("userID");
     String roles = (String) session.getAttribute("roles");
@@ -47,7 +46,6 @@
         out.println("userID not found in the session.");
     }
 %>
-
 <!DOCTYPE html>
 <html lang=" en">
     <head>
@@ -77,13 +75,16 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="">
-                        <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="staffDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="active">
                         <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
+                        <a href="manageQuotation.jsp"><i class="material-icons">list_alt</i>Manage Quotation</a>
+                    </li>
+                    <li class="">
+                        <a href="managePayment.jsp" class=""><i class="material-icons">payment</i>Manage Payment</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
@@ -118,11 +119,6 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="staffProfile.jsp">
@@ -162,7 +158,7 @@
                                         <input type="file" class="form-control-file" id="imageFile" name="imageFile">
                                     </div>
                                     <input type="hidden" name="userID" value="<%= userID%>">
-                                    <input type="hidden" name="roles" value="<%= roles %>">
+                                    <input type="hidden" name="roles" value="<%= roles%>">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -174,13 +170,13 @@
                 </div>
 
                 <!----main-content--->
-                <div class="main-content">
+                <div id="main-content-image">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 100px; height: 100px;">
+                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
@@ -233,8 +229,6 @@
                                                 <label for="state">State</label>
                                                 <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
                                             </div>
-                                            <!-- Add more fields as needed -->
-                                            <!--<button type="submit" class="btn btn-primary">Update Profile</button>-->
                                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
                                         </form>
                                     </div>

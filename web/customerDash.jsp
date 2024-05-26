@@ -3,13 +3,34 @@
 <%@page import="java.util.*"%>
 <%
     String roles = (String) session.getAttribute("roles");
-    String userId = (String) session.getAttribute("userID");
+    String userID = (String) session.getAttribute("userID");
+    
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
+            ps.setString(1, userID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                roles = rs.getString("roles");
+            }
+        } catch (SQLException e) {
+            // Handle SQLException (print or log the error)
+            e.printStackTrace();
+            out.println("An error occurred while fetching customer data. Please try again later.");
+        }
+    } else {
+        // Handle the case where customerID is not found in the session
+        out.println("CustomerID not found in the session.");
+    }
+    
     List<String> notifications = new ArrayList<>();
-    if (userId != null) {
+    if (userID != null) {
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(
                         "SELECT message FROM Notifications WHERE userID = ? AND isRead = FALSE ORDER BY created_at DESC")) {
-            ps.setString(1, userId);
+            ps.setString(1, userID);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     notifications.add(rs.getString("message"));
@@ -106,7 +127,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="getImage?userID=<%= userId%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>

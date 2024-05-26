@@ -60,11 +60,11 @@
             }
 
             double[] peninsulaThirdPartyBaseValues = {
-                50.00, 60.00, 70.00, 80.00, 90.00, 100.00, 110.00
+                10.00, 15.50, 20.75, 25.00, 30.25, 35.50, 40.75
             };
 
             double[] eastMalaysiaThirdPartyBaseValues = {
-                40.00, 50.00, 60.00, 70.00, 80.00, 90.00, 100.00
+                5.00, 9.50, 14.00, 18.50, 23.00, 27.50, 32.00
             };
 
             double baseValue = 0.0;

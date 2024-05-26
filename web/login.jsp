@@ -4,9 +4,6 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.SQLException"%>
-
-<%@ page language="java" %>
-<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +44,7 @@
                     </svg>
                     <input type="password" name="password" id="password" placeholder="Password">
                 </div>
-                
+
                 <input type="hidden" name="roles" id="roles" value="customer">
 
                 <div class="options">
@@ -76,7 +73,7 @@
                             String myURL = "jdbc:mysql://localhost/irs";
                             Connection myConnection = DriverManager.getConnection(myURL, "root", "admin");
 
-                            String sSelectQry = "SELECT * FROM customer WHERE email = ? AND password = ?";
+                            String sSelectQry = "SELECT * FROM customer WHERE email = ? AND BINARY password = ?";
                             PreparedStatement myPS = myConnection.prepareStatement(sSelectQry);
                             myPS.setString(1, email);
                             myPS.setString(2, password);

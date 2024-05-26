@@ -34,7 +34,7 @@
                         <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="manageQuotation.jsp" class=""><i class="material-icons">library_books</i>Manage Quotation</a>
+                        <a href="manageQuotation.jsp"><i class="material-icons">list_alt</i>Manage Quotation</a>
                     </li>
                     <li class="">
                         <a href="managePayment.jsp" class=""><i class="material-icons">payment</i>Manage Payment</a>
@@ -72,11 +72,6 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="staffProfile.jsp">

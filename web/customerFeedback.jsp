@@ -1,8 +1,10 @@
+<%@page import="com.dao.DBConnection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
-
+<%@page import="java.util.*"%>
 <%
     String userID = (String) session.getAttribute("userID");
+    String roles = (String) session.getAttribute("roles");
     String quotationIdStr = request.getParameter("quotationId");
     int quotationId = quotationIdStr != null ? Integer.parseInt(quotationIdStr) : -1;
 
@@ -26,6 +28,22 @@
         }
     } else {
         out.println("User not logged in.");
+    }
+
+    List<String> notifications = new ArrayList<>();
+    if (userID != null) {
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(
+                        "SELECT message FROM Notifications WHERE userID = ? AND isRead = FALSE ORDER BY created_at DESC")) {
+            ps.setString(1, userID);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    notifications.add(rs.getString("message"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 %>
 
@@ -59,27 +77,17 @@
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="">
-                        <a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
-                    </li>
-                    <li class="">
-                        <a href="customerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
-                    </li>
+                    <li><a href="customerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                    <li><a href="customerProfile.jsp"><i class="material-icons">account_circle</i>Profile</a></li>
                     <li class="dropdown">
-                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i>Quotation <b class="caret"></b>
-                        </a>
+                        <a href="#quotationMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="material-icons">border_color</i>Quotation <b class="caret"></b></a>
                         <ul class="collapse list-unstyled menu" id="quotationMenu">
-                            <li class="active"><a href="customerQuo.jsp"><i class="material-icons">list</i> Quotation Form</a></li>
-                            <li class=""><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i> Quotations List</a></li>
+                            <li><a href="customerQuo.jsp"><i class="material-icons">list</i>Quotation Form</a></li>
+                            <li><a href="customerQuoList.jsp"><i class="material-icons">list_alt</i>Quotations List</a></li>
                         </ul>
                     </li>
-                    <li class="">
-                        <a href="customerHistory.jsp" class=""><i class="material-icons">date_range</i>History</a>
-                    </li>
-                    <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                    <li><a href="customerHistory.jsp"><i class="material-icons">date_range</i>History</a></li>
+                    <li><a href="homePage.jsp"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
@@ -100,25 +108,34 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
+                                                <% if (notifications.size() > 0) {%>
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
+                                                    <span class="notification"><%= notifications.size()%></span>
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
+                                                    <% for (String notification : notifications) {%>
+                                                    <li><a href="#"><%= notification%></a></li>
+                                                        <% } %>
+                                                    <li class="dropdown-divider"></li>
+                                                    <li>
+                                                        <form method="post" action="ClearNotificationsServlet">
+                                                            <button type="submit" class="btn btn-link" style="text-decoration: none;">Clear Notifications</button>
+                                                        </form>
+                                                    </li>
                                                 </ul>
-                                            </li>
-                                            <li class="nav-item">
+                                                <% } else { %>
                                                 <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
+                                                    <span class="material-icons">notifications</span>
                                                 </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">No new notifications.</a></li>
+                                                </ul>
+                                                <% }%>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>

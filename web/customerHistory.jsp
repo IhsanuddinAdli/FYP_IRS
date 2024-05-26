@@ -4,6 +4,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="com.dao.DBConnection"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String userID = (String) session.getAttribute("userID");
@@ -27,6 +28,22 @@
     } else {
         // Handle the case where userID is not found in the session
         out.println("UserID not found in the session.");
+    }
+
+    List<String> notifications = new ArrayList<>();
+    if (userID != null) {
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(
+                        "SELECT message FROM Notifications WHERE userID = ? AND isRead = FALSE ORDER BY created_at DESC")) {
+            ps.setString(1, userID);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    notifications.add(rs.getString("message"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 %>
 <!DOCTYPE html>
@@ -98,30 +115,30 @@
                                     <nav class="navbar p-0">
                                         <ul class="nav navbar-nav flex-row ml-auto">
                                             <li class="dropdown nav-item">
-                                                <%
-                                                    if (userID != null) {
-                                                        try {
-                                                            Connection conn = DBConnection.getConnection();
-                                                            PreparedStatement ps = conn.prepareStatement(
-                                                                    "SELECT COUNT(*) AS count FROM QuotationHistory WHERE userID = ? AND notification_sent = TRUE");
-                                                            ps.setString(1, userID);
-                                                            ResultSet rs = ps.executeQuery();
-                                                            if (rs.next() && rs.getInt("count") > 0) {
-                                                                int notifications = rs.getInt("count");
-                                                                out.println("<a class='nav-link' href='#' data-toggle='dropdown'><span class='material-icons'>notifications</span><span class='notification'>" + notifications + "</span></a>");
-                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>You have " + notifications + " new notifications.</a></li></ul>");
-                                                            } else {
-                                                                out.println("<a class='nav-link' href='#'><span class='material-icons'>notifications</span></a>");
-                                                                out.println("<ul class='dropdown-menu'><li><a href='#'>No new notifications.</a></li></ul>");
-                                                            }
-                                                            rs.close();
-                                                            ps.close();
-                                                            conn.close();
-                                                        } catch (SQLException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                %>
+                                                <% if (notifications.size() > 0) {%>
+                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                    <span class="material-icons">notifications</span>
+                                                    <span class="notification"><%= notifications.size()%></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <% for (String notification : notifications) {%>
+                                                    <li><a href="#"><%= notification%></a></li>
+                                                        <% } %>
+                                                    <li class="dropdown-divider"></li>
+                                                    <li>
+                                                        <form method="post" action="ClearNotificationsServlet">
+                                                            <button type="submit" class="btn btn-link" style="text-decoration: none;">Clear Notifications</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                                <% } else { %>
+                                                <a class="nav-link" href="#">
+                                                    <span class="material-icons">notifications</span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">No new notifications.</a></li>
+                                                </ul>
+                                                <% }%>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
@@ -156,7 +173,7 @@
                                     <th>Coverage</th>
                                     <th>Policy Expiry Date</th>
                                     <th>Company</th>
-                                    <th>Price (RM)</th>
+                                    <th>Price</th>
                                     <th>Cover Note</th>
                                 </tr>
                             </thead>
@@ -206,7 +223,7 @@
                                     <td><%= coverage%></td>
                                     <td><%= policyExpiryDate%></td>
                                     <td><%= company%></td>
-                                    <td><%= price%></td>
+                                    <td>RM<%= price%></td>
                                     <td>
                                         <%
                                             // Query to retrieve the cover_note from QuotationHistory table based on quotationId
