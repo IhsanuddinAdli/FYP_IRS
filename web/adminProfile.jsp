@@ -9,7 +9,7 @@
     String ICNumber = "";
     String email = "";
     String phone = "";
-    String password ="";
+    String password = "";
     String residence = "";
     String city = "";
     String zipcode = "";
@@ -77,7 +77,7 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="">
-                        <a href="adminDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="adminDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="active">
                         <a href="adminProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
@@ -93,14 +93,11 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
-                    <!-- <li class="">
-                            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-                        </li> -->
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
@@ -175,7 +172,7 @@
                                         <input type="file" class="form-control-file" id="imageFile" name="imageFile">
                                     </div>
                                     <input type="hidden" name="userID" value="<%= userID%>">
-                                    <input type="hidden" name="roles" value="<%= roles %>">
+                                    <input type="hidden" name="roles" value="<%= roles%>">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -185,9 +182,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!----main-content--->
-                <div class="main-content">
+                <div id="main-content-image">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-4">

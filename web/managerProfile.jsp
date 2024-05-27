@@ -77,28 +77,16 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="">
-                        <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="active">
                         <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i>Manage Feedback
-                        </a>
-                        <ul class="collapse list-unstyled menu" id="homeSubmenu1">
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Show</a></li>
-                        </ul>
+                        <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Manage Payment</a>
-                    </li>
-                    <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Customer Notify</a>
+                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
@@ -189,7 +177,7 @@
                 </div>
                                 
                 <!----main-content--->
-                <div class="main-content">
+                <div id="main-content-image">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-4">

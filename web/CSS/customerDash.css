@@ -60,8 +60,6 @@ html {
   material-icon font-style end
   ================================*/
 
-
-
 h1,
 h2,
 h3,
@@ -114,7 +112,6 @@ a:focus {
     text-decoration: none;
     transition: all 0.3s;
 }
-
 
 .wrapper {
     position: relative;

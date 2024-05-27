@@ -3,85 +3,211 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <title>Manage Reports</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="CSS/bootstrap.min.css">
+        <!----css3---->
+        <link rel="stylesheet" href="CSS/managerDash.css">
+        <!--oogle fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <!--google material icon-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
     </head>
     <body>
-        <div class="container mt-5">
-            <h1>Vehicle Insurance Renewal Report</h1>
-            <div id="report-content" style="display:none;">
-                <h2>Insurance Renewal Summary</h2>
-                <p>Here is the vehicle insurance renewal report which provides an overview of all renewals processed, upcoming expiries, and other relevant details for efficient management.</p>
-
-                <h3>Renewal Details</h3>
-                <ul>
-                    <li>Total Renewals Processed: 120</li>
-                    <li>Renewals Due Next Month: 45</li>
-                    <li>Expired Policies: 15</li>
-                </ul>
-
-                <h3>Payment Details</h3>
-                <ul>
-                    <li>Total Collected: $25,000</li>
-                    <li>Outstanding Payments: $5,750</li>
-                </ul>
-
-                <h3>Advanced Data and Insights</h3>
-                <ul>
-                    <li>Average Renewal Time: 5 days</li>
-                    <li>Customer Satisfaction Rate: 85%</li>
-                    <li>Retention Rate: 92%</li>
-                    <li>Top 5 Reasons for Non-Renewal:
-                        <ul>
-                            <li>Price Increase</li>
-                            <li>Better Offer from Competitor</li>
-                            <li>Customer Relocation</li>
-                            <li>Service Issues</li>
-                            <li>Vehicle Sale</li>
-                        </ul>
+        <div class="wrapper">
+            <div class="body-overlay"></div>
+            <!-------sidebar--design------------>
+            <div id="sidebar">
+                <div class="sidebar-header">
+                    <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
+                </div>
+                <ul class="list-unstyled component m-0">
+                    <li class="">
+                        <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
-                    <li>Most Common Payment Methods:
-                        <ul>
-                            <li>Credit Card: 70%</li>
-                            <li>Bank Transfer: 20%</li>
-                            <li>Cash: 10%</li>
-                        </ul>
+                    <li class="">
+                        <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
+                    </li>
+                    <li class="">
+                        <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
+                    </li>
+                    <li class="active">
+                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
+                    </li>
+                    <li class="">
+                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
                 </ul>
-
-                <h3>Key Performance Indicators (KPIs)</h3>
-                <ul>
-                    <li>Monthly Renewal Rate: 78%</li>
-                    <li>Policy Lapse Rate: 6%</li>
-                    <li>New Customer Acquisition: 25</li>
-                    <li>Average Premium per Customer: $208</li>
-                </ul>
-
-                <h3>Actionable Insights</h3>
-                <p>To improve the renewal rate and customer satisfaction, consider the following actions:</p>
-                <ul>
-                    <li>Implement a customer loyalty program to incentivize renewals.</li>
-                    <li>Offer flexible payment plans to accommodate different customer needs.</li>
-                    <li>Enhance customer service training to address service-related non-renewals.</li>
-                    <li>Review and adjust pricing strategies based on competitive analysis.</li>
-                </ul>
-
-                <h3>Manager's Notes</h3>
-                <p>Ensure that all outstanding payments are followed up promptly and renewals for the next month are prioritized. Review expired policies to determine if any follow-up actions are required. Monitor the KPIs closely and implement the recommended actions to enhance overall performance.</p>
-
-                <h3>Admin Instructions</h3>
-                <ul>
-                    <li>Verify all processed renewals for accuracy.</li>
-                    <li>Update the payment status in the system.</li>
-                    <li>Coordinate with the finance department for payment reconciliation.</li>
-                    <li>Prepare renewal reminders for the next month.</li>
-                </ul>
-
-                <p>This report is intended for internal use and should not be distributed without appropriate authorization.</p>
             </div>
-            <button class="btn btn-primary" onclick="generatePDF()">Generate PDF</button>
+            <!-------sidebar--design- close----------->
+            <!-------page-content start----------->
+            <div id="content">
+                <!------top-navbar-start----------->
+                <div class="top-navbar">
+                    <div class="xd-topbar">
+                        <div class="row">
+                            <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+                                <div class="xp-menubar">
+                                    <span class="material-icons text-white">signal_cellular_alt</span>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-3 order-3 order-md-2"></div>
+                            <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                                <div class="xp-profilebar text-right">
+                                    <nav class="navbar p-0">
+                                        <ul class="nav navbar-nav flex-row ml-auto">
+                                            <li class="dropdown nav-item">
+                                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                                    <span class="material-icons">notifications</span>
+                                                    <span class="notification">4</span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">You Have 4 New Messages</a></li>
+                                                    <li><a href="#">You Have 4 New Messages</a></li>
+                                                    <li><a href="#">You Have 4 New Messages</a></li>
+                                                    <li><a href="#">You Have 4 New Messages</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">
+                                                    <span class="material-icons">question_answer</span>
+                                                </a>
+                                            </li>
+                                            <li class="dropdown nav-item">
+                                                <a class="nav-link" href="managerProfile.jsp">
+                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <span class="xp-user-live"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="xp-breadcrumbbar text-center">
+                            <h4 class="page-title">Report</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Manager</a></li>
+                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!------top-navbar-end----------->
+                <!----main-content--->
+                <div class="main-content">
+                    <div class="container mt-5">
+                        <h1>Vehicle Insurance Renewal Report</h1>
+                        <div id="report-content" style="display:none;">
+                            <h2>Insurance Renewal Summary</h2>
+                            <p>Here is the vehicle insurance renewal report which provides an overview of all renewals processed, upcoming expiries, and other relevant details for efficient management.</p>
+
+                            <h3>Renewal Details</h3>
+                            <ul>
+                                <li>Total Renewals Processed: 120</li>
+                                <li>Renewals Due Next Month: 45</li>
+                                <li>Expired Policies: 15</li>
+                            </ul>
+
+                            <h3>Payment Details</h3>
+                            <ul>
+                                <li>Total Collected: $25,000</li>
+                                <li>Outstanding Payments: $5,750</li>
+                            </ul>
+
+                            <h3>Advanced Data and Insights</h3>
+                            <ul>
+                                <li>Average Renewal Time: 5 days</li>
+                                <li>Customer Satisfaction Rate: 85%</li>
+                                <li>Retention Rate: 92%</li>
+                                <li>Top 5 Reasons for Non-Renewal:
+                                    <ul>
+                                        <li>Price Increase</li>
+                                        <li>Better Offer from Competitor</li>
+                                        <li>Customer Relocation</li>
+                                        <li>Service Issues</li>
+                                        <li>Vehicle Sale</li>
+                                    </ul>
+                                </li>
+                                <li>Most Common Payment Methods:
+                                    <ul>
+                                        <li>Credit Card: 70%</li>
+                                        <li>Bank Transfer: 20%</li>
+                                        <li>Cash: 10%</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <h3>Key Performance Indicators (KPIs)</h3>
+                            <ul>
+                                <li>Monthly Renewal Rate: 78%</li>
+                                <li>Policy Lapse Rate: 6%</li>
+                                <li>New Customer Acquisition: 25</li>
+                                <li>Average Premium per Customer: $208</li>
+                            </ul>
+
+                            <h3>Actionable Insights</h3>
+                            <p>To improve the renewal rate and customer satisfaction, consider the following actions:</p>
+                            <ul>
+                                <li>Implement a customer loyalty program to incentivize renewals.</li>
+                                <li>Offer flexible payment plans to accommodate different customer needs.</li>
+                                <li>Enhance customer service training to address service-related non-renewals.</li>
+                                <li>Review and adjust pricing strategies based on competitive analysis.</li>
+                            </ul>
+
+                            <h3>Manager's Notes</h3>
+                            <p>Ensure that all outstanding payments are followed up promptly and renewals for the next month are prioritized. Review expired policies to determine if any follow-up actions are required. Monitor the KPIs closely and implement the recommended actions to enhance overall performance.</p>
+
+                            <h3>Admin Instructions</h3>
+                            <ul>
+                                <li>Verify all processed renewals for accuracy.</li>
+                                <li>Update the payment status in the system.</li>
+                                <li>Coordinate with the finance department for payment reconciliation.</li>
+                                <li>Prepare renewal reminders for the next month.</li>
+                            </ul>
+
+                            <p>This report is intended for internal use and should not be distributed without appropriate authorization.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="generatePDF()">Generate PDF</button>
+                    </div>
+                    <!----main-content-end--->
+                    <!----footer-design------------->
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="footer-in">
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
         </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="JS/jquery-3.3.1.slim.min.js"></script>
+        <script src="JS/popper.min.js"></script>
+        <script src="JS/bootstrap.min.js"></script>
+        <script src="JS/jquery-3.3.1.min.js"></script>
+
+        <script>
+                            $(document).ready(function () {
+                                $(".xp-menubar").on('click', function () {
+                                    $("#sidebar").toggleClass('active');
+                                    $("#content").toggleClass('active');
+                                });
+
+                                $('.xp-menubar,.body-overlay').on('click', function () {
+                                    $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                });
+                            });
+        </script>
 
         <script>
             async function generatePDF() {

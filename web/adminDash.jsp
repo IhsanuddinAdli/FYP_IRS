@@ -28,7 +28,7 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="active">
-                        <a href="adminDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>dashboard </a>
+                        <a href="adminDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="">
                         <a href="adminProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
@@ -44,7 +44,7 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="#" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
@@ -107,7 +107,9 @@
                 </div>
                 <!------top-navbar-end----------->
                 <!----main-content--->
+                <div class="main-content">
 
+                </div>
                 <!----main-content-end--->
                 <!----footer-design------------->
                 <footer class="footer">
