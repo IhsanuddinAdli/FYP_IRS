@@ -202,7 +202,7 @@
                                                     String coverage = rs.getString("coverage");
 
                                                     // Display the quotation details in a table row
-                                %>
+%>
                                 <tr>
                                     <td><%= quotationId%></td>
                                     <td><%= regNumber%></td>
@@ -213,12 +213,15 @@
                                     <td><%= coverage%></td>
                                     <!-- Action buttons -->
                                     <td>
-                                        <!--<a href="javascript:void(0);" onclick="confirmDelete(<%= quotationId%>)">Delete Quotation</a>-->
                                         <form action="calculateQuotation.jsp" method="POST">
                                             <input type="hidden" name="quotationId" value="<%= quotationId%>">
-                                            <button type="submit" class="btn btn-primary">Calculate</button>
+                                            <button type="submit" class="btn btn-primary">
+                                                <span class="material-icons">calculate</span>
+                                            </button>
                                         </form>
-                                        <button type="button" class="btn btn-danger"  onclick="confirmDelete(<%= quotationId%>)">Delete</button>
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete(<%= quotationId%>)">
+                                            <span class="material-icons">delete</span>
+                                        </button>
                                     </td>
                                 </tr>
                                 <%
@@ -253,15 +256,15 @@
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
         <script>
-                                            $(document).ready(function () {
-                                                $(".xp-menubar").on('click', function () {
-                                                    $("#sidebar").toggleClass('active');
-                                                    $("#content").toggleClass('active');
-                                                });
-                                                $('.xp-menubar,.body-overlay').on('click', function () {
-                                                    $("#sidebar,.body-overlay").toggleClass('show-nav');
-                                                });
-                                            });
+        $(document).ready(function () {
+            $(".xp-menubar").on('click', function () {
+                $("#sidebar").toggleClass('active');
+                $("#content").toggleClass('active');
+            });
+            $('.xp-menubar,.body-overlay').on('click', function () {
+                $("#sidebar,.body-overlay").toggleClass('show-nav');
+            });
+        });
         </script>
         <!-- Confirmation Script -->
         <script>

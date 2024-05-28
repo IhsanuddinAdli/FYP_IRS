@@ -129,11 +129,6 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
-                                            </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="adminProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
@@ -328,7 +323,7 @@
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
