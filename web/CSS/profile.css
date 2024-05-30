@@ -492,7 +492,7 @@ input[type="search"] {
     padding: 30px;
     text-align: center;
     margin-top: 0;
-    height: 160vh; /* Set the container height */
+    height: 98vh; /* Set the container height */
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }

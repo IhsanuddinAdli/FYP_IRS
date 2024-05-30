@@ -1,40 +1,109 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.text.DateFormatSymbols"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
 
+    int approvedPayments = 0;
+    int rejectedPayments = 0;
+    int pendingPayments = 0;
+
+    int solvedQuotations = 0;
+    int coverNoteUploadedQuotations = 0;
+    int pendingQuotations = 0;
+
+    Map<String, Double> monthlyTotalPrices = new HashMap<>();
+    Map<String, Double> monthlyTotalProfits = new HashMap<>();
+
     if (userID != null) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
-            ps.setString(1, userID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                roles = rs.getString("roles");
+
+            // Fetch payment status counts
+            PreparedStatement psPayment = con.prepareStatement("SELECT paymentStatus, COUNT(*) AS count FROM PaymentHistory GROUP BY paymentStatus");
+            ResultSet rsPayment = psPayment.executeQuery();
+            while (rsPayment.next()) {
+                String status = rsPayment.getString("paymentStatus");
+                int count = rsPayment.getInt("count");
+                if ("Approved".equalsIgnoreCase(status)) {
+                    approvedPayments = count;
+                } else if ("Rejected".equalsIgnoreCase(status)) {
+                    rejectedPayments = count;
+                } else if ("Pending".equalsIgnoreCase(status)) {
+                    pendingPayments = count;
+                }
             }
+
+            // Fetch quotation status counts
+            PreparedStatement psQuotation = con.prepareStatement("SELECT notification_sent, cover_note IS NOT NULL AS coverNoteUploaded, COUNT(*) AS count FROM QuotationHistory GROUP BY notification_sent, cover_note IS NOT NULL");
+            ResultSet rsQuotation = psQuotation.executeQuery();
+            while (rsQuotation.next()) {
+                boolean notificationSent = rsQuotation.getBoolean("notification_sent");
+                boolean coverNoteUploaded = rsQuotation.getBoolean("coverNoteUploaded");
+                int count = rsQuotation.getInt("count");
+                if (notificationSent || coverNoteUploaded) {
+                    solvedQuotations += count;
+                } else {
+                    pendingQuotations += count;
+                }
+            }
+
+            // Fetch total prices per month
+            PreparedStatement psTotalPrice = con.prepareStatement("SELECT DATE_FORMAT(date_submitted, '%Y-%m') AS month, SUM(price) AS total FROM PaymentHistory GROUP BY month");
+            ResultSet rsTotalPrice = psTotalPrice.executeQuery();
+            while (rsTotalPrice.next()) {
+                String month = rsTotalPrice.getString("month");
+                double total = rsTotalPrice.getDouble("total");
+                double profit = total * 0.1; // Calculate 10% profit
+                monthlyTotalPrices.put(month, total);
+                monthlyTotalProfits.put(month, profit);
+            }
+
         } catch (SQLException e) {
             // Handle SQLException (print or log the error)
             e.printStackTrace();
-            out.println("An error occurred while fetching customer data. Please try again later.");
+            out.println("An error occurred while fetching data. Please try again later.");
         }
     } else {
-        // Handle the case where customerID is not found in the session
-        out.println("CustomerID not found in the session.");
+        // Handle the case where userID is not found in the session
+        out.println("UserID not found in the session.");
+    }
+
+    // Convert the data for the chart
+    StringBuilder months = new StringBuilder();
+    StringBuilder totals = new StringBuilder();
+    StringBuilder profits = new StringBuilder();
+    DateFormatSymbols dfs = new DateFormatSymbols();
+    for (Map.Entry<String, Double> entry : monthlyTotalPrices.entrySet()) {
+        String[] parts = entry.getKey().split("-");
+        String monthName = dfs.getMonths()[Integer.parseInt(parts[1]) - 1];
+        String formattedMonth = monthName + " " + parts[0];
+
+        if (months.length() > 0) {
+            months.append(",");
+            totals.append(",");
+            profits.append(",");
+        }
+        months.append("'").append(formattedMonth).append("'");
+        totals.append(entry.getValue());
+        profits.append(monthlyTotalProfits.get(entry.getKey()));
     }
 %>
 <!DOCTYPE html>
-<html lang=" en">
+<html lang="en">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Staff dashboard</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
@@ -117,7 +186,7 @@
                             <h4 class="page-title">Dashboard</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Staff</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
+                                <!-- <li class="breadcrumb-item active" aria-current="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
@@ -125,7 +194,46 @@
                 <!------top-navbar-end----------->
                 <!----main-content--->
                 <div class="main-content">
-
+                    <!-- Content Section -->
+                    <section>
+                        <!-- Centered Dashboard Widgets -->
+                        <div class="row justify-content-center">
+                            <!-- Widget 1: Payment Status -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title text-center">Payment Status</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <canvas id="paymentStatusChart" width="200" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Widget 2: Quotation Status -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title text-center">Quotation Status</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <canvas id="quotationStatusChart" width="200" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Widget 3: Total Price Per Month -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title text-center">Total Price and Profit Per Month</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <canvas id="totalPricePerMonthChart" width="200" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Centered Dashboard Widgets -->
+                    </section>
                 </div>
                 <!----main-content-end--->
                 <!----footer-design------------->
@@ -156,6 +264,81 @@
                 $('.xp-menubar,.body-overlay').on('click', function () {
                     $("#sidebar,.body-overlay").toggleClass('show-nav');
                 });
+            });
+        </script>
+
+        <!-- Include Chart.js library -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            // Payment Status Chart
+            var paymentStatusCtx = document.getElementById('paymentStatusChart').getContext('2d');
+            var paymentStatusChart = new Chart(paymentStatusCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Approved', 'Rejected', 'Pending'],
+                    datasets: [{
+                            data: [<%= approvedPayments%>, <%= rejectedPayments%>, <%= pendingPayments%>],
+                            backgroundColor: ['#36a2eb', '#ff6384', '#ffcd56']
+                        }]
+                },
+                options: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            });
+
+            // Quotation Status Chart
+            var quotationStatusCtx = document.getElementById('quotationStatusChart').getContext('2d');
+            var quotationStatusChart = new Chart(quotationStatusCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Solved', 'Pending'],
+                    datasets: [{
+                            data: [<%= solvedQuotations%>, <%= pendingQuotations%>],
+                            backgroundColor: ['#4caf50', '#ff6384']
+                        }]
+                },
+                options: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            });
+
+            // Total Price Per Month Chart
+            var totalPricePerMonthCtx = document.getElementById('totalPricePerMonthChart').getContext('2d');
+            var totalPricePerMonthChart = new Chart(totalPricePerMonthCtx, {
+                type: 'bar',
+                data: {
+                    labels: [<%= months.toString()%>],
+                    datasets: [
+                        {
+                            label: 'Total Price',
+                            data: [<%= totals.toString()%>],
+                            backgroundColor: '#36a2eb'
+                        },
+                        {
+                            label: 'Total Profit',
+                            data: [<%= profits.toString()%>],
+                            backgroundColor: '#ffcd56'
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        display: true
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         </script>
     </body>

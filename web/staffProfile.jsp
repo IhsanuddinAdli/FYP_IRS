@@ -187,47 +187,53 @@
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Staff Details</h5>
+                                        <h5 class="card-title">Customer Details</h5>
                                         <form id="profileForm" action="">
-                                            <div class="form-group">
-                                                <label for="firstname">Firstname</label>
-                                                <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="lastname">Lastname</label>
-                                                <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ICNumber">IC Number</label>
-                                                <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="phone">Phone</label>
-                                                <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="password">Password</label>
-                                                <input type="text" class="form-control" id="phone" value="<%= password%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="residence">Residence</label>
-                                                <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="zipcode">Zipcode</label>
-                                                <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="city">City</label>
-                                                <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="state">State</label>
-                                                <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="firstname">Firstname</label>
+                                                        <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lastname">Lastname</label>
+                                                        <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ICNumber">IC Number</label>
+                                                        <input type="text" class="form-control" id="ICNumber" value="<%= ICNumber%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="text" class="form-control" id="phone" value="<%= phone%>" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="password">Password</label>
+                                                        <input type="text" class="form-control" id="password" value="<%= password%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="residence">Residence</label>
+                                                        <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="zipcode">Zipcode</label>
+                                                        <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="city">City</label>
+                                                        <input type="text" class="form-control" id="city" value="<%= city%>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="state">State</label>
+                                                        <input type="text" class="form-control" id="state" value="<%= state%>" readonly>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
                                         </form>
