@@ -97,10 +97,10 @@
                 <!----main-content--->
                 <div class="main-content">
                     <div class="container">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="quotationTable">
                             <thead>
                                 <tr>
-                                    <th>Quotation ID</th>
+                                    <th>No.</th>
                                     <th>Customer Name</th>
                                     <th>Policy Expiry Date</th>
                                     <th>Details</th>
@@ -115,6 +115,7 @@
                                         Connection conn = DBConnection.getConnection();
                                         Statement stmt = conn.createStatement();
                                         ResultSet rs = stmt.executeQuery("SELECT qh.quotation_id, c.firstname, qh.policy_expiry_date, ph.paymentStatus, qh.cover_note FROM QuotationHistory qh JOIN Customer c ON qh.userID = c.userID LEFT JOIN PaymentHistory ph ON qh.quotation_id = ph.quotation_id");
+                                        int rowNumber = 1;
                                         if (!rs.isBeforeFirst()) {
                                 %><tr><td colspan="7">No data found</td></tr><%
                                     }
@@ -127,7 +128,7 @@
                                         boolean isUploadable = !"Pending".equals(paymentStatus) && !"Rejected".equals(paymentStatus);
                                 %>
                                 <tr data-quotation-id="<%= quotationId%>">
-                                    <td><%= quotationId%></td>
+                                    <td><%= rowNumber++%></td>
                                     <td><%= customerName%></td>
                                     <td><%= expiryDate%></td>
                                     <td>
@@ -188,59 +189,69 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <%
-                                                // Fetch details for the selected quotation
-                                                PreparedStatement detailStmt = conn.prepareStatement(
-                                                        "SELECT qh.*, ah.*, vh.*, c.* FROM QuotationHistory qh "
-                                                        + "JOIN AddonsHistory ah ON qh.quotation_id = ah.quotation_id "
-                                                        + "JOIN VehicleHistory vh ON qh.quotation_id = vh.quotation_id "
-                                                        + "JOIN Customer c ON qh.userID = c.userID "
-                                                        + "WHERE qh.quotation_id = ?"
-                                                );
-                                                detailStmt.setInt(1, quotationId);
-                                                ResultSet detailRs = detailStmt.executeQuery();
-                                                if (detailRs.next()) {
-                                            %>
-                                            <h5>Customer Details:</h5>
-                                            <p>Name: <%= detailRs.getString("firstname")%> <%= detailRs.getString("lastname")%></p>
-                                            <p>Email: <%= detailRs.getString("email")%></p>
-                                            <p>Phone: <%= detailRs.getString("phone")%></p>
-                                            <p>Address: <%= detailRs.getString("residence")%>, <%= detailRs.getString("city")%>, <%= detailRs.getString("state")%>, <%= detailRs.getString("zipcode")%></p>
+                                            <div class="container">
+                                                <%
+                                                    // Fetch details for the selected quotation
+                                                    PreparedStatement detailStmt = conn.prepareStatement(
+                                                            "SELECT qh.*, ah.*, vh.*, c.* FROM QuotationHistory qh "
+                                                            + "JOIN AddonsHistory ah ON qh.quotation_id = ah.quotation_id "
+                                                            + "JOIN VehicleHistory vh ON qh.quotation_id = vh.quotation_id "
+                                                            + "JOIN Customer c ON qh.userID = c.userID "
+                                                            + "WHERE qh.quotation_id = ?"
+                                                    );
+                                                    detailStmt.setInt(1, quotationId);
+                                                    ResultSet detailRs = detailStmt.executeQuery();
+                                                    if (detailRs.next()) {
+                                                %>
+                                                <div class="detail-section">
+                                                    <h5>Customer Details:</h5>
+                                                    <p>Name: <%= detailRs.getString("firstname")%> <%= detailRs.getString("lastname")%></p>
+                                                    <p>Email: <%= detailRs.getString("email")%></p>
+                                                    <p>Phone: <%= detailRs.getString("phone")%></p>
+                                                    <p>Address: <%= detailRs.getString("residence")%>, <%= detailRs.getString("city")%>, <%= detailRs.getString("state")%>, <%= detailRs.getString("zipcode")%></p>
+                                                </div>
 
-                                            <h5>Vehicle Details:</h5>
-                                            <p>Owner Name: <%= detailRs.getString("owner_name")%></p>
-                                            <p>Registration Number: <%= detailRs.getString("registration_number")%></p>
-                                            <p>Engine Number: <%= detailRs.getString("engine_number")%></p>
-                                            <p>Chassis Number: <%= detailRs.getString("chassis_number")%></p>
-                                            <p>Insured Value: RM<%= detailRs.getDouble("insured_value")%></p>
-                                            <p>Vehicle Make and Model: <%= detailRs.getString("vehicle_make")%> <%= detailRs.getString("vehicle_model")%></p>
-                                            <p>Manufacture Year: <%= detailRs.getInt("manufacture_year")%></p>
-                                            <p>Vehicle Type: <%= detailRs.getString("vehicle_type")%></p>
-                                            <p>Engine Capacity: <%= detailRs.getInt("engine_capacity")%> CC</p>
-                                            <p>Location: <%= detailRs.getString("location")%></p>
-                                            <p>Local or Import: <%= detailRs.getString("local_import")%></p>
+                                                <div class="detail-section">
+                                                    <h5>Vehicle Details:</h5>
+                                                    <p>Owner Name: <%= detailRs.getString("owner_name")%></p>
+                                                    <p>Registration Number: <%= detailRs.getString("registration_number")%></p>
+                                                    <p>Engine Number: <%= detailRs.getString("engine_number")%></p>
+                                                    <p>Chassis Number: <%= detailRs.getString("chassis_number")%></p>
+                                                    <p>Insured Value: RM<%= detailRs.getDouble("insured_value")%></p>
+                                                    <p>Vehicle Make and Model: <%= detailRs.getString("vehicle_make")%> <%= detailRs.getString("vehicle_model")%></p>
+                                                    <p>Manufacture Year: <%= detailRs.getInt("manufacture_year")%></p>
+                                                    <p>Vehicle Type: <%= detailRs.getString("vehicle_type")%></p>
+                                                    <p>Engine Capacity: <%= detailRs.getInt("engine_capacity")%> CC</p>
+                                                    <p>Location: <%= detailRs.getString("location")%></p>
+                                                    <p>Local or Import: <%= detailRs.getString("local_import")%></p>
+                                                </div>
 
-                                            <h5>Add-ons Details:</h5>
-                                            <p>Windscreen Cost: RM<%= detailRs.getDouble("windscreen_cost")%></p>
-                                            <p>All Driver Cost: RM<%= detailRs.getDouble("all_driver_cost")%></p>
-                                            <p>Special Perils Cost: RM<%= detailRs.getDouble("special_perils_cost")%></p>
-                                            <p>Legal Liability Cost: RM<%= detailRs.getDouble("legal_liability_cost")%></p>
+                                                <div class="detail-section">
+                                                    <h5>Add-ons Details:</h5>
+                                                    <p>Windscreen Cost: RM<%= detailRs.getDouble("windscreen_cost")%></p>
+                                                    <p>All Driver Cost: RM<%= detailRs.getDouble("all_driver_cost")%></p>
+                                                    <p>Special Perils Cost: RM<%= detailRs.getDouble("special_perils_cost")%></p>
+                                                    <p>Legal Liability Cost: RM<%= detailRs.getDouble("legal_liability_cost")%></p>
+                                                </div>
 
-                                            <h5>Quotation Details:</h5>
-                                            <p>Coverage: <%= detailRs.getString("coverage")%></p>
-                                            <p>Policy Commencement Date: <%= detailRs.getDate("policy_commencement_date")%></p>
-                                            <p>Policy Duration: <%= detailRs.getInt("policy_duration")%> months</p>
-                                            <p>Selected NCD: <%= detailRs.getString("selected_ncd")%></p>
+                                                <div class="detail-section">
+                                                    <h5>Quotation Details:</h5>
+                                                    <p>Coverage: <%= detailRs.getString("coverage")%></p>
+                                                    <p>Policy Commencement Date: <%= detailRs.getDate("policy_commencement_date")%></p>
+                                                    <p>Policy Duration: <%= detailRs.getInt("policy_duration")%> months</p>
+                                                    <p>Selected NCD: <%= detailRs.getString("selected_ncd")%></p>
+                                                </div>
 
-                                            <%
-                                            } else {
-                                            %>
-                                            <p>No details found for this quotation.</p>
-                                            <%
-                                                }
-                                                detailRs.close();
-                                                detailStmt.close();
-                                            %>
+                                                <%
+                                                } else {
+                                                %>
+                                                <p>No details found for this quotation.</p>
+                                                <%
+                                                    }
+                                                    detailRs.close();
+                                                    detailStmt.close();
+                                                %>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -276,32 +287,42 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
         <script>
-        $(document).ready(function () {
-            $(".xp-menubar").on('click', function () {
-                $("#sidebar").toggleClass('active');
-                $("#content").toggleClass('active');
-            });
+                                            $(document).ready(function () {
+                                                $('#quotationTable').DataTable({
+                                                    "order": [],
+                                                    "columnDefs": [
+                                                        {"orderable": false, "targets": [3, 5, 6]}
+                                                    ]
+                                                });
 
-            $('.xp-menubar,.body-overlay').on('click', function () {
-                $("#sidebar,.body-overlay").toggleClass('show-nav');
-            });
+                                                $(".xp-menubar").on('click', function () {
+                                                    $("#sidebar").toggleClass('active');
+                                                    $("#content").toggleClass('active');
+                                                });
+
+                                                $('.xp-menubar,.body-overlay').on('click', function () {
+                                                    $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                                });
 
             <%
-                String message = request.getParameter("message");
-                if (message != null && !message.isEmpty()) {
+                    String message = request.getParameter("message");
+                    if (message != null && !message.isEmpty()) {
             %>
-            alert('<%= message%>');
+                                                alert('<%= message%>');
             <%
-                }
+                    }
             %>
-        });
+                                            });
 
-        function confirmDelete(quotationId) {
-            if (confirm('Are you sure you want to delete this cover note?')) {
-                window.location.href = 'deleteCoverNote?quotationId=' + quotationId;
-            }
-        }
+                                            function confirmDelete(quotationId) {
+                                                if (confirm('Are you sure you want to delete this cover note?')) {
+                                                    window.location.href = 'deleteCoverNote?quotationId=' + quotationId;
+                                                }
+                                            }
         </script>
     </body>
 </html>

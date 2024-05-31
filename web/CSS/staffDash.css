@@ -466,7 +466,7 @@ input[type="search"] {
 .main-content {
     text-align: center;
     margin-top: 0;
-    height: 75vh; 
+    height: 73vh; 
     overflow: auto;
     background: url('background2.png') center/cover no-repeat; /* Add background image */
 }

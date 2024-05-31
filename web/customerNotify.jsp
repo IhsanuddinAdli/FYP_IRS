@@ -39,7 +39,7 @@
                         <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
                     </li>
                     <li>
-                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="managerReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li>
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
@@ -74,11 +74,6 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="managerProfile.jsp">

@@ -524,3 +524,58 @@ footer {
         background-color: rgba(0, 0, 0, 0.5);
     }
 }
+
+/* Modal Styles */
+.modal .modal-dialog {
+    max-width: 800px;
+}
+
+.modal .modal-header {
+    border-bottom: none;
+    background-color: #353b48;
+    color: #fff;
+}
+
+.modal .modal-title {
+    font-weight: 600;
+}
+
+.modal .modal-body {
+    padding: 20px 30px;
+    background-color: #f9fafc;
+    border-top: 3px solid #4c7cf3;
+}
+
+.modal .modal-footer {
+    border-top: none;
+    padding: 15px 30px;
+    background-color: #f9fafc;
+}
+
+.detail-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.detail-section h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.detail-section p {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.modal .btn-primary {
+    background-color: #4c7cf3;
+    border-color: #4c7cf3;
+}
+
+.modal .btn-primary:hover {
+    background-color: #3b63c6;
+    border-color: #3b63c6;
+}

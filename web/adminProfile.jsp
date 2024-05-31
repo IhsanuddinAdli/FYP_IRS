@@ -93,7 +93,7 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>

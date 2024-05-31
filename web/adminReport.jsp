@@ -29,22 +29,30 @@
                 </div>
                 <ul class="list-unstyled component m-0">
                     <li class="">
-                        <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
-                    </li>
-                    <li class="">
-                        <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
-                    </li>
-                    <li class="">
-                        <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
+                        <a href="adminDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
                     </li>
                     <li class="active">
-                        <a href="manageReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
+                        <a href="adminProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">border_color</i>Manage Account
+                        </a>
+                        <ul class="collapse list-unstyled menu" id="homeSubmenu1">
+                            <li><a href="customerList.jsp">Customer</a></li>
+                            <li><a href="staffList.jsp">Staff</a></li>
+                            <li><a href="managerList.jsp">Manager</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
                     </li>
                 </ul>
             </div>
+
             <!-------sidebar--design- close----------->
             <!-------page-content start----------->
             <div id="content">
@@ -74,11 +82,6 @@
                                                     <li><a href="#">You Have 4 New Messages</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="#">
-                                                    <span class="material-icons">question_answer</span>
-                                                </a>
-                                            </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="managerProfile.jsp">
                                                     <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
@@ -93,7 +96,7 @@
                         <div class="xp-breadcrumbbar text-center">
                             <h4 class="page-title">Report</h4>
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Manager</a></li>
+                                <li class="breadcrumb-item"><a href="#">Admin</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
