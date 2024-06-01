@@ -9,10 +9,20 @@
 <%
     String userID = (String) session.getAttribute("userID");
     String roles = (String) session.getAttribute("roles");
+    boolean hasImage = false;
     if (userID != null) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM customer WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
+
             PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
             ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
@@ -56,19 +66,21 @@
         <title>History Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
-        <!----css3---->
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+        <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/customerHistory.css">
-        <!--google fonts -->
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
+        <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-            <!-------sidebar--design------------>
+            <!-- Sidebar Design -->
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
@@ -97,10 +109,10 @@
                     </li>
                 </ul>
             </div>
-            <!-------sidebar--design- close----------->
-            <!-------page-content start----------->
+            <!-- Sidebar Design End -->
+            <!-- Page Content Start -->
             <div id="content">
-                <!------top-navbar-start----------->
+                <!-- Top Navbar Start -->
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -142,7 +154,8 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />                                                    <span class="xp-user-live"></span>
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
+                                                    <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -154,128 +167,132 @@
                             <h4 class="page-title">History</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
                 </div>
-                <!------top-navbar-end----------->
+                <!-- Top Navbar End -->
                 <!-- Main content start -->
-                <div id="main-content-image">
-                    <div class="container">
-                        <h2>History of Vehicle Insurance Purchases</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Registration Number</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Vehicle Model</th>
-                                    <th>Coverage</th>
-                                    <th>Policy Expiry Date</th>
-                                    <th>Company</th>
-                                    <th>Price</th>
-                                    <th>Cover Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Retrieve and display data from QuotationHistory, VehicleHistory, and PaymentHistory tables -->
-                                <%
-                                    if (userID != null) {
-                                        try {
-                                            Connection conn = DBConnection.getConnection();
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="historyTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Registration Number</th>
+                                                <th>Vehicle Type</th>
+                                                <th>Vehicle Model</th>
+                                                <th>Coverage</th>
+                                                <th>Policy Expiry Date</th>
+                                                <th>Company</th>
+                                                <th>Price</th>
+                                                <th>Cover Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Retrieve and display data from QuotationHistory, VehicleHistory, and PaymentHistory tables -->
+                                            <%
+                                                if (userID != null) {
+                                                    try {
+                                                        Connection conn = DBConnection.getConnection();
 
-                                            // Query to retrieve data from QuotationHistory table based on userID
-                                            PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM QuotationHistory WHERE userID = ?");
-                                            stmt1.setString(1, userID);
-                                            ResultSet rs1 = stmt1.executeQuery();
+                                                        // Query to retrieve data from QuotationHistory table based on userID
+                                                        PreparedStatement stmt1 = conn.prepareStatement("SELECT * FROM QuotationHistory WHERE userID = ?");
+                                                        stmt1.setString(1, userID);
+                                                        ResultSet rs1 = stmt1.executeQuery();
 
-                                            // Iterate through the result set and display data in table rows
-                                            while (rs1.next()) {
-                                                int quotationId = rs1.getInt("quotation_id");
-                                                String coverage = rs1.getString("coverage");
-                                                String company = rs1.getString("company");
-                                                String policyExpiryDate = rs1.getString("policy_expiry_date");
+                                                        // Iterate through the result set and display data in table rows
+                                                        while (rs1.next()) {
+                                                            int quotationId = rs1.getInt("quotation_id");
+                                                            String coverage = rs1.getString("coverage");
+                                                            String company = rs1.getString("company");
+                                                            String policyExpiryDate = rs1.getString("policy_expiry_date");
 
-                                                // Query to retrieve data from VehicleHistory table based on quotationId
-                                                PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM VehicleHistory WHERE quotation_id = ?");
-                                                stmt2.setInt(1, quotationId);
-                                                ResultSet rs2 = stmt2.executeQuery();
+                                                            // Query to retrieve data from VehicleHistory table based on quotationId
+                                                            PreparedStatement stmt2 = conn.prepareStatement("SELECT * FROM VehicleHistory WHERE quotation_id = ?");
+                                                            stmt2.setInt(1, quotationId);
+                                                            ResultSet rs2 = stmt2.executeQuery();
 
-                                                // Iterate through the result set and display data in table rows
-                                                while (rs2.next()) {
-                                                    String registrationNumber = rs2.getString("registration_number");
-                                                    String vehicleType = rs2.getString("vehicle_type");
-                                                    String vehicleModel = rs2.getString("vehicle_model");
+                                                            // Iterate through the result set and display data in table rows
+                                                            while (rs2.next()) {
+                                                                String registrationNumber = rs2.getString("registration_number");
+                                                                String vehicleType = rs2.getString("vehicle_type");
+                                                                String vehicleModel = rs2.getString("vehicle_model");
 
-                                                    // Query to retrieve data from PaymentHistory table based on quotationId
-                                                    PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM PaymentHistory WHERE quotation_id = ?");
-                                                    stmt3.setInt(1, quotationId);
-                                                    ResultSet rs3 = stmt3.executeQuery();
+                                                                // Query to retrieve data from PaymentHistory table based on quotationId
+                                                                PreparedStatement stmt3 = conn.prepareStatement("SELECT * FROM PaymentHistory WHERE quotation_id = ?");
+                                                                stmt3.setInt(1, quotationId);
+                                                                ResultSet rs3 = stmt3.executeQuery();
 
-                                                    // Iterate through the result set and display data in table rows
-                                                    while (rs3.next()) {
-                                                        double price = rs3.getDouble("price");
-                                %>
-                                <tr>
-                                    <td><%= registrationNumber%></td>
-                                    <td><%= vehicleType%></td>
-                                    <td><%= vehicleModel%></td>
-                                    <td><%= coverage%></td>
-                                    <td><%= policyExpiryDate%></td>
-                                    <td><%= company%></td>
-                                    <td>RM<%= price%></td>
-                                    <td>
-                                        <%
-                                            // Query to retrieve the cover_note from QuotationHistory table based on quotationId
-                                            PreparedStatement stmt4 = conn.prepareStatement("SELECT cover_note FROM QuotationHistory WHERE quotation_id = ?");
-                                            stmt4.setInt(1, quotationId);
-                                            ResultSet rs4 = stmt4.executeQuery();
+                                                                // Iterate through the result set and display data in table rows
+                                                                while (rs3.next()) {
+                                                                    double price = rs3.getDouble("price");
+                                            %>
+                                            <tr>
+                                                <td><%= registrationNumber%></td>
+                                                <td><%= vehicleType%></td>
+                                                <td><%= vehicleModel%></td>
+                                                <td><%= coverage%></td>
+                                                <td><%= policyExpiryDate%></td>
+                                                <td><%= company%></td>
+                                                <td>RM<%= price%></td>
+                                                <td>
+                                                    <%
+                                                        // Query to retrieve the cover_note from QuotationHistory table based on quotationId
+                                                        PreparedStatement stmt4 = conn.prepareStatement("SELECT cover_note FROM QuotationHistory WHERE quotation_id = ?");
+                                                        stmt4.setInt(1, quotationId);
+                                                        ResultSet rs4 = stmt4.executeQuery();
 
-                                            // Check if the result set has data
-                                            if (rs4.next()) {
-                                                // Retrieve the cover_note binary data
-                                                byte[] coverNoteData = rs4.getBytes("cover_note");
-                                                // Check if coverNoteData is not null and has content
-                                                if (coverNoteData != null && coverNoteData.length > 0) {
-                                                    // Output a link to download or view the PDF
-%>
-                                        <a href="viewPDF?id=<%= quotationId%>" class="btn btn-primary" target="_blank">View Cover Note</a>
-                                        <%
-                                        } else {
-                                        %>
-                                        No file uploaded
-                                        <%
-                                                }
-                                            }
-                                            rs4.close();
-                                            stmt4.close();
-                                        %>
-                                    </td>
-                                </tr>
-                                <%
+                                                        // Check if the result set has data
+                                                        if (rs4.next()) {
+                                                            // Retrieve the cover_note binary data
+                                                            byte[] coverNoteData = rs4.getBytes("cover_note");
+                                                            // Check if coverNoteData is not null and has content
+                                                            if (coverNoteData != null && coverNoteData.length > 0) {
+                                                                // Output a link to download or view the PDF
+                                                    %>
+                                                    <a href="viewPDF?id=<%= quotationId%>" class="btn btn-primary" target="_blank">View</a>
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    No file
+                                                    <%
+                                                            }
+                                                        }
+                                                        rs4.close();
+                                                        stmt4.close();
+                                                    %>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                                }
+                                                                rs3.close();
+                                                                stmt3.close();
+                                                            }
+                                                            rs2.close();
+                                                            stmt2.close();
+                                                        }
+                                                        rs1.close();
+                                                        stmt1.close();
+                                                        conn.close();
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
                                                     }
-                                                    rs3.close();
-                                                    stmt3.close();
+                                                } else {
+                                                    out.println("UserID not found in the session.");
                                                 }
-                                                rs2.close();
-                                                stmt2.close();
-                                            }
-                                            rs1.close();
-                                            stmt1.close();
-                                            conn.close();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    } else {
-                                        out.println("UserID not found in the session.");
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Main content end -->
-                <!----footer-design------------->
+                <!-- Footer Design -->
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
@@ -291,15 +308,31 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <!-- DataTables JavaScript -->
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script>
             $(document).ready(function () {
+                $('#historyTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        {"orderable": false, "targets": [7]}
+                    ]
+                });
+
                 $(".xp-menubar").on('click', function () {
                     $("#sidebar").toggleClass('active');
                     $("#content").toggleClass('active');
                 });
+
                 $('.xp-menubar,.body-overlay').on('click', function () {
                     $("#sidebar,.body-overlay").toggleClass('show-nav');
                 });
+
+            <% String message = request.getParameter("message");
+                if (message != null && !message.isEmpty()) {%>
+                alert('<%= message%>');
+            <% }%>
             });
         </script>
     </body>

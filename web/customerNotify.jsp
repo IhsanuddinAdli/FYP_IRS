@@ -1,6 +1,33 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*, java.util.Calendar"%>
 <%@page import="com.dao.DBConnection"%>
+<%
+    String roles = (String) session.getAttribute("roles");
+    String userID = (String) session.getAttribute("userID");
+    boolean hasImage = false;
+
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM manager WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
+        } catch (SQLException e) {
+            // Handle SQLException (print or log the error)
+            e.printStackTrace();
+            out.println("An error occurred while fetching data. Please try again later.");
+        }
+    } else {
+        // Handle the case where userID is not found in the session
+        out.println("UserID not found in the session.");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -66,18 +93,11 @@
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
                                                 </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="managerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>

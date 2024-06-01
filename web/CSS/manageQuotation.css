@@ -579,3 +579,16 @@ footer {
     background-color: #3b63c6;
     border-color: #3b63c6;
 }
+
+.dataTables_wrapper .dataTables_filter {
+    float: none;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_info {
+    float: left;
+}
+.dataTables_wrapper .dataTables_filter input {
+    width: 100%;
+    max-width: 300px; /* Adjust the max-width as per your requirement */
+}

@@ -3,17 +3,14 @@ html {
     line-height: 1.8;
     font-family: 'Poppins', sans-serif;
     color: #555e58;
-    text-transform: capitalize;
     font-weight: 400;
     margin: 0px;
     padding: 0px;
 }
 
-
 /*==========================================================
   material-icon font-style
   ================================*/
-
 
 @font-face {
     font-family: 'Material Icons';
@@ -27,8 +24,6 @@ html {
         url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
         url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
-
-
 
 .material-icons {
     font-family: 'Material Icons';
@@ -59,8 +54,6 @@ html {
 /*==========================================================
   material-icon font-style end
   ================================*/
-
-
 
 h1,
 h2,
@@ -115,7 +108,6 @@ a:focus {
     transition: all 0.3s;
 }
 
-
 .wrapper {
     position: relative;
     width: 100%;
@@ -137,7 +129,6 @@ a:focus {
     background-color: #fff;
     box-shadow: 0 0 30px 0 rgba(200 200 200 / 20%);
 }
-
 
 @media only screen and (min-width:992px) {
     #sidebar.active {
@@ -163,7 +154,6 @@ a:focus {
     }
 
 }
-
 
 #sidebar::-webkit-scrollbar {
     width: 5px;
@@ -216,18 +206,14 @@ a:focus {
     background-color: #DBE5FD;
 }
 
-
 #sidebar ul li.active>a i {
     color: #4c7cf3;
 }
-
-
 
 #sidebar ul li a:hover {
     color: #4c7cf3;
     background-color: #DBE5FD;
 }
-
 
 .dropdown-toggle::after {
     position: absolute;
@@ -239,7 +225,6 @@ a:focus {
 #sidebar ul li.dropdown {
     position: sticky;
 }
-
 
 #sidebar ul.component {
     padding: 20px 0px;
@@ -262,9 +247,7 @@ a:focus {
     top: 6px;
 }
 
-
 /*=========sidebar---design- end-----*/
-
 
 /*========main-content- navbardesign -start-----*/
 
@@ -273,7 +256,6 @@ a:focus {
     transition: all 0.5s;
     background-attachment: #f9fafc;
 }
-
 
 .top-navbar {
     width: 100%;
@@ -300,7 +282,6 @@ input[type="search"] {
     margin-left: -1px;
 }
 
-
 .xp-searchbar .btn {
     background-color: #4a5263;
     color: #fff;
@@ -309,7 +290,6 @@ input[type="search"] {
     border-radius: 0 50px 50px 0;
     padding: 4px 15px;
 }
-
 
 .xp-breadcrumbbar .page-title {
     font-size: 20px;
@@ -332,7 +312,6 @@ input[type="search"] {
 .breadcrumb-item.active {
     color: #6c757d;
 }
-
 
 .breadcrumb-item+.breadcrumb-item {
     padding-left: .5rem;
@@ -437,7 +416,6 @@ input[type="search"] {
     min-width: 10rem;
 }
 
-
 .dropdown-menu li>a {
     font-size: 13px;
     padding: 10px 20px;
@@ -446,7 +424,6 @@ input[type="search"] {
     font-weight: 400;
     transition: all 150ms linear;
 }
-
 
 .dropdown-menu li>a .material-icons {
     position: relative;
@@ -487,50 +464,17 @@ input[type="search"] {
 
 /*---navbardesign -end-----*/
 
-
 /* main content */
-#main-content-image {
+.main-content {
+    padding: 30px;
     text-align: center;
     margin-top: 0;
-    overflow: auto; /* Hide any overflowing content */
+    overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
-    min-height: 73vh;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    margin-top: 25px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 8px;
-    text-align: center;
-}
-
-thead {
-    background-color: #f2f2f2;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tbody tr:hover {
-    background-color: #ddd;
+    min-height: 73px;
 }
 
 /* main content end */
-
 
 /*-------footer design start------*/
 footer {
@@ -544,8 +488,16 @@ footer {
 
 /*-------footer design end------*/
 
-/*========main-content- navbardesign -end-----*/
+#sidebar.show-nav,
+.body-overlay.show-nav {
+    transform: translatex(0%);
+    opacity: 1;
+    display: block;
+    visibility: visible;
+    z-index: 15;
+}
 
+/*========main-content- navbardesign -end-----*/
 
 @media only screen and (max-width:992px) {
     #sidebar {
@@ -572,4 +524,72 @@ footer {
         transition: all 150ms linear;
         background-color: rgba(0, 0, 0, 0.5);
     }
+}
+
+/* Modal Styles */
+.modal .modal-dialog {
+    max-width: 800px;
+}
+
+.modal .modal-header {
+    border-bottom: none;
+    background-color: #353b48;
+    color: #fff;
+}
+
+.modal .modal-title {
+    font-weight: 600;
+}
+
+.modal .modal-body {
+    padding: 20px 30px;
+    background-color: #f9fafc;
+    border-top: 3px solid #4c7cf3;
+}
+
+.modal .modal-footer {
+    border-top: none;
+    padding: 15px 30px;
+    background-color: #f9fafc;
+}
+
+.detail-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.detail-section h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.detail-section p {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.modal .btn-primary {
+    background-color: #4c7cf3;
+    border-color: #4c7cf3;
+}
+
+.modal .btn-primary:hover {
+    background-color: #3b63c6;
+    border-color: #3b63c6;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: none;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_info {
+    float: left;
+}
+.dataTables_wrapper .dataTables_filter input {
+    width: 100%;
+    max-width: 300px; /* Adjust the max-width as per your requirement */
 }

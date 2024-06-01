@@ -10,6 +10,7 @@
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
+    boolean hasImage = false;
 
     int approvedPayments = 0;
     int rejectedPayments = 0;
@@ -26,6 +27,14 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM staff WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
 
             // Fetch payment status counts
             PreparedStatement psPayment = con.prepareStatement("SELECT paymentStatus, COUNT(*) AS count FROM PaymentHistory GROUP BY paymentStatus");
@@ -173,7 +182,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="staffProfile.jsp">
-                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>

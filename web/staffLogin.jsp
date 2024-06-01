@@ -68,7 +68,7 @@
                 </div>
 
                 <!--<button class="signin-btn">LOGIN</button>-->
-                <input type="submit" class="signin-btn" id="submit" value="LOGIN">
+                <input type="submit" class="signin-btn" id="submit" value="Login">
                 <%
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");

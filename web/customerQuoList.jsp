@@ -9,10 +9,20 @@
 <%
     String userID = (String) session.getAttribute("userID");
     String roles = (String) session.getAttribute("roles");
+    boolean hasImage = false;
     if (userID != null) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM customer WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
+
             PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
             ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
@@ -55,19 +65,21 @@
         <title>Customer Quotation List</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/customerHistory.css">
-        <!--google fonts -->
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
+        <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-            <!-------sidebar--design------------>
+            <!-- Sidebar Design -->
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
@@ -96,10 +108,10 @@
                     </li>
                 </ul>
             </div>
-            <!-------sidebar--design- close----------->
-            <!-------page-content start----------->
+            <!-- Sidebar Design End -->
+            <!-- Page Content Start -->
             <div id="content">
-                <!------top-navbar-start----------->
+                <!-- Top Navbar Start -->
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -141,7 +153,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -154,92 +166,88 @@
                             <h4 class="page-title">Customer Quotation List</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Customer</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
                 </div>
-                <!------top-navbar-end----------->
+                <!-- Top Navbar End -->
                 <!-- Main content start -->
-                <div id="main-content-image">
-                    <div class="container">
-                        <h2>Customer Quotation List</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Quotation ID</th>
-                                    <th>Registration Number</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Vehicle Model</th>
-                                    <th>Manufacture Year</th>
-                                    <th>Engine Capacity</th>
-                                    <th>Coverage</th>
-                                    <th>Action</th> <!-- New column for actions -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    // Retrieve userID from session
-//                                    String userID = (String) session.getAttribute("userID");
-
-                                    // Check if userID is not null
-                                    if (userID != null && !userID.isEmpty()) {
-                                        try (Connection conn = DBConnection.getConnection();
-                                                PreparedStatement pstmt = conn.prepareStatement("SELECT q.quotation_id, v.registration_number, v.vehicle_type, v.vehicle_model, v.manufacture_year, v.engine_capacity, q.coverage "
-                                                        + "FROM Quotation q "
-                                                        + "INNER JOIN Vehicle v ON q.quotation_id = v.quotation_id "
-                                                        + "WHERE q.userID=?")) {
-                                            pstmt.setString(1, userID);
-                                            try (ResultSet rs = pstmt.executeQuery()) {
-                                                // Loop through the result set and display each quotation
-                                                while (rs.next()) {
-                                                    int quotationId = rs.getInt("quotation_id");
-                                                    String regNumber = rs.getString("registration_number");
-                                                    String vehicleType = rs.getString("vehicle_type");
-                                                    String vehicleModel = rs.getString("vehicle_model");
-                                                    int manufactureYear = rs.getInt("manufacture_year");
-                                                    int engineCapacity = rs.getInt("engine_capacity");
-                                                    String coverage = rs.getString("coverage");
-
-                                                    // Display the quotation details in a table row
-%>
-                                <tr>
-                                    <td><%= quotationId%></td>
-                                    <td><%= regNumber%></td>
-                                    <td><%= vehicleType%></td>
-                                    <td><%= vehicleModel%></td>
-                                    <td><%= manufactureYear%></td>
-                                    <td><%= engineCapacity%></td>
-                                    <td><%= coverage%></td>
-                                    <!-- Action buttons -->
-                                    <td>
-                                        <form action="calculateQuotation.jsp" method="POST">
-                                            <input type="hidden" name="quotationId" value="<%= quotationId%>">
-                                            <button type="submit" class="btn btn-primary">
-                                                <span class="material-icons">calculate</span>
-                                            </button>
-                                        </form>
-                                        <button type="button" class="btn btn-danger" onclick="confirmDelete(<%= quotationId%>)">
-                                            <span class="material-icons">delete</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <%
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="quotationTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Registration Number</th>
+                                                <th>Vehicle Type</th>
+                                                <th>Vehicle Model</th>
+                                                <th>Manufacture Year</th>
+                                                <th>Engine Capacity</th>
+                                                <th>Coverage</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                if (userID != null && !userID.isEmpty()) {
+                                                    try (Connection conn = DBConnection.getConnection();
+                                                            PreparedStatement pstmt = conn.prepareStatement("SELECT q.quotation_id, v.registration_number, v.vehicle_type, v.vehicle_model, v.manufacture_year, v.engine_capacity, q.coverage "
+                                                                    + "FROM Quotation q "
+                                                                    + "INNER JOIN Vehicle v ON q.quotation_id = v.quotation_id "
+                                                                    + "WHERE q.userID=?")) {
+                                                        pstmt.setString(1, userID);
+                                                        try (ResultSet rs = pstmt.executeQuery()) {
+                                                            int rowNumber = 1; // Initialize row number counter
+                                                            while (rs.next()) {
+                                                                String regNumber = rs.getString("registration_number");
+                                                                String vehicleType = rs.getString("vehicle_type");
+                                                                String vehicleModel = rs.getString("vehicle_model");
+                                                                int manufactureYear = rs.getInt("manufacture_year");
+                                                                int engineCapacity = rs.getInt("engine_capacity");
+                                                                String coverage = rs.getString("coverage");
+                                            %>
+                                            <tr>
+                                                <td><%= rowNumber++%></td>
+                                                <td><%= regNumber%></td>
+                                                <td><%= vehicleType%></td>
+                                                <td><%= vehicleModel%></td>
+                                                <td><%= manufactureYear%></td>
+                                                <td><%= engineCapacity%></td>
+                                                <td><%= coverage%></td>
+                                                <td>
+                                                    <form action="calculateQuotation.jsp" method="POST">
+                                                        <input type="hidden" name="quotationId" value="<%= rs.getInt("quotation_id")%>">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <span class="material-icons">calculate</span>
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete(<%= rs.getInt("quotation_id")%>)">
+                                                        <span class="material-icons">delete</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                            }
+                                                        }
+                                                    } catch (SQLException e) {
+                                                        out.println("<tr><td colspan='8'>Error retrieving quotations: " + e.getMessage() + "</td></tr>");
+                                                    }
+                                                } else {
+                                                    out.println("<tr><td colspan='8'>No quotations found for the user.</td></tr>");
                                                 }
-                                            }
-                                        } catch (SQLException e) {
-                                            out.println("<tr><td colspan='8'>Error retrieving quotations: " + e.getMessage() + "</td></tr>");
-                                        }
-                                    } else {
-                                        out.println("<tr><td colspan='8'>No quotations found for the user.</td></tr>");
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Main content end -->
-                <!----footer-design------------->
+                <!-- Footer Design -->
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
@@ -255,25 +263,34 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <!-- DataTables JavaScript -->
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script>
-        $(document).ready(function () {
-            $(".xp-menubar").on('click', function () {
-                $("#sidebar").toggleClass('active');
-                $("#content").toggleClass('active');
-            });
-            $('.xp-menubar,.body-overlay').on('click', function () {
-                $("#sidebar,.body-overlay").toggleClass('show-nav');
-            });
-        });
-        </script>
-        <!-- Confirmation Script -->
-        <script>
-            function confirmDelete(quotationId) {
-                var confirmDelete = confirm("Are you sure you want to delete this quotation?");
-                if (confirmDelete) {
-                    window.location.href = "deleteQuotation.jsp?quotation_id=" + quotationId;
-                }
-            }
+                                                        $(document).ready(function () {
+                                                            $('#quotationTable').DataTable({
+                                                                "order": [],
+                                                                "columnDefs": [
+                                                                    {"orderable": false, "targets": [7]}
+                                                                ]
+                                                            });
+
+                                                            $(".xp-menubar").on('click', function () {
+                                                                $("#sidebar").toggleClass('active');
+                                                                $("#content").toggleClass('active');
+                                                            });
+
+                                                            $('.xp-menubar,.body-overlay').on('click', function () {
+                                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                                            });
+                                                        });
+
+                                                        function confirmDelete(quotationId) {
+                                                            var confirmDelete = confirm("Are you sure you want to delete this quotation?");
+                                                            if (confirmDelete) {
+                                                                window.location.href = "deleteQuotation.jsp?quotation_id=" + quotationId;
+                                                            }
+                                                        }
         </script>
     </body>
 </html>

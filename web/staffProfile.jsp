@@ -13,6 +13,7 @@
     String city = "";
     String zipcode = "";
     String state = "";
+    boolean hasImage = false;
 
     if (userID != null) {
         try {
@@ -34,6 +35,7 @@
                 city = rs.getString("city");
                 zipcode = rs.getString("zipcode");
                 state = rs.getString("state");
+                hasImage = rs.getBlob("profileIMG") != null; // Check if the user has uploaded an image
                 // Process retrieved data
             }
         } catch (SQLException e) {
@@ -52,7 +54,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Profile Page</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
@@ -122,7 +124,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="staffProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -176,7 +178,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
+                                        <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"

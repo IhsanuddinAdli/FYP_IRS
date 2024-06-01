@@ -1,5 +1,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%
+    String roles = (String) session.getAttribute("roles");
+    String userID = (String) session.getAttribute("userID");
+    boolean hasImage = false;
+
+    if (userID != null) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM admin WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
+        } catch (SQLException e) {
+            // Handle SQLException (print or log the error)
+            e.printStackTrace();
+            out.println("An error occurred while fetching data. Please try again later.");
+        }
+    } else {
+        // Handle the case where userID is not found in the session
+        out.println("UserID not found in the session.");
+    }
+%>
 <!DOCTYPE html>
 <html lang=" en">
     <head>
@@ -71,18 +98,11 @@
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
                                                 </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="adminProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -144,21 +164,21 @@
 
                                                     while (rs.next()) {
                                                         // Retrieve staff details from the result set
-                                                        String userID = rs.getString("userID");
+                                                        String userIDs = rs.getString("userID");
                                                         String firstname = rs.getString("firstname");
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
                                             %>
                                             <tr>
-                                                <td><%= userID%></td>
+                                                <td><%= userIDs%></td>
                                                 <td><%= firstname%></td>
                                                 <td><%= email%></td>
                                                 <td><%= phone%></td>
                                                 <td><%= ICNumber%></td>
                                                 <td>
-                                                    <a href="editManagerList.jsp?userID=<%= userID%>" class="btn btn-info btn-sm">View</a>
-                                                    <button class="btn btn-danger btn-sm" onclick="deleteManager('<%= userID%>')">Delete</button>
+                                                    <a href="editManagerList.jsp?userID=<%= userIDs%>" class="btn btn-info btn-sm">View</a>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteManager('<%= userIDs%>')">Delete</button>
                                                 </td>
                                             </tr>
                                             <%

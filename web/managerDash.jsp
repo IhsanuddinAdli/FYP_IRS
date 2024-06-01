@@ -11,6 +11,7 @@
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
+    boolean hasImage = false;
 
     int notified = 0;
     int notNotified = 0;
@@ -27,6 +28,14 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
+            
+            // Check if user has uploaded an image
+            PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM manager WHERE userID = ?");
+            psImage.setString(1, userID);
+            ResultSet rsImage = psImage.executeQuery();
+            if (rsImage.next()) {
+                hasImage = rsImage.getBlob("profileIMG") != null;
+            }
 
             // Fetch notification status counts
             PreparedStatement psNotification = con.prepareStatement("SELECT notification_sent, COUNT(*) AS count FROM QuotationHistory GROUP BY notification_sent");
@@ -109,7 +118,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!----css3---->
-        <link rel="stylesheet" href="CSS/adminDash.css">
+        <link rel="stylesheet" href="CSS/managerDash.css">
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -161,18 +170,11 @@
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="#" data-toggle="dropdown">
                                                     <span class="material-icons">notifications</span>
-                                                    <span class="notification">4</span>
                                                 </a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                    <li><a href="#">You Have 4 New Messages</a></li>
-                                                </ul>
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="managerProfile.jsp">
-                                                    <img src="IMG/avatar.jpg" style="width:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>

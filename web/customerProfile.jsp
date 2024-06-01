@@ -15,6 +15,7 @@
     String city = "";
     String zipcode = "";
     String state = "";
+    boolean hasImage = false;
 
     if (userID != null) {
         try {
@@ -36,6 +37,7 @@
                 city = rs.getString("city");
                 zipcode = rs.getString("zipcode");
                 state = rs.getString("state");
+                hasImage = rs.getBlob("profileIMG") != null;
                 // Process retrieved data
             }
         } catch (SQLException e) {
@@ -161,7 +163,7 @@
                                             </li>
                                             <li class="dropdown nav-item">
                                                 <a class="nav-link" href="customerProfile.jsp">
-                                                    <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle" style="width:40px; height:40px; border-radius:50%;" />
+                                                    <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" style="width:40px; height:40px; border-radius:50%;" />
                                                     <span class="xp-user-live"></span>
                                                 </a>
                                             </li>
@@ -216,7 +218,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <!-- Display the customer's current profile image -->
-                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
+                                        <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
                                     </div>
                                     <div class="card-footer text-center">
                                         <!-- Button to trigger the modal for updating the profile image -->
