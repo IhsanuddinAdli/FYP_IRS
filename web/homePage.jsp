@@ -75,8 +75,8 @@
                                         </li>
                                         <!-- Staff Section -->
                                         <li>
-                                            <span class="dropdown-header">Staff</span>
-                                            <a class="dropdown-item" href="staffLogin.jsp">Login</a>
+                                            <span class="dropdown-header">Employee</span>
+                                            <a class="dropdown-item" href="employeeLogin.jsp">Login</a>
                                         </li>
                                     </ul>
                                 </li>

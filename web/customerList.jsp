@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.Base64" %>
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
@@ -79,7 +79,6 @@
                     </li>
                 </ul>
             </div>
-
             <!-------sidebar--design- close----------->
             <div id="content">
                 <!------top-navbar-start----------->
@@ -127,11 +126,11 @@
                     <div class="container-fluid">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title">List of Customer</h5>
+                                <h5 class="card-title">List of Customers</h5>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="staffTable" width="100%" cellspacing="0">
+                                    <table class="table table-striped" id="customerTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -158,22 +157,49 @@
                                                     ResultSet rs = st.executeQuery(query);
 
                                                     while (rs.next()) {
-                                                        // Retrieve staff details from the result set
+                                                        // Retrieve customer details from the result set
                                                         String userIDs = rs.getString("userID");
                                                         String firstname = rs.getString("firstname");
+                                                        String lastname = rs.getString("lastname");
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
+                                                        String residence = rs.getString("residence");
+                                                        String city = rs.getString("city");
+                                                        String zipcode = rs.getString("zipcode");
+                                                        String state = rs.getString("state");
+                                                        String registrationDate = rs.getString("registration_date");
+                                                        String registrationTime = rs.getString("registration_time");
+                                                        Blob profileIMG = rs.getBlob("profileIMG");
+                                                        String profileIMGBase64 = "";
+                                                        if (profileIMG != null) {
+                                                            byte[] imgData = profileIMG.getBytes(1, (int) profileIMG.length());
+                                                            profileIMGBase64 = Base64.getEncoder().encodeToString(imgData);
+                                                        }
                                             %>
                                             <tr>
                                                 <td><%= userIDs%></td>
-                                                <td><%= firstname%></td>
+                                                <td><%= firstname%> <%= lastname%></td>
                                                 <td><%= email%></td>
                                                 <td><%= phone%></td>
                                                 <td><%= ICNumber%></td>
                                                 <td>
-                                                    <a href="editCustomerList.jsp?userID=<%= userIDs%>" class="btn btn-info btn-sm">View</a>
-                                                    <button class="btn btn-danger btn-sm" onclick="deleteStaff('<%= userIDs%>')">Delete</button>
+                                                    <button class="btn btn-info btn-sm viewBtn"
+                                                            data-userid="<%= userIDs%>"
+                                                            data-firstname="<%= firstname%>"
+                                                            data-lastname="<%= lastname%>"
+                                                            data-email="<%= email%>"
+                                                            data-phone="<%= phone%>"
+                                                            data-icnumber="<%= ICNumber%>"
+                                                            data-residence="<%= residence%>"
+                                                            data-city="<%= city%>"
+                                                            data-zipcode="<%= zipcode%>"
+                                                            data-state="<%= state%>"
+                                                            data-registrationdate="<%= registrationDate%>"
+                                                            data-registrationtime="<%= registrationTime%>"
+                                                            data-profileimg="<%= profileIMGBase64%>"
+                                                            data-toggle="modal" data-target="#customerModal">View</button>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteCustomer('<%= userIDs%>')">Delete</button>
                                                 </td>
                                             </tr>
                                             <%
@@ -184,37 +210,46 @@
                                                     out.println("Error: " + e);
                                                 }
                                             %>
+                                        </tbody>
                                     </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Confirmation Modal -->
-                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to delete this customer member?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <!-- Add a hidden input to store the staffID to be deleted -->
-                                    <input type="hidden" id="customerIDToDelete">
-                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!----main-content-end--->
 
-                    <!----footer-design------------->
+                    <!-- Modal -->
+                    <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="customerModalLabel">Customer Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>ID:</strong> <span id="modalUserID"></span></p>
+                                    <p><strong>Name:</strong> <span id="modalFirstname"></span> <span id="modalLastname"></span></p>
+                                    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                                    <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+                                    <p><strong>IC:</strong> <span id="modalICNumber"></span></p>
+                                    <p><strong>Residence:</strong> <span id="modalResidence"></span></p>
+                                    <p><strong>City:</strong> <span id="modalCity"></span></p>
+                                    <p><strong>Zipcode:</strong> <span id="modalZipcode"></span></p>
+                                    <p><strong>State:</strong> <span id="modalState"></span></p>
+                                    <p><strong>Registration Date:</strong> <span id="modalRegistrationDate"></span></p>
+                                    <p><strong>Registration Time:</strong> <span id="modalRegistrationTime"></span></p>
+                                    <p><strong>Profile Image:</strong></p>
+                                    <img id="modalProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <footer class="footer">
                     <div class="container-fluid">
@@ -235,38 +270,71 @@
         <script src="JS/jquery-3.3.1.min.js"></script>
 
         <script>
-                                        $(document).ready(function () {
-                                            $(".xp-menubar").on('click', function () {
-                                                $("#sidebar").toggleClass('active');
-                                                $("#content").toggleClass('active');
-                                            });
+                                                        $(document).ready(function () {
+                                                            $(".xp-menubar").on('click', function () {
+                                                                $("#sidebar").toggleClass('active');
+                                                                $("#content").toggleClass('active');
+                                                            });
 
-                                            $('.xp-menubar,.body-overlay').on('click', function () {
-                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
-                                            });
-                                        });
-        </script>
-        <script>
-            function deleteStaff(customerID) {
-                if (confirm("Are you sure you want to delete this staff member?")) {
-                    // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
-                    $.ajax({
-                        type: "POST",
-                        url: "processDeleteCustomer.jsp",
-                        data: {customerID: customerID},
-                        success: function (response) {
-                            // Reload the page after successful deletion
-                            window.location.reload();
-                        },
-                        error: function (error) {
-                            console.log("Error:", error);
-                            alert("Error deleting customer member. Please try again.");
-                        }
-                    });
-                }
-            }
-        </script>
+                                                            $('.xp-menubar,.body-overlay').on('click', function () {
+                                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                                            });
 
+                                                            // View button click event
+                                                            $(".viewBtn").on("click", function () {
+                                                                var userID = $(this).data("userid");
+                                                                var firstname = $(this).data("firstname");
+                                                                var lastname = $(this).data("lastname");
+                                                                var email = $(this).data("email");
+                                                                var phone = $(this).data("phone");
+                                                                var icnumber = $(this).data("icnumber");
+                                                                var residence = $(this).data("residence");
+                                                                var city = $(this).data("city");
+                                                                var zipcode = $(this).data("zipcode");
+                                                                var state = $(this).data("state");
+                                                                var registrationDate = $(this).data("registrationdate");
+                                                                var registrationTime = $(this).data("registrationtime");
+                                                                var profileIMG = $(this).data("profileimg");
+
+                                                                // Set the data to the modal
+                                                                $("#modalUserID").text(userID);
+                                                                $("#modalFirstname").text(firstname);
+                                                                $("#modalLastname").text(lastname);
+                                                                $("#modalEmail").text(email);
+                                                                $("#modalPhone").text(phone);
+                                                                $("#modalICNumber").text(icnumber);
+                                                                $("#modalResidence").text(residence);
+                                                                $("#modalCity").text(city);
+                                                                $("#modalZipcode").text(zipcode);
+                                                                $("#modalState").text(state);
+                                                                $("#modalRegistrationDate").text(registrationDate);
+                                                                $("#modalRegistrationTime").text(registrationTime);
+                                                                if (profileIMG) {
+                                                                    $("#modalProfileIMG").attr("src", "data:image/jpeg;base64," + profileIMG);
+                                                                } else {
+                                                                    $("#modalProfileIMG").attr("src", "IMG/avatar.jpg");
+                                                                }
+                                                            });
+                                                        });
+
+                                                        function deleteCustomer(customerID) {
+                                                            if (confirm("Are you sure you want to delete this customer?")) {
+                                                                // Send an AJAX request to processDeleteCustomer.jsp with the customerID parameter
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "processDeleteCustomer.jsp",
+                                                                    data: {customerID: customerID},
+                                                                    success: function (response) {
+                                                                        // Reload the page after successful deletion
+                                                                        window.location.reload();
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log("Error:", error);
+                                                                        alert("Error deleting customer. Please try again.");
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+        </script>
     </body>
-
 </html>

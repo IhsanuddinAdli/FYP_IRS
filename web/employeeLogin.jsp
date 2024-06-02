@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400$display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="CSS/staffLogin.css">
+        <link rel="stylesheet" href="CSS/employeeLogin.css">
         <title>Staff Login Page</title>
     </head>
 

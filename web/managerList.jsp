@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.Base64" %>
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
@@ -28,7 +28,7 @@
     }
 %>
 <!DOCTYPE html>
-<html lang=" en">
+<html lang="en">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -72,14 +72,13 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
-                    </li>
+                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a></li>
                     <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
+
             <div id="content">
                 <!------top-navbar-start----------->
                 <div class="top-navbar">
@@ -125,18 +124,18 @@
                 <!----main-content--->
                 <div class="main-content">
                     <div class="container-fluid">
-                        <!-- Add Staff Button (Moved to the top right corner) -->
+                        <!-- Add Manager Button (Moved to the top right corner) -->
                         <div class="text-right mb-4">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#addStaffModal">Add Manager</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#addManagerModal">Add Manager</button>
                         </div>
                         <!-- Manager Table -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title">List of Manager</h5>
+                                <h5 class="card-title">List of Managers</h5>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="staffTable" width="100%" cellspacing="0">
+                                    <table class="table table-striped" id="managerTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -163,21 +162,44 @@
                                                     ResultSet rs = st.executeQuery(query);
 
                                                     while (rs.next()) {
-                                                        // Retrieve staff details from the result set
+                                                        // Retrieve manager details from the result set
                                                         String userIDs = rs.getString("userID");
                                                         String firstname = rs.getString("firstname");
+                                                        String lastname = rs.getString("lastname");
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
+                                                        String residence = rs.getString("residence");
+                                                        String city = rs.getString("city");
+                                                        String zipcode = rs.getString("zipcode");
+                                                        String state = rs.getString("state");
+                                                        Blob profileIMG = rs.getBlob("profileIMG");
+                                                        String profileIMGBase64 = "";
+                                                        if (profileIMG != null) {
+                                                            byte[] imgData = profileIMG.getBytes(1, (int) profileIMG.length());
+                                                            profileIMGBase64 = Base64.getEncoder().encodeToString(imgData);
+                                                        }
                                             %>
                                             <tr>
                                                 <td><%= userIDs%></td>
-                                                <td><%= firstname%></td>
+                                                <td><%= firstname%> <%= lastname%></td>
                                                 <td><%= email%></td>
                                                 <td><%= phone%></td>
                                                 <td><%= ICNumber%></td>
                                                 <td>
-                                                    <a href="editManagerList.jsp?userID=<%= userIDs%>" class="btn btn-info btn-sm">View</a>
+                                                    <button class="btn btn-info btn-sm viewBtn"
+                                                            data-userid="<%= userIDs%>"
+                                                            data-firstname="<%= firstname%>"
+                                                            data-lastname="<%= lastname%>"
+                                                            data-email="<%= email%>"
+                                                            data-phone="<%= phone%>"
+                                                            data-icnumber="<%= ICNumber%>"
+                                                            data-residence="<%= residence%>"
+                                                            data-city="<%= city%>"
+                                                            data-zipcode="<%= zipcode%>"
+                                                            data-state="<%= state%>"
+                                                            data-profileimg="<%= profileIMGBase64%>"
+                                                            data-toggle="modal" data-target="#managerModal">View</button>
                                                     <button class="btn btn-danger btn-sm" onclick="deleteManager('<%= userIDs%>')">Delete</button>
                                                 </td>
                                             </tr>
@@ -189,25 +211,25 @@
                                                     out.println("Error: " + e);
                                                 }
                                             %>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Add Staff Modal -->
-                    <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel"
-                         aria-hidden="true">
+                    <!-- Add Manager Modal -->
+                    <div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addStaffModalLabel">Add Manager</h5>
+                                    <h5 class="modal-title" id="addManagerModalLabel">Add Manager</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Add a form to input staff information -->
+                                    <!-- Add a form to input manager information -->
                                     <form action="processRegisterManager.jsp" method="post">
                                         <div class="form-group">
                                             <label for="firstname">Firstname:</label>
@@ -215,7 +237,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="lastname">Lastname</label>
-                                            <input type="text" class="form-control" name="lastname" id="staffName" placeholder="Enter Manager Lastname" required>
+                                            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Manager Lastname" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email:</label>
@@ -230,12 +252,12 @@
                                             <input type="password" class="form-control" name="password" id="password" placeholder="Enter Manager Password" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="confirmPassword">Cofirm Password:</label>
+                                            <label for="confirmPassword">Confirm Password:</label>
                                             <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Manager Password" required oninput="checkPasswordMatch()">
                                         </div>
 
                                         <input type="hidden" name="roles" id="roles" value="manager">
-                                        <!-- Add more input fields based on your staff information -->
+                                        <!-- Add more input fields based on your manager information -->
                                         <button type="submit" class="btn btn-primary">ADD</button>
                                     </form>
                                 </div>
@@ -243,97 +265,129 @@
                         </div>
                     </div>
 
-                    <!-- Confirmation Modal -->
-                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                    <!-- View Manager Modal -->
+                    <div class="modal fade" id="managerModal" tabindex="-1" role="dialog" aria-labelledby="managerModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                    <h5 class="modal-title" id="managerModalLabel">Manager Details</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
-                                    </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Are you sure you want to delete this manager?</p>
+                                    <p><strong>ID:</strong> <span id="modalManagerUserID"></span></p>
+                                    <p><strong>Name:</strong> <span id="modalManagerFirstname"></span> <span id="modalManagerLastname"></span></p>
+                                    <p><strong>Email:</strong> <span id="modalManagerEmail"></span></p>
+                                    <p><strong>Phone:</strong> <span id="modalManagerPhone"></span></p>
+                                    <p><strong>IC:</strong> <span id="modalManagerICNumber"></span></p>
+                                    <p><strong>Residence:</strong> <span id="modalManagerResidence"></span></p>
+                                    <p><strong>City:</strong> <span id="modalManagerCity"></span></p>
+                                    <p><strong>Zipcode:</strong> <span id="modalManagerZipcode"></span></p>
+                                    <p><strong>State:</strong> <span id="modalManagerState"></span></p>
+                                    <p><strong>Profile Image:</strong></p>
+                                    <img id="modalManagerProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <!-- Add a hidden input to store the staffID to be deleted -->
-                                    <input type="hidden" id="managerIDToDelete">
-                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!----main-content-end--->
-
-                    <!----footer-design------------->
                 </div>
+                <!----footer-design------------->
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
-        <!-------complete html----------->
+    </div>
+    <!-------complete html----------->
 
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="JS/jquery-3.3.1.slim.min.js"></script>
-        <script src="JS/popper.min.js"></script>
-        <script src="JS/bootstrap.min.js"></script>
-        <script src="JS/jquery-3.3.1.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="JS/jquery-3.3.1.slim.min.js"></script>
+    <script src="JS/popper.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    <script src="JS/jquery-3.3.1.min.js"></script>
 
-        <script>
-                                    $(document).ready(function () {
-                                        $(".xp-menubar").on('click', function () {
-                                            $("#sidebar").toggleClass('active');
-                                            $("#content").toggleClass('active');
-                                        });
+    <script>
+                                                        $(document).ready(function () {
+                                                            $(".xp-menubar").on('click', function () {
+                                                                $("#sidebar").toggleClass('active');
+                                                                $("#content").toggleClass('active');
+                                                            });
 
-                                        $('.xp-menubar,.body-overlay').on('click', function () {
-                                            $("#sidebar,.body-overlay").toggleClass('show-nav');
-                                        });
-                                    });
-        </script>
-        <script>
-            function deleteManager(managerID) {
-                if (confirm("Are you sure you want to delete this manager?")) {
-                    // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
-                    $.ajax({
-                        type: "POST",
-                        url: "processDeleteManager.jsp",
-                        data: {managerID: managerID},
-                        success: function (response) {
-                            // Reload the page after successful deletion
-                            window.location.reload();
-                        },
-                        error: function (error) {
-                            console.log("Error:", error);
-                            alert("Error deleting manager. Please try again.");
-                        }
-                    });
-                }
-            }
-        </script>
-        <script>
+                                                            $('.xp-menubar,.body-overlay').on('click', function () {
+                                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                                            });
 
-            function checkPasswordMatch() {
-                var password = document.getElementById("password").value;
-                var confirmPassword = document.getElementById("confirmPassword").value;
-                var passwordError = document.getElementById("passwordError");
+                                                            // View button click event
+                                                            $(".viewBtn").on("click", function () {
+                                                                var userID = $(this).data("userid");
+                                                                var firstname = $(this).data("firstname");
+                                                                var lastname = $(this).data("lastname");
+                                                                var email = $(this).data("email");
+                                                                var phone = $(this).data("phone");
+                                                                var icnumber = $(this).data("icnumber");
+                                                                var residence = $(this).data("residence");
+                                                                var city = $(this).data("city");
+                                                                var zipcode = $(this).data("zipcode");
+                                                                var state = $(this).data("state");
+                                                                var profileIMG = $(this).data("profileimg");
 
-                if (password !== confirmPassword) {
-                    passwordError.innerHTML = "Passwords do not match!";
-                } else {
-                    passwordError.innerHTML = "";
-                }
-            }
-        </script>
-    </body>
+                                                                // Set the data to the modal
+                                                                $("#modalManagerUserID").text(userID);
+                                                                $("#modalManagerFirstname").text(firstname);
+                                                                $("#modalManagerLastname").text(lastname);
+                                                                $("#modalManagerEmail").text(email);
+                                                                $("#modalManagerPhone").text(phone);
+                                                                $("#modalManagerICNumber").text(icnumber);
+                                                                $("#modalManagerResidence").text(residence);
+                                                                $("#modalManagerCity").text(city);
+                                                                $("#modalManagerZipcode").text(zipcode);
+                                                                $("#modalManagerState").text(state);
+                                                                if (profileIMG) {
+                                                                    $("#modalManagerProfileIMG").attr("src", "data:image/jpeg;base64," + profileIMG);
+                                                                } else {
+                                                                    $("#modalManagerProfileIMG").attr("src", "IMG/avatar.jpg");
+                                                                }
+                                                            });
+                                                        });
 
+                                                        function deleteManager(managerID) {
+                                                            if (confirm("Are you sure you want to delete this manager?")) {
+                                                                // Send an AJAX request to processDeleteManager.jsp with the managerID parameter
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "processDeleteManager.jsp",
+                                                                    data: {managerID: managerID},
+                                                                    success: function (response) {
+                                                                        // Reload the page after successful deletion
+                                                                        window.location.reload();
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log("Error:", error);
+                                                                        alert("Error deleting manager. Please try again.");
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+
+                                                        function checkPasswordMatch() {
+                                                            var password = document.getElementById("password").value;
+                                                            var confirmPassword = document.getElementById("confirmPassword").value;
+                                                            var passwordError = document.getElementById("passwordError");
+
+                                                            if (password !== confirmPassword) {
+                                                                passwordError.innerHTML = "Passwords do not match!";
+                                                            } else {
+                                                                passwordError.innerHTML = "";
+                                                            }
+                                                        }
+    </script>
+</body>
 </html>

@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.Base64" %>
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
@@ -28,7 +28,7 @@
     }
 %>
 <!DOCTYPE html>
-<html lang=" en">
+<html lang="en">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -72,11 +72,9 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
-                    </li>
+                        <a href="adminReport.jsp" class=""><i class="material-icons">library_books</i>Report</a></li>
                     <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->
@@ -113,7 +111,7 @@
                             </div>
                         </div>
                         <div class="xp-breadcrumbbar text-center">
-                            <h4 class="page-title">Dashboard</h4>
+                            <h4 class="page-title">Manage Staff</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
                                 <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
@@ -137,7 +135,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="staffTable" width="100%" cellspacing="0">
+                                    <table class="table table-striped" id="staffTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -167,18 +165,41 @@
                                                         // Retrieve staff details from the result set
                                                         String userIDs = rs.getString("userID");
                                                         String firstname = rs.getString("firstname");
+                                                        String lastname = rs.getString("lastname");
                                                         String email = rs.getString("email");
                                                         String phone = rs.getString("phone");
                                                         String ICNumber = rs.getString("ICNumber");
+                                                        String residence = rs.getString("residence");
+                                                        String city = rs.getString("city");
+                                                        String zipcode = rs.getString("zipcode");
+                                                        String state = rs.getString("state");
+                                                        Blob profileIMG = rs.getBlob("profileIMG");
+                                                        String profileIMGBase64 = "";
+                                                        if (profileIMG != null) {
+                                                            byte[] imgData = profileIMG.getBytes(1, (int) profileIMG.length());
+                                                            profileIMGBase64 = Base64.getEncoder().encodeToString(imgData);
+                                                        }
                                             %>
                                             <tr>
                                                 <td><%= userIDs%></td>
-                                                <td><%= firstname%></td>
+                                                <td><%= firstname%> <%= lastname%></td>
                                                 <td><%= email%></td>
                                                 <td><%= phone%></td>
                                                 <td><%= ICNumber%></td>
                                                 <td>
-                                                    <a href="editStaffList.jsp?userID=<%= userIDs%>" class="btn btn-info btn-sm">View</a>
+                                                    <button class="btn btn-info btn-sm viewBtn"
+                                                            data-userid="<%= userIDs%>"
+                                                            data-firstname="<%= firstname%>"
+                                                            data-lastname="<%= lastname%>"
+                                                            data-email="<%= email%>"
+                                                            data-phone="<%= phone%>"
+                                                            data-icnumber="<%= ICNumber%>"
+                                                            data-residence="<%= residence%>"
+                                                            data-city="<%= city%>"
+                                                            data-zipcode="<%= zipcode%>"
+                                                            data-state="<%= state%>"
+                                                            data-profileimg="<%= profileIMGBase64%>"
+                                                            data-toggle="modal" data-target="#staffModal">View</button>
                                                     <button class="btn btn-danger btn-sm" onclick="deleteStaff('<%= userIDs%>')">Delete</button>
                                                 </td>
                                             </tr>
@@ -190,6 +211,7 @@
                                                     out.println("Error: " + e);
                                                 }
                                             %>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -197,8 +219,7 @@
                     </div>
 
                     <!-- Add Staff Modal -->
-                    <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel"
-                         aria-hidden="true">
+                    <div class="modal fade" id="addStaffModal" tabindex="-1" role="dialog" aria-labelledby="addStaffModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -231,7 +252,7 @@
                                             <input type="password" class="form-control" name="password" id="password" placeholder="Enter Staff Password" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="confirmPassword">Cofirm Password:</label>
+                                            <label for="confirmPassword">Confirm Password:</label>
                                             <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-Enter Staff Password" required oninput="checkPasswordMatch()">
                                         </div>
 
@@ -244,37 +265,42 @@
                         </div>
                     </div>
 
-                    <!-- Confirmation Modal -->
-                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                    <!-- Modal -->
+                    <div class="modal fade" id="staffModal" tabindex="-1" role="dialog" aria-labelledby="staffModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                    <h5 class="modal-title" id="staffModalLabel">Staff Details</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Are you sure you want to delete this staff member?</p>
+                                    <p><strong>ID:</strong> <span id="modalStaffUserID"></span></p>
+                                    <p><strong>Name:</strong> <span id="modalStaffFirstname"></span> <span id="modalStaffLastname"></span></p>
+                                    <p><strong>Email:</strong> <span id="modalStaffEmail"></span></p>
+                                    <p><strong>Phone:</strong> <span id="modalStaffPhone"></span></p>
+                                    <p><strong>IC:</strong> <span id="modalStaffICNumber"></span></p>
+                                    <p><strong>Residence:</strong> <span id="modalStaffResidence"></span></p>
+                                    <p><strong>City:</strong> <span id="modalStaffCity"></span></p>
+                                    <p><strong>Zipcode:</strong> <span id="modalStaffZipcode"></span></p>
+                                    <p><strong>State:</strong> <span id="modalStaffState"></span></p>
+                                    <p><strong>Profile Image:</strong></p>
+                                    <img id="modalStaffProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <!-- Add a hidden input to store the staffID to be deleted -->
-                                    <input type="hidden" id="staffIDToDelete">
-                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!----main-content-end--->
 
                     <!----footer-design------------->
                 </div>
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
-                            <p class="mb-0">&copy 2021 Vishweb Design . All Rights Reserved.</p>
+                            <p class="mb-0">&copy; 2024 RAZ WAWASAN SDN BHD (ADLI YONG)</p>
                         </div>
                     </div>
                 </footer>
@@ -288,52 +314,81 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-        <script>
-                                    $(document).ready(function () {
-                                        $(".xp-menubar").on('click', function () {
-                                            $("#sidebar").toggleClass('active');
-                                            $("#content").toggleClass('active');
-                                        });
 
-                                        $('.xp-menubar,.body-overlay').on('click', function () {
-                                            $("#sidebar,.body-overlay").toggleClass('show-nav');
-                                        });
-                                    });
-        </script>
         <script>
-            function deleteStaff(staffID) {
-                if (confirm("Are you sure you want to delete this staff member?")) {
-                    // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
-                    $.ajax({
-                        type: "POST",
-                        url: "processDeleteStaff.jsp",
-                        data: {staffID: staffID},
-                        success: function (response) {
-                            // Reload the page after successful deletion
-                            window.location.reload();
-                        },
-                        error: function (error) {
-                            console.log("Error:", error);
-                            alert("Error deleting staff member. Please try again.");
-                        }
-                    });
-                }
-            }
-        </script>
-        <script>
+                                                        $(document).ready(function () {
+                                                            $(".xp-menubar").on('click', function () {
+                                                                $("#sidebar").toggleClass('active');
+                                                                $("#content").toggleClass('active');
+                                                            });
 
-            function checkPasswordMatch() {
-                var password = document.getElementById("password").value;
-                var confirmPassword = document.getElementById("confirmPassword").value;
-                var passwordError = document.getElementById("passwordError");
+                                                            $('.xp-menubar,.body-overlay').on('click', function () {
+                                                                $("#sidebar,.body-overlay").toggleClass('show-nav');
+                                                            });
 
-                if (password !== confirmPassword) {
-                    passwordError.innerHTML = "Passwords do not match!";
-                } else {
-                    passwordError.innerHTML = "";
-                }
-            }
+                                                            // View button click event
+                                                            $(".viewBtn").on("click", function () {
+                                                                var userID = $(this).data("userid");
+                                                                var firstname = $(this).data("firstname");
+                                                                var lastname = $(this).data("lastname");
+                                                                var email = $(this).data("email");
+                                                                var phone = $(this).data("phone");
+                                                                var icnumber = $(this).data("icnumber");
+                                                                var residence = $(this).data("residence");
+                                                                var city = $(this).data("city");
+                                                                var zipcode = $(this).data("zipcode");
+                                                                var state = $(this).data("state");
+                                                                var profileIMG = $(this).data("profileimg");
+
+                                                                // Set the data to the modal
+                                                                $("#modalStaffUserID").text(userID);
+                                                                $("#modalStaffFirstname").text(firstname);
+                                                                $("#modalStaffLastname").text(lastname);
+                                                                $("#modalStaffEmail").text(email);
+                                                                $("#modalStaffPhone").text(phone);
+                                                                $("#modalStaffICNumber").text(icnumber);
+                                                                $("#modalStaffResidence").text(residence);
+                                                                $("#modalStaffCity").text(city);
+                                                                $("#modalStaffZipcode").text(zipcode);
+                                                                $("#modalStaffState").text(state);
+                                                                if (profileIMG) {
+                                                                    $("#modalStaffProfileIMG").attr("src", "data:image/jpeg;base64," + profileIMG);
+                                                                } else {
+                                                                    $("#modalStaffProfileIMG").attr("src", "IMG/avatar.jpg");
+                                                                }
+                                                            });
+                                                        });
+
+                                                        function deleteStaff(staffID) {
+                                                            if (confirm("Are you sure you want to delete this staff member?")) {
+                                                                // Send an AJAX request to processDeleteStaff.jsp with the staffID parameter
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url: "processDeleteStaff.jsp",
+                                                                    data: {staffID: staffID},
+                                                                    success: function (response) {
+                                                                        // Reload the page after successful deletion
+                                                                        window.location.reload();
+                                                                    },
+                                                                    error: function (error) {
+                                                                        console.log("Error:", error);
+                                                                        alert("Error deleting staff member. Please try again.");
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+
+                                                        function checkPasswordMatch() {
+                                                            var password = document.getElementById("password").value;
+                                                            var confirmPassword = document.getElementById("confirmPassword").value;
+                                                            var passwordError = document.getElementById("passwordError");
+
+                                                            if (password !== confirmPassword) {
+                                                                passwordError.innerHTML = "Passwords do not match!";
+                                                            } else {
+                                                                passwordError.innerHTML = "";
+                                                            }
+                                                        }
         </script>
     </body>
-
 </html>
