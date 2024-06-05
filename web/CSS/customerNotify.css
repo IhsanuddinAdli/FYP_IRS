@@ -65,7 +65,8 @@ h6,
 .h3,
 .h4 {
     font-weight: 400;
-    line-height: 1.5em;
+    line-height:
+        1.5em;
 }
 
 p {
@@ -80,11 +81,13 @@ a {
 
 }
 
+
 button:focus {
     box-shadow: none;
     outline: none;
     border: none;
 }
+
 
 button {
     cursor: pointer;
@@ -468,7 +471,7 @@ input[type="search"] {
     margin-top: 0;
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
-    min-height: 73px;
+    min-height: 90px;
 }
 
 /* main content end */
@@ -589,4 +592,18 @@ footer {
 .dataTables_wrapper .dataTables_filter input {
     width: 100%;
     max-width: 300px; /* Adjust the max-width as per your requirement */
+}
+
+table, th, td {
+    border: none !important;
+}
+th, td {
+    border-bottom: 1px solid #dee2e6; /* Optional: Add a subtle bottom border for rows */
+}
+#yearSelect {
+    width: 20% !important; 
+    margin-top: 10px; 
+}
+.center {
+    text-align: center;
 }

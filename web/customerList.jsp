@@ -33,7 +33,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Customer List</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
@@ -45,6 +45,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     </head>
     <body>
         <div class="wrapper">
@@ -133,6 +135,7 @@
                                     <table class="table table-striped" id="customerTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
@@ -156,20 +159,21 @@
                                                     Statement st = con.createStatement();
                                                     ResultSet rs = st.executeQuery(query);
 
+                                                    int rowNum = 1;
                                                     while (rs.next()) {
                                                         // Retrieve customer details from the result set
-                                                        String userIDs = rs.getString("userID");
-                                                        String firstname = rs.getString("firstname");
-                                                        String lastname = rs.getString("lastname");
-                                                        String email = rs.getString("email");
-                                                        String phone = rs.getString("phone");
-                                                        String ICNumber = rs.getString("ICNumber");
-                                                        String residence = rs.getString("residence");
-                                                        String city = rs.getString("city");
-                                                        String zipcode = rs.getString("zipcode");
-                                                        String state = rs.getString("state");
-                                                        String registrationDate = rs.getString("registration_date");
-                                                        String registrationTime = rs.getString("registration_time");
+                                                        String userIDs = rs.getString("userID") != null ? rs.getString("userID") : "";
+                                                        String firstname = rs.getString("firstname") != null ? rs.getString("firstname") : "";
+                                                        String lastname = rs.getString("lastname") != null ? rs.getString("lastname") : "";
+                                                        String email = rs.getString("email") != null ? rs.getString("email") : "";
+                                                        String phone = rs.getString("phone") != null ? rs.getString("phone") : "";
+                                                        String ICNumber = rs.getString("ICNumber") != null ? rs.getString("ICNumber") : "";
+                                                        String residence = rs.getString("residence") != null ? rs.getString("residence") : "";
+                                                        String city = rs.getString("city") != null ? rs.getString("city") : "";
+                                                        String zipcode = rs.getString("zipcode") != null ? rs.getString("zipcode") : "";
+                                                        String state = rs.getString("state") != null ? rs.getString("state") : "";
+                                                        String registrationDate = rs.getString("registration_date") != null ? rs.getString("registration_date") : "";
+                                                        String registrationTime = rs.getString("registration_time") != null ? rs.getString("registration_time") : "";
                                                         Blob profileIMG = rs.getBlob("profileIMG");
                                                         String profileIMGBase64 = "";
                                                         if (profileIMG != null) {
@@ -178,6 +182,7 @@
                                                         }
                                             %>
                                             <tr>
+                                                <td><%= rowNum++%></td>
                                                 <td><%= userIDs%></td>
                                                 <td><%= firstname%> <%= lastname%></td>
                                                 <td><%= email%></td>
@@ -229,6 +234,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <img id="modalProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                     <p><strong>ID:</strong> <span id="modalUserID"></span></p>
                                     <p><strong>Name:</strong> <span id="modalFirstname"></span> <span id="modalLastname"></span></p>
                                     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
@@ -240,8 +246,6 @@
                                     <p><strong>State:</strong> <span id="modalState"></span></p>
                                     <p><strong>Registration Date:</strong> <span id="modalRegistrationDate"></span></p>
                                     <p><strong>Registration Time:</strong> <span id="modalRegistrationTime"></span></p>
-                                    <p><strong>Profile Image:</strong></p>
-                                    <img id="modalProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -268,9 +272,12 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <script>
                                                         $(document).ready(function () {
+                                                            $("#customerTable").DataTable();
+
                                                             $(".xp-menubar").on('click', function () {
                                                                 $("#sidebar").toggleClass('active');
                                                                 $("#content").toggleClass('active');

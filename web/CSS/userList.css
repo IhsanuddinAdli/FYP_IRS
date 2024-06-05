@@ -603,3 +603,10 @@ footer {
 .modal-footer .btn-primary:hover {
     background-color: #3b62d0;
 }
+
+table, th, td {
+    border: none !important;
+}
+th, td {
+    border-bottom: 1px solid #dee2e6; /* Optional: Add a subtle bottom border for rows */
+}

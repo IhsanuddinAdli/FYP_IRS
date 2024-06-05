@@ -24,19 +24,18 @@
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                roles = rs.getString("roles");
-                firstname = rs.getString("firstname");
-                lastname = rs.getString("lastname");
-                ICNumber = rs.getString("ICNumber");
-                email = rs.getString("email");
-                phone = rs.getString("phone");
-                password = rs.getString("password");
-                residence = rs.getString("residence");
-                city = rs.getString("city");
-                zipcode = rs.getString("zipcode");
-                state = rs.getString("state");
-                hasImage = rs.getBlob("profileIMG") != null; // Check if the user has uploaded an image
-                // Process retrieved data
+                roles = rs.getString("roles") != null ? rs.getString("roles") : "";
+                firstname = rs.getString("firstname") != null ? rs.getString("firstname") : "";
+                lastname = rs.getString("lastname") != null ? rs.getString("lastname") : "";
+                ICNumber = rs.getString("ICNumber") != null ? rs.getString("ICNumber") : "";
+                email = rs.getString("email") != null ? rs.getString("email") : "";
+                phone = rs.getString("phone") != null ? rs.getString("phone") : "";
+                password = rs.getString("password") != null ? rs.getString("password") : "";
+                residence = rs.getString("residence") != null ? rs.getString("residence") : "";
+                city = rs.getString("city") != null ? rs.getString("city") : "";
+                zipcode = rs.getString("zipcode") != null ? rs.getString("zipcode") : "";
+                state = rs.getString("state") != null ? rs.getString("state") : "";
+                hasImage = rs.getBlob("profileIMG") != null;
             }
         } catch (SQLException e) {
             // Handle SQLException (print or log the error)
@@ -178,27 +177,28 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <img src="<%= hasImage ? "getImage?userID=" + userID + "&roles=" + roles : "IMG/avatar.jpg"%>" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width: 90px; height: 100px;">
+                                        <img src="getImage?userID=<%= userID%>&roles=<%= roles%>" alt="Avatar" class="img-fluid rounded-circle mb-3 shadow-sm" style="width: 120px; height: 120px;">
+                                        <h4 class="card-title"><%= firstname%> <%= lastname%></h4>
+                                        <p class="text-muted"><%= roles%></p>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
-                                                data-target="#updateImageModal">Update Image</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateImageModal">Update Image</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Customer Details</h5>
-                                        <form id="profileForm" action="">
+                                        <h5 class="card-title">Profile Details</h5>
+                                        <form id="profileForm">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="firstname">Firstname</label>
+                                                        <label for="firstname">First Name</label>
                                                         <input type="text" class="form-control" id="firstname" value="<%= firstname%>" readonly>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="lastname">Lastname</label>
+                                                        <label for="lastname">Last Name</label>
                                                         <input type="text" class="form-control" id="lastname" value="<%= lastname%>" readonly>
                                                     </div>
                                                     <div class="form-group">
@@ -207,7 +207,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="email">Email</label>
-                                                        <input type="text" class="form-control" id="email" value="<%= email%>" readonly>
+                                                        <input type="email" class="form-control" id="email" value="<%= email%>" readonly>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="phone">Phone</label>
@@ -217,14 +217,14 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="password">Password</label>
-                                                        <input type="text" class="form-control" id="password" value="<%= password%>" readonly>
+                                                        <input type="password" class="form-control" id="password" value="<%= password%>" readonly>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="residence">Residence</label>
                                                         <input type="text" class="form-control" id="residence" value="<%= residence%>" readonly>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="zipcode">Zipcode</label>
+                                                        <label for="zipcode">Zip Code</label>
                                                         <input type="text" class="form-control" id="zipcode" value="<%= zipcode%>" readonly>
                                                     </div>
                                                     <div class="form-group">
@@ -237,7 +237,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateProfileModal" id="updateProfileModalButton">Update Profile</button>
                                         </form>
                                     </div>
                                 </div>

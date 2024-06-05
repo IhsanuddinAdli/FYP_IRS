@@ -189,10 +189,10 @@
                         <div id="payment-page" class="row">
                             <!-- Left Section for Payment Submission -->
                             <div id="left-section" class="col-md-6">
-                                <div class="transaction-details">
+                                <div class="transaction-details" style="text-align: left">
                                     <h3>Transaction Details</h3>
                                     <p><strong>Company Name:</strong> <%= request.getParameter("companyName")%></p>
-                                    <p><strong>Quotation ID:</strong> <%=request.getParameter("quotationId")%></p>
+                                    <!--<p><strong>Quotation ID:</strong> <%=request.getParameter("quotationId")%></p>-->
                                     <p><strong>Registration Number:</strong> <%= request.getParameter("registrationNumber")%></p>
                                     <%
                                         java.time.LocalDateTime now = java.time.LocalDateTime.now();
@@ -204,7 +204,7 @@
                                     <p><strong>Policy Commencement Date:</strong> <%= request.getParameter("policyCommencementDate")%></p>
                                     <p><strong>Policy Duration:</strong> <%= request.getParameter("policyDuration")%> months</p>
                                     <p><strong>Policy Expiry Date:</strong> <%= request.getParameter("policyExpiryDate")%></p>
-                                    <p><strong>Your insurance price is:</strong> RM <%= request.getParameter("finalTotalPremium")%></p>
+                                    <p><strong>Insurance price:</strong> RM <%= request.getParameter("finalTotalPremium")%></p>
                                 </div>
                             </div>
                             <!-- Right Section for QR Code and Payment Submission -->

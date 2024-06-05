@@ -45,6 +45,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <!--google material icon-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     </head>
     <body>
         <div class="wrapper">
@@ -138,6 +140,7 @@
                                     <table class="table table-striped" id="managerTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>No.</th>
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
@@ -161,18 +164,19 @@
                                                     Statement st = con.createStatement();
                                                     ResultSet rs = st.executeQuery(query);
 
+                                                    int rowNum = 1;
                                                     while (rs.next()) {
                                                         // Retrieve manager details from the result set
-                                                        String userIDs = rs.getString("userID");
-                                                        String firstname = rs.getString("firstname");
-                                                        String lastname = rs.getString("lastname");
-                                                        String email = rs.getString("email");
-                                                        String phone = rs.getString("phone");
-                                                        String ICNumber = rs.getString("ICNumber");
-                                                        String residence = rs.getString("residence");
-                                                        String city = rs.getString("city");
-                                                        String zipcode = rs.getString("zipcode");
-                                                        String state = rs.getString("state");
+                                                        String userIDs = rs.getString("userID") != null ? rs.getString("userID") : "";
+                                                        String firstname = rs.getString("firstname") != null ? rs.getString("firstname") : "";
+                                                        String lastname = rs.getString("lastname") != null ? rs.getString("lastname") : "";
+                                                        String email = rs.getString("email") != null ? rs.getString("email") : "";
+                                                        String phone = rs.getString("phone") != null ? rs.getString("phone") : "";
+                                                        String ICNumber = rs.getString("ICNumber") != null ? rs.getString("ICNumber") : "";
+                                                        String residence = rs.getString("residence") != null ? rs.getString("residence") : "";
+                                                        String city = rs.getString("city") != null ? rs.getString("city") : "";
+                                                        String zipcode = rs.getString("zipcode") != null ? rs.getString("zipcode") : "";
+                                                        String state = rs.getString("state") != null ? rs.getString("state") : "";
                                                         Blob profileIMG = rs.getBlob("profileIMG");
                                                         String profileIMGBase64 = "";
                                                         if (profileIMG != null) {
@@ -181,6 +185,7 @@
                                                         }
                                             %>
                                             <tr>
+                                                <td><%= rowNum++%></td>
                                                 <td><%= userIDs%></td>
                                                 <td><%= firstname%> <%= lastname%></td>
                                                 <td><%= email%></td>
@@ -273,8 +278,10 @@
                                     <h5 class="modal-title" id="managerModalLabel">Manager Details</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
+                                    <img id="modalManagerProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                     <p><strong>ID:</strong> <span id="modalManagerUserID"></span></p>
                                     <p><strong>Name:</strong> <span id="modalManagerFirstname"></span> <span id="modalManagerLastname"></span></p>
                                     <p><strong>Email:</strong> <span id="modalManagerEmail"></span></p>
@@ -284,8 +291,6 @@
                                     <p><strong>City:</strong> <span id="modalManagerCity"></span></p>
                                     <p><strong>Zipcode:</strong> <span id="modalManagerZipcode"></span></p>
                                     <p><strong>State:</strong> <span id="modalManagerState"></span></p>
-                                    <p><strong>Profile Image:</strong></p>
-                                    <img id="modalManagerProfileIMG" src="" alt="Profile Image" style="width:100px; height:100px; border-radius:50%;">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -313,9 +318,12 @@
     <script src="JS/popper.min.js"></script>
     <script src="JS/bootstrap.min.js"></script>
     <script src="JS/jquery-3.3.1.min.js"></script>
-
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script>
                                                         $(document).ready(function () {
+                                                            $("#managerTable").DataTable();
+
                                                             $(".xp-menubar").on('click', function () {
                                                                 $("#sidebar").toggleClass('active');
                                                                 $("#content").toggleClass('active');

@@ -38,14 +38,28 @@
         <title>Customer Notifications</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
-        <!----css3---->
-        <link rel="stylesheet" href="CSS/managerDash.css">
-        <!--oogle fonts -->
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="CSS/customerNotify.css">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
+        <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Custom CSS to remove table borders -->
+        <style>
+            table, th, td {
+                border: none !important;
+            }
+            th, td {
+                border-bottom: 1px solid #dee2e6; /* Optional: Add a subtle bottom border for rows */
+            }
+            #yearSelect {
+                width: 100%; /* Make the select box take up the full width */
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -110,7 +124,6 @@
                             <h4 class="page-title">Customer Notifications</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Manager</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
@@ -118,82 +131,98 @@
                 <!------top-navbar-end----------->
                 <!----main-content--->
                 <div class="main-content">
-                    <div class="container">
-                        <form method="POST" action="NotifyServlet">
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <div class="btn-group" role="group" aria-label="Month Navigation">
-                                        <%
-                                            String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-                                            for (int i = 1; i <= 12; i++) {
-                                        %>
-                                        <button type="button" class="btn btn-secondary month-button" data-month="<%= i%>"><%= monthNames[i - 1]%></button>
-                                        <% } %>
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <form method="POST" action="NotifyServlet">
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <div class="btn-group center" role="group" aria-label="Month Navigation">
+                                                <%
+                                                    String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                                                    for (int i = 1; i <= 12; i++) {
+                                                %>
+                                                <button type="button" class="btn btn-secondary month-button" data-month="<%= i%>"><%= monthNames[i - 1]%></button>
+                                                <% } %>
+                                            </div>
+                                            <div class="center">
+                                                <select id="yearSelect" class="custom-select" aria-label="Year select" name="year">
+                                                    <option value="">Select Year</option>
+                                                    <%
+                                                        Calendar cal = Calendar.getInstance();
+                                                        int currentYear = cal.get(Calendar.YEAR);
+                                                        for (int i = currentYear; i <= currentYear + 6; i++) {
+                                                    %>
+                                                    <option value="<%= i%>"><%= i%></option>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <select id="yearSelect" class="custom-select" aria-label="Year select" name="year">
-                                        <option value="">Select Year</option>
-                                        <%
-                                            Calendar cal = Calendar.getInstance();
-                                            int currentYear = cal.get(Calendar.YEAR);
-                                            for (int i = currentYear; i <= currentYear + 5; i++) {
-                                        %>
-                                        <option value="<%= i%>"><%= i%></option>
-                                        <% } %>
-                                    </select>
+                                    <input type="hidden" name="month" id="hiddenMonth" />
+                                    <div class="center">
+                                        <button type="submit" id="notifyButton" class="btn btn-primary mb-3">Notify All</button>
+                                        <button type="button" id="resetButton" class="btn btn-warning mb-3">Reset All</button>
+                                    </div>
+                                </form>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="customerTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Customer Name</th>
+                                                <th>Registration Number</th>
+                                                <th>Owner Name</th>
+                                                <th>Policy End Date</th>
+                                                <th>Notification Sent</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                try {
+                                                    Connection conn = DBConnection.getConnection();
+                                                    Statement stmt = conn.createStatement();
+                                                    String query = "SELECT c.firstname, c.lastname, vh.registration_number, vh.owner_name, qh.policy_expiry_date, qh.notification_sent "
+                                                            + "FROM Customer c "
+                                                            + "JOIN QuotationHistory qh ON c.userID = qh.userID "
+                                                            + "JOIN VehicleHistory vh ON qh.quotation_id = vh.quotation_id "
+                                                            + "ORDER BY MONTH(qh.policy_expiry_date)";
+                                                    ResultSet rs = stmt.executeQuery(query);
+                                                    int rowNum = 1;
+                                                    while (rs.next()) {
+                                                        String customerName = rs.getString("firstname") + " " + rs.getString("lastname");
+                                                        String registrationNumber = rs.getString("registration_number");
+                                                        String ownerName = rs.getString("owner_name");
+                                                        Date policyEndDate = rs.getDate("policy_expiry_date");
+                                                        boolean notificationSent = rs.getBoolean("notification_sent");
+                                            %>
+                                            <tr>
+                                                <td><%= rowNum++%></td>
+                                                <td><%= customerName%></td>
+                                                <td><%= registrationNumber%></td>
+                                                <td><%= ownerName%></td>
+                                                <td><%= policyEndDate%></td>
+                                                <td class="notification-status"><%= notificationSent ? "✔️" : "Pending"%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                                rs.close();
+                                                stmt.close();
+                                                conn.close();
+                                            } catch (SQLException e) {
+                                                e.printStackTrace();
+                                            %>
+                                            <tr>
+                                                <td colspan="6">Error retrieving data: <%= e.getMessage()%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <input type="hidden" name="month" id="hiddenMonth" />
-                            <button type="submit" id="notifyButton" class="btn btn-primary mb-3">Notify All</button>
-                            <button type="button" id="resetButton" class="btn btn-warning mb-3">Reset All</button>
-                        </form>
-                        <table id="customerTable" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Customer Name</th>
-                                    <th>Registration Number</th>
-                                    <th>Owner Name</th>
-                                    <th>Policy End Date</th>
-                                    <th>Notification Sent</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    try {
-                                        Connection conn = DBConnection.getConnection();
-                                        Statement stmt = conn.createStatement();
-                                        String query = "SELECT c.firstname, c.lastname, vh.registration_number, vh.owner_name, qh.policy_expiry_date, qh.notification_sent "
-                                                + "FROM Customer c "
-                                                + "JOIN QuotationHistory qh ON c.userID = qh.userID "
-                                                + "JOIN VehicleHistory vh ON qh.quotation_id = vh.quotation_id "
-                                                + "ORDER BY MONTH(qh.policy_expiry_date)";
-                                        ResultSet rs = stmt.executeQuery(query);
-                                        while (rs.next()) {
-                                            String customerName = rs.getString("firstname") + " " + rs.getString("lastname");
-                                            String registrationNumber = rs.getString("registration_number");
-                                            String ownerName = rs.getString("owner_name");
-                                            Date policyEndDate = rs.getDate("policy_expiry_date");
-                                            boolean notificationSent = rs.getBoolean("notification_sent");
-                                %>
-                                <tr>
-                                    <td><%= customerName%></td>
-                                    <td><%= registrationNumber%></td>
-                                    <td><%= ownerName%></td>
-                                    <td><%= policyEndDate%></td>
-                                    <td class="notification-status"><%= notificationSent ? "✔️" : "Pending"%></td>
-                                </tr>
-                                <%
-                                        }
-                                        rs.close();
-                                        stmt.close();
-                                        conn.close();
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
                 </div>
                 <!----main-content-end--->
@@ -207,16 +236,26 @@
                 </footer>
             </div>
         </div>
-        <!-------complete html----------->
+        <!-- Complete HTML -->
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
+        <!-- DataTables JavaScript -->
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script>
             $(document).ready(function () {
+                $('#customerTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        {"orderable": false, "targets": [0]},
+                        {"orderable": true, "targets": [5]}
+                    ]
+                });
+
                 $(".xp-menubar").on('click', function () {
                     $("#sidebar").toggleClass('active');
                     $("#content").toggleClass('active');
@@ -258,7 +297,7 @@
                     }
 
                     $('table#customerTable tbody tr').each(function () {
-                        var policyEndDate = new Date($(this).find('td:eq(3)').text());
+                        var policyEndDate = new Date($(this).find('td:eq(4)').text());
                         var policyMonth = policyEndDate.getMonth() + 1; // JavaScript months are zero-indexed
                         var policyYear = policyEndDate.getFullYear();
 
