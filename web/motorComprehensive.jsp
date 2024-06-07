@@ -525,6 +525,9 @@
                             %>
                             <div class="row">
                                 <%
+                                    // Initialize a color index to rotate through the color classes
+                                    int colorIndex = 1;
+
                                     // Iterate over each company in companyVehicleMakePercentages
                                     for (Map.Entry<String, Map<String, Double>> entry : companyVehicleMakePercentages.entrySet()) {
                                         String companyName = entry.getKey();
@@ -554,7 +557,7 @@
                                 %>
                                 <div class="col-md-6 mb-4">
                                     <div class="card">
-                                        <div class="card-header text-center">
+                                        <div class="card-header text-center bg-color-<%= colorIndex%>">
                                             <%= companyName%>
                                         </div>
                                         <div class="card-body">
@@ -563,7 +566,7 @@
                                             <p>Stamp Duty (RM10): RM <%= formattedStampDuty%></p>
                                             <p>Final Total Premium: RM <%= formattedFinalTotalPremium%></p>
                                         </div>
-                                        <div class="card-footer">
+                                        <div class="card-footer bg-color-<%= colorIndex%>">
                                             <form id="purchaseForm_<%= companyName%>" method="post" action="qrCode.jsp" class="d-inline">
                                                 <input type="hidden" name="finalTotalPremium" value="<%= formattedFinalTotalPremium%>">
                                                 <input type="hidden" name="userID" value="<%= userID%>">
@@ -594,7 +597,13 @@
                                 <%
                                         } else {
                                             // If percentage not found for the selected make, display a message
-                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header'>" + companyName + "</div><div class='card-body'><p>No insurance price available for selected vehicle make.</p></div></div></div>");
+                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header bg-color-" + colorIndex + "'>" + companyName + "</div><div class='card-body'><p>No insurance price available for selected vehicle make.</p></div><div class='card-footer bg-color-" + colorIndex + "'></div></div></div>");
+                                        }
+
+                                        // Increment the color index and reset if it exceeds the number of defined colors
+                                        colorIndex++;
+                                        if (colorIndex > 8) {
+                                            colorIndex = 1;
                                         }
                                     }
                                 %>

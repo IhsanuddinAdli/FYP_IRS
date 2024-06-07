@@ -80,6 +80,9 @@
                         <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
                     </li>
                     <li>
+                        <a href="manageContactUs.jsp" class=""><i class="material-icons">mark_email_unread</i>Contact Us</a>
+                    </li>
+                    <li>
                         <a href="managerReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
                     </li>
                     <li>

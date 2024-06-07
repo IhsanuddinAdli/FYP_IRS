@@ -82,10 +82,10 @@
                         <a href="staffProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
                     </li>
                     <li class="">
-                        <a href="manageQuotation.jsp"><i class="material-icons">list_alt</i>Manage Quotation</a>
+                        <a href="managePayment.jsp" class=""><i class="material-icons">payment</i>Manage Payment</a>
                     </li>
                     <li class="">
-                        <a href="managePayment.jsp" class=""><i class="material-icons">payment</i>Manage Payment</a>
+                        <a href="manageQuotation.jsp"><i class="material-icons">list_alt</i>Manage Quotation</a>
                     </li>
                     <li class="">
                         <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>

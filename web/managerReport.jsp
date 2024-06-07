@@ -36,51 +36,41 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <title>Manage Reports</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
-        <!----css3---->
+        <!-- Custom CSS -->
         <link rel="stylesheet" href="CSS/managerDash.css">
-        <!--oogle fonts -->
+        <link rel="stylesheet" href="CSS/report.css"> <!-- Add the CSS from above here -->
+        <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-        <!--google material icon-->
+        <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
     </head>
     <body>
         <div class="wrapper">
             <div class="body-overlay"></div>
-            <!-------sidebar--design------------>
+            <!-- Sidebar design -->
             <div id="sidebar">
                 <div class="sidebar-header">
                     <h3><img src="IMG/IRS.png" class="img-fluid" /><span>GuardWheels : IRS</span></h3>
                 </div>
                 <ul class="list-unstyled component m-0">
-                    <li class="">
-                        <a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard </a>
-                    </li>
-                    <li class="">
-                        <a href="managerProfile.jsp" class=""><i class="material-icons">account_circle</i>Profile</a>
-                    </li>
-                    <li class="">
-                        <a href="customerNotify.jsp" class=""><i class="material-icons">notifications_active</i>Customer Notify</a>
-                    </li>
-                    <li class="active">
-                        <a href="managerReport.jsp" class=""><i class="material-icons">library_books</i>Report</a>
-                    </li>
-                    <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
-                    </li>
+                    <li class=""><a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                    <li class=""><a href="managerProfile.jsp"><i class="material-icons">account_circle</i>Profile</a></li>
+                    <li class=""><a href="customerNotify.jsp"><i class="material-icons">notifications_active</i>Customer Notify</a></li>
+                    <li class=""><a href="manageContactUs.jsp" class=""><i class="material-icons">mark_email_unread</i>Contact Us</a></li>
+                    <li class="active"><a href="managerReport.jsp"><i class="material-icons">library_books</i>Report</a></li>
+                    <li class=""><a href="homePage.jsp"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
-            <!-------sidebar--design- close----------->
-            <!-------page-content start----------->
+            <!-- Sidebar design end -->
+            <!-- Page content start -->
             <div id="content">
-                <!------top-navbar-start----------->
+                <!-- Top navbar start -->
                 <div class="top-navbar">
                     <div class="xd-topbar">
                         <div class="row">
@@ -114,17 +104,16 @@
                             <h4 class="page-title">Report</h4>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Manager</a></li>
-                                <!-- <li class="breadcrumb-item active" aria-curent="page">Dashboard</li> -->
                             </ol>
                         </div>
                     </div>
                 </div>
-                <!------top-navbar-end----------->
-                <!----main-content--->
+                <!-- Top navbar end -->
+                <!-- Main content start -->
                 <div class="main-content">
                     <div class="container mt-5">
                         <h1>Vehicle Insurance Renewal Report</h1>
-                        <div id="report-content" style="display:none;">
+                        <div class="report-content" id="report-content" style="display: none">
                             <h2>Insurance Renewal Summary</h2>
                             <p>Here is the vehicle insurance renewal report which provides an overview of all renewals processed, upcoming expiries, and other relevant details for efficient management.</p>
 
@@ -196,9 +185,9 @@
                         </div>
                         <button class="btn btn-primary" onclick="generatePDF()">Generate PDF</button>
                     </div>
-                    <!----main-content-end--->
-                    <!----footer-design------------->
                 </div>
+                <!-- Main content end -->
+                <!-- Footer design -->
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="footer-in">
@@ -208,14 +197,11 @@
                 </footer>
             </div>
         </div>
-
         <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="JS/jquery-3.3.1.slim.min.js"></script>
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
-
         <script>
                             $(document).ready(function () {
                                 $(".xp-menubar").on('click', function () {
@@ -228,7 +214,6 @@
                                 });
                             });
         </script>
-
         <script>
             async function generatePDF() {
                 const {jsPDF} = window.jspdf;

@@ -579,3 +579,29 @@ footer {
         background-color: rgba(0, 0, 0, 0.5);
     }
 }
+
+/*quotation card*/
+.bg-color-1 {
+    background-color: #f8d7da;
+} /* Light Red */
+.bg-color-2 {
+    background-color: #d4edda;
+} /* Light Green */
+.bg-color-3 {
+    background-color: #d1ecf1;
+} /* Light Cyan */
+.bg-color-4 {
+    background-color: #fff3cd;
+} /* Light Yellow */
+.bg-color-5 {
+    background-color: #cce5ff;
+} /* Light Blue */
+.bg-color-6 {
+    background-color: #e2e3e5;
+} /* Light Grey */
+.bg-color-7 {
+    background-color: #f7d6e0;
+} /* Light Pink */
+.bg-color-8 {
+    background-color: #e4d8f7;
+} /* Light Purple */
