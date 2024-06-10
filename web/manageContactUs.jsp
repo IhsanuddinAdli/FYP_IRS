@@ -37,14 +37,15 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="CSS/bootstrap.min.css">
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="CSS/managerDash.css">
+        <link rel="stylesheet" href="CSS/customerNotify.css">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     </head>
     <body>
         <div class="wrapper">
@@ -58,7 +59,6 @@
                     <li class=""><a href="managerProfile.jsp"><i class="material-icons">account_circle</i>Profile</a></li>
                     <li class=""><a href="customerNotify.jsp"><i class="material-icons">notifications_active</i>Customer Notify</a></li>
                     <li class="active"><a href="manageContactUs.jsp" class=""><i class="material-icons">mark_email_unread</i>Contact Us</a></li>
-                    <li class=""><a href="managerReport.jsp"><i class="material-icons">library_books</i>Report</a></li>
                     <li class=""><a href="homePage.jsp"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
                 </ul>
             </div>
@@ -101,8 +101,65 @@
                     </div>
                 </div>
                 <div class="main-content">
-                    <div class="container mt-5">
-                        
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="contactusTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Message</th>
+                                                <th>Timestamp</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%
+                                                try {
+                                                    Connection conn = DBConnection.getConnection();
+                                                    Statement stmt = conn.createStatement();
+                                                    String query = "SELECT id, name, email, message, timestamp FROM contactus";
+                                                    ResultSet rs = stmt.executeQuery(query);
+                                                    int rowNum = 1;
+                                                    while (rs.next()) {
+                                                        int id = rs.getInt("id");
+                                                        String name = rs.getString("name");
+                                                        String email = rs.getString("email");
+                                                        String message = rs.getString("message");
+                                                        Timestamp timestamp = rs.getTimestamp("timestamp");
+                                            %>
+                                            <tr>
+                                                <td><%= rowNum++%></td>
+                                                <td><%= name%></td>
+                                                <td><%= email%></td>
+                                                <td><%= message%></td>
+                                                <td><%= timestamp%></td>
+                                                <td>
+                                                    <a href="mailto:<%= email%>?subject=Response to your message&body=Dear <%= name%>,%0D%0A%0D%0A" class="btn btn-primary btn-sm">Send Email</a>
+                                                </td>
+                                            </tr>
+                                            <%
+                                                }
+                                                rs.close();
+                                                stmt.close();
+                                                conn.close();
+                                            } catch (SQLException e) {
+                                                e.printStackTrace();
+                                            %>
+                                            <tr>
+                                                <td colspan="6">Error retrieving data: <%= e.getMessage()%></td>
+                                            </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <footer class="footer">
@@ -119,8 +176,18 @@
         <script src="JS/popper.min.js"></script>
         <script src="JS/bootstrap.min.js"></script>
         <script src="JS/jquery-3.3.1.min.js"></script>
+        <!-- DataTables JavaScript -->
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script>
             $(document).ready(function () {
+                $('#contactusTable').DataTable({
+                    "order": [],
+                    "columnDefs": [
+                        {"orderable": false, "targets": [0]}
+                    ]
+                });
+
                 $(".xp-menubar").on('click', function () {
                     $("#sidebar").toggleClass('active');
                     $("#content").toggleClass('active');

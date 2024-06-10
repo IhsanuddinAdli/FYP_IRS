@@ -96,18 +96,6 @@
             </svg>
         </section>
 
-        <!-- Company Insurance Covered section -->
-        <section id="insurance" style="background-color: #f0f8ff; padding: 0;">
-            <div class="container py-5">
-                <h2 class="text-center mb-4">Company Insurance Covered</h2>
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <canvas id="insuranceChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- About Us section -->
         <section id="about" class="" style="background-color: #f8f9fa;">
             <div class="container">
@@ -202,6 +190,18 @@
                 <!-- View All Reviews Button -->
                 <div class="text-center mt-4">
                     <a href="reviews.jsp" class="btn btn-primary">View All Reviews</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Insurance Covered section -->
+        <section id="insurance" style="background-color: #f0f8ff; padding: 0;">
+            <div class="container py-5">
+                <h2 class="text-center mb-4">Company Insurance Covered</h2>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <canvas id="insuranceChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>

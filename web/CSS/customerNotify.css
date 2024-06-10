@@ -471,7 +471,7 @@ input[type="search"] {
     margin-top: 0;
     overflow: hidden; /* Hide any overflowing content */
     background: url('background2.png') center/cover no-repeat; /* Add background image */
-    min-height: 90px;
+    min-height: 73vh;
 }
 
 /* main content end */

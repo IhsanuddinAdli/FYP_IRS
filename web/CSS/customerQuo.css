@@ -518,14 +518,32 @@ input[type="search"] {
     color: black;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
     cursor: pointer;
     border-radius: 8px;
     margin: 5px; /* Adjust as needed */
+    font-weight: bold;
+    font-size: smaller;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+    transition: transform 0.2s, box-shadow 0.2s; /* Adds a transition effect */
 }
+
+.button:hover {
+    transform: translateY(-5px); /* Slightly lifts the button on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deepens the shadow on hover */
+}
+
 .button i.material-icons {
-    font-size: 80px; /* Adjust the size as needed */
+    font-size: 100px; /* Adjust the size as needed */
+    margin-bottom: 8px; /* Space between icon and text */
+}
+
+.button span {
+    font-size: 18px; /* Adjust text size as needed */
 }
 /* main content end */
 

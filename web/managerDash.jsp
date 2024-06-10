@@ -148,9 +148,8 @@
                         <a href="manageContactUs.jsp" class=""><i class="material-icons">mark_email_unread</i>Contact Us</a>
                     </li>
                     <li class="">
-                        <a href="managerReport.jsp" class=""><i class="material-icons">library_books</i>Report</a></li>
-                    <li class="">
-                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a></li>
+                        <a href="homePage.jsp" class=""><i class="material-icons">power_settings_new</i>Sign Out</a>
+                    </li>
                 </ul>
             </div>
             <!-------sidebar--design- close----------->

@@ -14,7 +14,7 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            
+
             // Check if user has uploaded an image
             PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM customer WHERE userID = ?");
             psImage.setString(1, userID);
@@ -22,7 +22,7 @@
             if (rsImage.next()) {
                 hasImage = rsImage.getBlob("profileIMG") != null;
             }
-            
+
             PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
             ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
@@ -175,12 +175,24 @@
                 <div id="main-content-image">
                     <div class="container">
                         <div class="button-container">
-                            <a href="customerQuoForm.jsp?vehicle=Car" class="button" id="car-btn"><i class="material-icons">directions_car</i></a>
-                            <a href="customerQuoForm.jsp?vehicle=Motorcycle" class="button" id="moto-btn"><i class="material-icons">motorcycle</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Car" class="button" id="car-btn">
+                                <i class="material-icons">directions_car</i>
+                                <span>Car</span>
+                            </a>
+                            <a href="customerQuoForm.jsp?vehicle=Motorcycle" class="button" id="moto-btn">
+                                <i class="material-icons">motorcycle</i>
+                                <span>Motorcycle</span>
+                            </a>
                         </div>
                         <div class="button-container">
-                            <a href="customerQuoForm.jsp?vehicle=Van" class="button" id="van-btn"><i class="material-icons">directions_bus</i></a>
-                            <a href="customerQuoForm.jsp?vehicle=Lorry" class="button" id="lorry-btn"><i class="material-icons">local_shipping</i></a>
+                            <a href="customerQuoForm.jsp?vehicle=Van" class="button" id="van-btn">
+                                <i class="material-icons">directions_bus</i>
+                                <span>Van</span>
+                            </a>
+                            <a href="customerQuoForm.jsp?vehicle=Lorry" class="button" id="lorry-btn">
+                                <i class="material-icons">local_shipping</i>
+                                <span>Lorry</span>
+                            </a>
                         </div>
                     </div>
                 </div>

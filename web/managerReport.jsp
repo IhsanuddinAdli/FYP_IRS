@@ -1,13 +1,27 @@
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.SQLException"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.text.DateFormatSymbols"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.LinkedHashMap"%>
 <%
     String roles = (String) session.getAttribute("roles");
     String userID = (String) session.getAttribute("userID");
     boolean hasImage = false;
+
+    int notified = 0;
+    int notNotified = 0;
+
+    Map<String, Integer> monthlyRegistrations = new LinkedHashMap<>();
+
+    int verySatisfied = 0;
+    int satisfied = 0;
+    int neutral = 0;
+    int dissatisfied = 0;
+    int veryDissatisfied = 0;
 
     if (userID != null) {
         try {
@@ -21,14 +35,75 @@
             if (rsImage.next()) {
                 hasImage = rsImage.getBlob("profileIMG") != null;
             }
-        } catch (SQLException e) {
-            // Handle SQLException (print or log the error)
+
+            // Fetch notification status counts
+            PreparedStatement psNotification = con.prepareStatement("SELECT notification_sent, COUNT(*) AS count FROM QuotationHistory GROUP BY notification_sent");
+            ResultSet rsNotification = psNotification.executeQuery();
+            while (rsNotification.next()) {
+                if (rsNotification.getBoolean("notification_sent")) {
+                    notified = rsNotification.getInt("count");
+                } else {
+                    notNotified = rsNotification.getInt("count");
+                }
+            }
+
+            // Fetch customer engagement data
+            PreparedStatement psEngagement = con.prepareStatement("SELECT DATE_FORMAT(registration_date, '%Y-%m') AS month, COUNT(*) AS count FROM customer GROUP BY month ORDER BY month");
+            ResultSet rsEngagement = psEngagement.executeQuery();
+            while (rsEngagement.next()) {
+                String month = rsEngagement.getString("month");
+                int count = rsEngagement.getInt("count");
+                monthlyRegistrations.put(month, count);
+            }
+
+            // Fetch customer satisfaction data
+            PreparedStatement psSatisfaction = con.prepareStatement("SELECT rating, COUNT(*) AS count FROM feedback GROUP BY rating");
+            ResultSet rsSatisfaction = psSatisfaction.executeQuery();
+            while (rsSatisfaction.next()) {
+                int rating = rsSatisfaction.getInt("rating");
+                int count = rsSatisfaction.getInt("count");
+                switch (rating) {
+                    case 5:
+                        verySatisfied = count;
+                        break;
+                    case 4:
+                        satisfied = count;
+                        break;
+                    case 3:
+                        neutral = count;
+                        break;
+                    case 2:
+                        dissatisfied = count;
+                        break;
+                    case 1:
+                        veryDissatisfied = count;
+                        break;
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             out.println("An error occurred while fetching data. Please try again later.");
         }
     } else {
-        // Handle the case where userID is not found in the session
         out.println("UserID not found in the session.");
+    }
+
+    // Convert the data for the chart
+    StringBuilder months = new StringBuilder();
+    StringBuilder counts = new StringBuilder();
+    DateFormatSymbols dfs = new DateFormatSymbols();
+    for (Map.Entry<String, Integer> entry : monthlyRegistrations.entrySet()) {
+        String[] parts = entry.getKey().split("-");
+        String monthName = dfs.getMonths()[Integer.parseInt(parts[1]) - 1];
+        String formattedMonth = monthName + " " + parts[0];
+
+        if (months.length() > 0) {
+            months.append(",");
+            counts.append(",");
+        }
+        months.append("'").append(formattedMonth).append("'");
+        counts.append(entry.getValue());
     }
 %>
 <!DOCTYPE html>
@@ -62,9 +137,9 @@
                     <li class=""><a href="managerDash.jsp" class="dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
                     <li class=""><a href="managerProfile.jsp"><i class="material-icons">account_circle</i>Profile</a></li>
                     <li class=""><a href="customerNotify.jsp"><i class="material-icons">notifications_active</i>Customer Notify</a></li>
-                    <li class=""><a href="manageContactUs.jsp" class=""><i class="material-icons">mark_email_unread</i>Contact Us</a></li>
+                    <li class=""><a href="manageContactUs.jsp"><i class="material-icons">mark_email_unread</i>Contact Us</a></li>
                     <li class="active"><a href="managerReport.jsp"><i class="material-icons">library_books</i>Report</a></li>
-                    <li class=""><a href="homePage.jsp"><i class="material-icons">power_settings_new</i>Sign Out</a></li>
+                    <li class=""><a href="homePage.jsp"><i class="material-icons">power_settings_new"></i>Sign Out</a></li>
                 </ul>
             </div>
             <!-- Sidebar design end -->
@@ -113,61 +188,37 @@
                 <div class="main-content">
                     <div class="container mt-5">
                         <h1>Vehicle Insurance Renewal Report</h1>
-                        <div class="report-content" id="report-content" style="display: none">
+                        <div class="report-content" id="report-content">
                             <h2>Insurance Renewal Summary</h2>
                             <p>Here is the vehicle insurance renewal report which provides an overview of all renewals processed, upcoming expiries, and other relevant details for efficient management.</p>
 
-                            <h3>Renewal Details</h3>
+                            <h3>Customer Notifications</h3>
                             <ul>
-                                <li>Total Renewals Processed: 120</li>
-                                <li>Renewals Due Next Month: 45</li>
-                                <li>Expired Policies: 15</li>
+                                <li>Notifications Sent: <%= notified%></li>
+                                <li>Notifications Pending: <%= notNotified%></li>
                             </ul>
 
-                            <h3>Payment Details</h3>
+                            <h3>Customer Engagement</h3>
                             <ul>
-                                <li>Total Collected: $25,000</li>
-                                <li>Outstanding Payments: $5,750</li>
+                                <%
+                                    for (Map.Entry<String, Integer> entry : monthlyRegistrations.entrySet()) {
+                                        String[] parts = entry.getKey().split("-");
+                                        String monthName = dfs.getMonths()[Integer.parseInt(parts[1]) - 1];
+                                        String formattedMonth = monthName + " " + parts[0];
+                                %>
+                                <li><%= formattedMonth%>: <%= entry.getValue()%> registrations</li>
+                                    <%
+                                        }
+                                    %>
                             </ul>
 
-                            <h3>Advanced Data and Insights</h3>
+                            <h3>Customer Satisfaction</h3>
                             <ul>
-                                <li>Average Renewal Time: 5 days</li>
-                                <li>Customer Satisfaction Rate: 85%</li>
-                                <li>Retention Rate: 92%</li>
-                                <li>Top 5 Reasons for Non-Renewal:
-                                    <ul>
-                                        <li>Price Increase</li>
-                                        <li>Better Offer from Competitor</li>
-                                        <li>Customer Relocation</li>
-                                        <li>Service Issues</li>
-                                        <li>Vehicle Sale</li>
-                                    </ul>
-                                </li>
-                                <li>Most Common Payment Methods:
-                                    <ul>
-                                        <li>Credit Card: 70%</li>
-                                        <li>Bank Transfer: 20%</li>
-                                        <li>Cash: 10%</li>
-                                    </ul>
-                                </li>
-                            </ul>
-
-                            <h3>Key Performance Indicators (KPIs)</h3>
-                            <ul>
-                                <li>Monthly Renewal Rate: 78%</li>
-                                <li>Policy Lapse Rate: 6%</li>
-                                <li>New Customer Acquisition: 25</li>
-                                <li>Average Premium per Customer: $208</li>
-                            </ul>
-
-                            <h3>Actionable Insights</h3>
-                            <p>To improve the renewal rate and customer satisfaction, consider the following actions:</p>
-                            <ul>
-                                <li>Implement a customer loyalty program to incentivize renewals.</li>
-                                <li>Offer flexible payment plans to accommodate different customer needs.</li>
-                                <li>Enhance customer service training to address service-related non-renewals.</li>
-                                <li>Review and adjust pricing strategies based on competitive analysis.</li>
+                                <li>Very Satisfied: <%= verySatisfied%></li>
+                                <li>Satisfied: <%= satisfied%></li>
+                                <li>Neutral: <%= neutral%></li>
+                                <li>Dissatisfied: <%= dissatisfied%></li>
+                                <li>Very Dissatisfied: <%= veryDissatisfied%></li>
                             </ul>
 
                             <h3>Manager's Notes</h3>
@@ -264,38 +315,19 @@
                 await addText("Vehicle Insurance Renewal Report", 22, true);
                 await addText("Insurance Renewal Summary", 16, true);
                 await addText("Here is the vehicle insurance renewal report which provides an overview of all renewals processed, upcoming expiries, and other relevant details for efficient management.", 12, false);
-                await addText("Renewal Details", 14, true);
-                await addText("Total Renewals Processed: 120", 12, false);
-                await addText("Renewals Due Next Month: 45", 12, false);
-                await addText("Expired Policies: 15", 12, false);
-                await addText("Payment Details", 14, true);
-                await addText("Total Collected: $25,000", 12, false);
-                await addText("Outstanding Payments: $5,750", 12, false);
-                await addText("Advanced Data and Insights", 14, true);
-                await addText("Average Renewal Time: 5 days", 12, false);
-                await addText("Customer Satisfaction Rate: 85%", 12, false);
-                await addText("Retention Rate: 92%", 12, false);
-                await addText("Top 5 Reasons for Non-Renewal:", 12, false);
-                await addText("- Price Increase", 12, false);
-                await addText("- Better Offer from Competitor", 12, false);
-                await addText("- Customer Relocation", 12, false);
-                await addText("- Service Issues", 12, false);
-                await addText("- Vehicle Sale", 12, false);
-                await addText("Most Common Payment Methods:", 12, false);
-                await addText("- Credit Card: 70%", 12, false);
-                await addText("- Bank Transfer: 20%", 12, false);
-                await addText("- Cash: 10%", 12, false);
-                await addText("Key Performance Indicators (KPIs)", 14, true);
-                await addText("Monthly Renewal Rate: 78%", 12, false);
-                await addText("Policy Lapse Rate: 6%", 12, false);
-                await addText("New Customer Acquisition: 25", 12, false);
-                await addText("Average Premium per Customer: $208", 12, false);
-                await addText("Actionable Insights", 14, true);
-                await addText("To improve the renewal rate and customer satisfaction, consider the following actions:", 12, false);
-                await addText("- Implement a customer loyalty program to incentivize renewals.", 12, false);
-                await addText("- Offer flexible payment plans to accommodate different customer needs.", 12, false);
-                await addText("- Enhance customer service training to address service-related non-renewals.", 12, false);
-                await addText("- Review and adjust pricing strategies based on competitive analysis.", 12, false);
+                await addText("Customer Notifications", 14, true);
+                await addText(`Notifications Sent: <%= notified%>`, 12, false);
+                await addText(`Notifications Pending: <%= notNotified%>`, 12, false);
+                await addText("Customer Engagement", 14, true);
+            <% for (Map.Entry<String, Integer> entry : monthlyRegistrations.entrySet()) {%>
+                await addText(`<%= entry.getKey()%>: <%= entry.getValue()%> registrations`, 12, false);
+            <% }%>
+                await addText("Customer Satisfaction", 14, true);
+                await addText(`Very Satisfied: <%= verySatisfied%>`, 12, false);
+                await addText(`Satisfied: <%= satisfied%>`, 12, false);
+                await addText(`Neutral: <%= neutral%>`, 12, false);
+                await addText(`Dissatisfied: <%= dissatisfied%>`, 12, false);
+                await addText(`Very Dissatisfied: <%= veryDissatisfied%>`, 12, false);
                 await addText("Manager's Notes", 14, true);
                 await addText("Ensure that all outstanding payments are followed up promptly and renewals for the next month are prioritized. Review expired policies to determine if any follow-up actions are required. Monitor the KPIs closely and implement the recommended actions to enhance overall performance.", 12, false);
                 await addText("Admin Instructions", 14, true);
