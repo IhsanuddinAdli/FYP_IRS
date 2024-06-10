@@ -96,6 +96,59 @@
             </svg>
         </section>
 
+        <!-- Services Provided section -->
+        <section id="services" style="background-color: #e9ecef; padding: 60px 0;">
+            <div class="container">
+                <h2 class="text-center mb-4">Services Provided</h2>
+                <div class="row">
+                    <!-- Car Service Card -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center custom-card d-flex flex-column">
+                            <img src="IMG/car.jpg" class="card-img-top service-image" alt="Car">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Car</h5>
+                                <p class="card-text flex-grow-1">Comprehensive car insurance solutions to keep you protected on the road.</p>
+                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Motorcycle Service Card -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center custom-card d-flex flex-column">
+                            <img src="IMG/motor.jpg" class="card-img-top service-image" alt="Motorcycle">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Motorcycle</h5>
+                                <p class="card-text flex-grow-1">Affordable motorcycle insurance to cover you and your bike.</p>
+                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Van Service Card -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center custom-card d-flex flex-column">
+                            <img src="IMG/van.jpg" class="card-img-top service-image" alt="Van">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Van</h5>
+                                <p class="card-text flex-grow-1">Reliable van insurance options for both personal and commercial use.</p>
+                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Lorry Service Card -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 text-center custom-card d-flex flex-column">
+                            <img src="IMG/lorry.jpg" class="card-img-top service-image" alt="Lorry">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Lorry</h5>
+                                <p class="card-text flex-grow-1">Comprehensive coverage for lorries, ensuring your business runs smoothly.</p>
+                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- About Us section -->
         <section id="about" class="" style="background-color: #f8f9fa;">
             <div class="container">

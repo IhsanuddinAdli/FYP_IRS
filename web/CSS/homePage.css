@@ -275,3 +275,24 @@ footer {
 #backToTopBtn i {
     font-size: 20px; /* Increase the size of the icon */
 }
+
+.service-image {
+    height: 200px; /* Set the height for the images */
+    object-fit: cover; /* Ensure the aspect ratio is maintained */
+    width: 100%; /* Ensure the images take full width of the card */
+}
+.custom-card {
+    min-height: 500px; /* Adjust the minimum height to make the cards taller */
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-text {
+    flex-grow: 1;
+}
+
+.btn {
+    margin-top: auto; /* Push the button to the bottom */
+}
