@@ -82,7 +82,7 @@
         <!-- Services Provided section -->
         <section id="services">
             <div class="container">
-                <h2 class="text-center mb-4">Services Provided</h2>
+                <h2 class="text-center mb-4">Services Provided</h2><br>
                 <div class="row">
                     <!-- Car Service Card -->
                     <div class="col-md-3 mb-4">
@@ -132,21 +132,44 @@
             </div>
         </section>
 
-        <!-- About Us section -->
-        <section id="about">
+        <!-- Manager's Welcome Notes section -->
+        <section id="welcome-notes">
             <div class="container">
-                <h2 class="text-center mb-4">About Us</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="IMG/kedai.jpg" class="img-fluid rounded" alt="About Us Image">
+                <h2 class="text-center mb-4">Manager's Welcome Notes</h2><br>
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <div class="manager-container">
+                            <img src="IMG/profile1.jpg" class="manager-img img-fluid rounded" alt="Manager Image">
+                            <div class="manager-details mt-3">
+                                <h5 class="manager-name">Adli Yong</h5>
+                                <p class="manager-position">Manager</p>
+                                <p class="manager-company">Raz Wawasan SDN BHD</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6" style="background-color: #ffffff;">
-                        <p class="lead">
-                            Welcome to GuardWheels, your trusted partner for hassle-free insurance renewal.
-                            Our mission is to provide efficient and reliable services to ensure your vehicle is
-                            always protected. With a team of dedicated professionals, we strive to make the
-                            insurance renewal process seamless and convenient for you.
-                        </p>
+                    <div class="col-md-8">
+                        <div class="welcome-notes-container">
+                            <strong><p class="small-text">
+                                    Assalamualaikum Warahmatullahi Wabarakatuh dan Salam Sejahtera,
+                                </p></strong>
+                            <p class="small-text">
+                                Welcome to GuardWheels! We are thrilled to have you join our team. Your presence here marks a significant step towards achieving excellence in vehicle insurance solutions.
+                            </p>
+                            <p class="small-text">
+                                In today’s fast-paced technological landscape, staying informed and skilled is essential. We encourage you to take full advantage of the opportunities available at GuardWheels to enhance your knowledge and capabilities.
+                            </p>
+                            <p class="small-text">
+                                Our mission is to provide you with the tools and support needed to excel in your role and contribute to our collective success. Together, we aim to exceed client expectations and build a resilient community.
+                            </p>
+                            <p class="small-text">
+                                Thank you for being a part of our journey. We wish you a successful and rewarding experience with GuardWheels.
+                            </p>
+                            <p class="small-text">
+                                Warm regards,<br>
+                                Adli Yong<br>
+                                Manager
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,7 +178,7 @@
         <!-- Customer Reviews section -->
         <section id="review">
             <div class="container">
-                <h2 class="text-center mb-4">Customer Reviews</h2>
+                <h2 class="text-center mb-4">Customer Reviews</h2><br>
                 <!-- Slideshow container -->
                 <div class="slideshow-container">
                     <!-- Iterate over feedback data and display -->
@@ -233,7 +256,7 @@
         <!-- Company Insurance Covered section -->
         <section id="insurance">
             <div class="container py-5">
-                <h2 class="text-center mb-4">Company Insurance Covered</h2>
+                <h2 class="text-center mb-4">Company Insurance Covered</h2><br>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <canvas id="insuranceChart"></canvas>
@@ -251,7 +274,8 @@
                 </div>
                 <% }%>
                 <div class="row">
-                    <div class="col-md-6">
+                    <!-- Get in Touch Container -->
+                    <div class="col-md-6 contact-container">
                         <h2 class="mb-4">Get in Touch</h2>
                         <p>If you have any questions or inquiries, feel free to contact us. Our team is here to assist you.</p>
                         <form action="contactUs" method="post">
@@ -267,7 +291,8 @@
                             <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
                     </div>
-                    <div class="col-md-6">
+                    <!-- Contact Information Container -->
+                    <div class="col-md-6 contact-container">
                         <div class="contact-info">
                             <h2 class="mb-4">Contact Information</h2>
                             <p><i class="bi bi-geo-alt-fill"></i> Lot 822 B, Jalan Tengku Mizan Kg Duyong Besar, 21300 Kuala Terengganu</p>

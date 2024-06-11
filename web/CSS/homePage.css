@@ -82,11 +82,12 @@ h2 {
 }
 
 /* section */
-#about,
+#welcome-notes,
 #contact,
 #services,
 #review,
 #insurance {
+    padding: 60px 0;
     min-height: 110vh;
     display: flex;
     justify-content: center;
@@ -303,23 +304,110 @@ footer {
 
 /* Background images for each section */
 #services {
-    background-image: url("bg1.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg1.jpg");
 }
 
-#about {
-    background-image: url("bg2.jpg");
+#welcome-notes {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg2.jpg");
 }
 
 #review {
-    background-image: url("bg3.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg3.jpg");
 }
 
 #insurance {
-    background-image: url("bg4.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg4.jpg");
 }
 
 #contact {
-    background-image: url("bg5.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg5.jpg");
 }
 
+@media (max-width: 768px) {
+    .manager-container,
+    .welcome-notes-container {
+        margin-left: 0; /* Reset margin for smaller screens */
+    }
+}
 
+.manager-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 385px;
+    width: 300px;
+    margin-left: 100px;
+}
+
+.manager-img {
+    width: 150px; /* Adjust the width to make the image smaller */
+    height: 100%; /* Maintain the aspect ratio */
+    border-radius: 50%; /* Make the image circular */
+    max-height: 500px;
+}
+
+.manager-details {
+    color: #333333;
+}
+
+.manager-name {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.manager-position, .manager-contact {
+    font-size: 1em;
+    margin-bottom: 0.3em;
+}
+
+.welcome-notes-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333333;
+    height: 100%;
+    font-size: 20px;
+    margin-left: -30px;
+}
+
+.small-text {
+    font-size: 0.875rem; /* Bootstrap small text size */
+}
+
+/* Contact Us section */
+#contact {
+    color: white;
+}
+
+#contact .contact-container {
+    background-color: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#contact h2,
+#contact p,
+#contact form input,
+#contact form textarea,
+#contact .contact-info p,
+#contact .contact-info a {
+    color: white; /* Ensure all relevant text elements are white */
+}
+
+#contact .contact-info a {
+    color: white; /* Ensure the color of the contact info links is white */
+}
+
+#contact .form-control {
+    background-color: transparent; /* Make input backgrounds transparent */
+    color: white; /* Ensure input text color is white */
+    border: 1px solid white; /* White border for inputs */
+}
+
+#contact .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6); /* Lighter white for placeholder text */
+}
