@@ -20,7 +20,7 @@
     </head>
     <body>
         <div class="container py-5">
-            <h2 class="text-center mb-4">All Customer Reviews</h2>
+            <h2 class="text-center mb-4 " style="color: black">All Customer Reviews</h2>
             <div class="row mb-4">
                 <div class="col-md-4 offset-md-4">
                     <form method="get" action="reviews.jsp">

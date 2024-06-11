@@ -42,21 +42,6 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#header">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#insurance" data-target="#insurance">Insurance Covered</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#about" data-target="#about">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#review" data-target="#review">Review</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#contact" data-target="#contact">Contact Us</a>
-                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,15 +74,13 @@
                             FREE!</span>.</h1>
                 </div>
             </div>
-            <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#E8E8E7" fill-opacity="1"
-                  d="M0,192L60,181.3C120,171,240,149,360,133.3C480,117,600,107,720,106.7C840,107,960,117,1080,122.7C1200,128,1320,128,1380,128L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
-            </path>
-            </svg>
+            <!--            <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160">
+                        <path fill="#E8E8E7" fill-opacity="1" d="M0,96L60,85.3C120,75,240,53,360,37.3C480,21,600,11,720,10.7C840,11,960,21,1080,26.7C1200,32,1320,32,1380,32L1440,32L1440,160L1380,160C1320,160,1200,160,1080,160C960,160,840,160,720,160C600,160,480,160,360,160C240,160,120,160,60,160L0,160Z"></path>
+                        </svg>-->
         </section>
 
         <!-- Services Provided section -->
-        <section id="services" style="background-color: #e9ecef; padding: 60px 0;">
+        <section id="services">
             <div class="container">
                 <h2 class="text-center mb-4">Services Provided</h2>
                 <div class="row">
@@ -108,7 +91,7 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">Car</h5>
                                 <p class="card-text flex-grow-1">Comprehensive car insurance solutions to keep you protected on the road.</p>
-                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                                <a href="login.jsp" class="btn btn-primary mt-auto">Get Quotation</a>
                             </div>
                         </div>
                     </div>
@@ -119,7 +102,7 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">Motorcycle</h5>
                                 <p class="card-text flex-grow-1">Affordable motorcycle insurance to cover you and your bike.</p>
-                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                                <a href="login.jsp" class="btn btn-primary mt-auto">Get Quotation</a>
                             </div>
                         </div>
                     </div>
@@ -130,7 +113,7 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">Van</h5>
                                 <p class="card-text flex-grow-1">Reliable van insurance options for both personal and commercial use.</p>
-                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                                <a href="login.jsp" class="btn btn-primary mt-auto">Get Quotation</a>
                             </div>
                         </div>
                     </div>
@@ -141,7 +124,7 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">Lorry</h5>
                                 <p class="card-text flex-grow-1">Comprehensive coverage for lorries, ensuring your business runs smoothly.</p>
-                                <a href="login.jsp" class="btn btn-primary mt-auto" style="border-radius: 20px;">Get Quotation</a>
+                                <a href="login.jsp" class="btn btn-primary mt-auto">Get Quotation</a>
                             </div>
                         </div>
                     </div>
@@ -150,7 +133,7 @@
         </section>
 
         <!-- About Us section -->
-        <section id="about" class="" style="background-color: #f8f9fa;">
+        <section id="about">
             <div class="container">
                 <h2 class="text-center mb-4">About Us</h2>
                 <div class="row">
@@ -170,7 +153,7 @@
         </section>
 
         <!-- Customer Reviews section -->
-        <section id="review" class="" style="background-color: #fffaf0;">
+        <section id="review">
             <div class="container">
                 <h2 class="text-center mb-4">Customer Reviews</h2>
                 <!-- Slideshow container -->
@@ -248,7 +231,7 @@
         </section>
 
         <!-- Company Insurance Covered section -->
-        <section id="insurance" style="background-color: #f0f8ff; padding: 0;">
+        <section id="insurance">
             <div class="container py-5">
                 <h2 class="text-center mb-4">Company Insurance Covered</h2>
                 <div class="row">
@@ -260,7 +243,7 @@
         </section>
 
         <!-- Contact Us section -->
-        <section id="contact" class="" style="background-color: #f0fff0;">
+        <section id="contact">
             <div class="container">
                 <% if ("true".equals(request.getParameter("success"))) { %>
                 <div class="alert alert-success" role="alert">

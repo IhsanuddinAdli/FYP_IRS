@@ -12,7 +12,7 @@
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 115vh;
+    height: 110vh;
     position: relative;
     overflow: hidden;
 }
@@ -76,43 +76,37 @@ svg.wave {
     /* Adjust the hover background color as needed */
 }
 
+h2 {
+    color: floralwhite;
+    font-weight: bold;
+}
+
 /* section */
 #about,
 #contact,
+#services,
 #review,
 #insurance {
-    height: 100vh;
+    min-height: 110vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-color: #4d4d4d;
+    background-blend-mode: overlay;
 }
 
 #insurance {
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff;
     position: relative;
     z-index: 2;
 }
 
 #insurance .container {
-    padding: 50px 0; /* Add padding to the container */
-}
-
-#about {
-    background-color: #f8f9fa; /* Light gray */
-}
-
-#review {
-    background-color: #fffaf0; /* Light yellow */
-}
-
-#contact {
-    background-color: #f0fff0; /* Light green */
-}
-
-#insurance h2 {
-    color: #333;
+    padding: 60px 0; /* Add padding to the container */
 }
 
 #insuranceChart {
@@ -125,12 +119,16 @@ svg.wave {
 .slideshow-container {
     position: relative;
     background: var(--bg-color);
+    border-radius: 20px; /* Add border-radius */
+    overflow: hidden; /* Ensure child elements follow border-radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    padding: 20px; /* Add padding */
 }
 
 /* Full-width slides */
 .mySlides {
     display: none;
-    padding: 80px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -142,31 +140,29 @@ svg.wave {
     width: auto;
     margin-top: -30px;
     padding: 16px;
-    color: #888;
+    color: #fff;
     font-weight: bold;
     font-size: 20px;
-    border-radius: 0 3px 3px 0;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5); /* Add background color */
     user-select: none;
     z-index: 1;
+    transition: background-color 0.3s;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* Position the "next button" to the right */
 .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-    color: white;
+    right: 20px; /* Adjust position */
 }
 
 /* The dot/bullet/indicator container */
 .dot-container {
     text-align: center;
     padding: 20px;
-    background: #ddd;
 }
 
 /* The dots/bullets/indicators */
@@ -174,14 +170,13 @@ svg.wave {
     cursor: pointer;
     height: 15px;
     width: 15px;
-    margin: 0 2px;
+    margin: 0 5px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
 }
 
-/* Add a background color to the active dot/circle */
 .active, .dot:hover {
     background-color: #717171;
 }
@@ -280,10 +275,19 @@ footer {
     height: 200px; /* Set the height for the images */
     object-fit: cover; /* Ensure the aspect ratio is maintained */
     width: 100%; /* Ensure the images take full width of the card */
+    border-radius: 20px;
 }
 .custom-card {
     min-height: 500px; /* Adjust the minimum height to make the cards taller */
+    border-radius: 20px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Add transition for smooth effect */
 }
+
+.custom-card:hover {
+    transform: translateY(-10px); /* Move the card up on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow effect on hover */
+}
+
 .card-body {
     display: flex;
     flex-direction: column;
@@ -296,3 +300,26 @@ footer {
 .btn {
     margin-top: auto; /* Push the button to the bottom */
 }
+
+/* Background images for each section */
+#services {
+    background-image: url("bg1.jpg");
+}
+
+#about {
+    background-image: url("bg2.jpg");
+}
+
+#review {
+    background-image: url("bg3.jpg");
+}
+
+#insurance {
+    background-image: url("bg4.jpg");
+}
+
+#contact {
+    background-image: url("bg5.jpg");
+}
+
+
