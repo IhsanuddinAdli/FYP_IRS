@@ -16,7 +16,7 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            
+
             // Check if user has uploaded an image
             PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM customer WHERE userID = ?");
             psImage.setString(1, userID);
@@ -24,7 +24,7 @@
             if (rsImage.next()) {
                 hasImage = rsImage.getBlob("profileIMG") != null;
             }
-            
+
             PreparedStatement ps = con.prepareStatement("SELECT * FROM customer WHERE userID = ? ");
             ps.setString(1, userID);
             ResultSet rs = ps.executeQuery();
@@ -326,11 +326,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-duration">Policy Duration</label>
-                                    <select class="form-control" id="policy-duration" name="policy-duration" required>
-                                        <option>Select a policy duration</option>
-                                        <option value="6" <%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 6) ? "selected" : ""%>>6 months</option>
-                                        <option value="12" <%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 12) ? "selected" : ""%>>12 months</option>
-                                    </select>
+                                    <input type="text" id="policy-duration-display" class="form-control wide-input" value="<%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 12) ? "12 months" : "12 months"%>" readonly>
+                                    <input type="hidden" id="policy-duration" name="policy-duration" value="<%= (request.getAttribute("policyDuration") != null && Integer.parseInt(request.getAttribute("policyDuration").toString()) == 12) ? "12" : "12"%>">
                                 </div>
                                 <div class="form-group">
                                     <label for="policy-expiry-date">Policy Expiry Date</label>

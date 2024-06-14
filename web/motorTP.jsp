@@ -536,14 +536,14 @@
                                         // Check if the year of manufacture meets the conditions for Takaful Ikhlas and other companies
                                         boolean vehicleEligible = false;
                                         if ("Takaful Ikhlas".equals(companyName)) {
-                                            vehicleEligible = Integer.parseInt(manufactureYear) >= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10);
+                                            vehicleEligible = Integer.parseInt(manufactureYear) <= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10);
                                         } else {
-                                            vehicleEligible = Integer.parseInt(manufactureYear) >= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 1);
+                                            vehicleEligible = Integer.parseInt(manufactureYear) <= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 1);
                                         }
 
                                         if (!vehicleEligible) {
                                             // Display a message if the vehicle is too old
-                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header bg-color-" + colorIndex + "'>" + companyName + "</div><div class='card-body'><p>The vehicle cannot be covered by Third Party Fire And Theft. Please select Comprehensive coverage.</p></div><div class='card-footer bg-color-" + colorIndex + "'></div></div></div>");
+                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header bg-color-" + colorIndex + "'>" + companyName + "</div><div class='card-body'><p>The vehicle cannot be covered by Third Party. Please select Comprehensive coverage.</p></div><div class='card-footer bg-color-" + colorIndex + "'></div></div></div>");
                                         } else {
                                             // Find the percentage for the selected vehicle make for this company
                                             Double companyPercentage = percentagesForCompany.get(vehicleMake);

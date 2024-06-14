@@ -9,11 +9,9 @@ html {
     padding: 0px;
 }
 
-
 /*==========================================================
   material-icon font-style
   ================================*/
-
 
 @font-face {
     font-family: 'Material Icons';
@@ -27,8 +25,6 @@ html {
         url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
         url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
-
-
 
 .material-icons {
     font-family: 'Material Icons';
@@ -59,9 +55,6 @@ html {
 /*==========================================================
   material-icon font-style end
   ================================*/
-
-
-
 h1,
 h2,
 h3,
@@ -88,13 +81,11 @@ a {
 
 }
 
-
 button:focus {
     box-shadow: none;
     outline: none;
     border: none;
 }
-
 
 button {
     cursor: pointer;
@@ -138,7 +129,6 @@ a:focus {
     box-shadow: 0 0 30px 0 rgba(200 200 200 / 20%);
 }
 
-
 @media only screen and (min-width:992px) {
     #sidebar.active {
         left: -260px;
@@ -163,7 +153,6 @@ a:focus {
     }
 
 }
-
 
 #sidebar::-webkit-scrollbar {
     width: 5px;
@@ -216,12 +205,9 @@ a:focus {
     background-color: #DBE5FD;
 }
 
-
 #sidebar ul li.active>a i {
     color: #4c7cf3;
 }
-
-
 
 #sidebar ul li a:hover {
     color: #4c7cf3;
@@ -262,7 +248,6 @@ a:focus {
     top: 6px;
 }
 
-
 /*=========sidebar---design- end-----*/
 
 
@@ -273,7 +258,6 @@ a:focus {
     transition: all 0.5s;
     background-attachment: #f9fafc;
 }
-
 
 .top-navbar {
     width: 100%;
@@ -300,7 +284,6 @@ input[type="search"] {
     margin-left: -1px;
 }
 
-
 .xp-searchbar .btn {
     background-color: #4a5263;
     color: #fff;
@@ -309,7 +292,6 @@ input[type="search"] {
     border-radius: 0 50px 50px 0;
     padding: 4px 15px;
 }
-
 
 .xp-breadcrumbbar .page-title {
     font-size: 20px;
@@ -372,7 +354,6 @@ input[type="search"] {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.09);
 }
-
 
 .xp-menubar span {
     margin: 9px;
@@ -437,7 +418,6 @@ input[type="search"] {
     min-width: 10rem;
 }
 
-
 .dropdown-menu li>a {
     font-size: 13px;
     padding: 10px 20px;
@@ -446,7 +426,6 @@ input[type="search"] {
     font-weight: 400;
     transition: all 150ms linear;
 }
-
 
 .dropdown-menu li>a .material-icons {
     position: relative;
@@ -507,11 +486,7 @@ footer {
     position: relative;
     width: 100%;
 }
-
 /*-------footer design end------*/
-
-
-
 #sidebar.show-nav,
 .body-overlay.show-nav {
     transform: translatex(0%);
@@ -520,13 +495,7 @@ footer {
     visibility: visible;
     z-index: 15;
 }
-
-
-
-
 /*========main-content- navbardesign -end-----*/
-
-
 @media only screen and (max-width:992px) {
     #sidebar {
         position: fixed;

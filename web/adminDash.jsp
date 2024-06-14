@@ -38,7 +38,7 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            
+
             // Check if user has uploaded an image
             PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM admin WHERE userID = ?");
             psImage.setString(1, userID);
@@ -271,83 +271,147 @@
                     </div>
                 </div>
                 <!------top-navbar-end----------->
-                <!----main-content--->
+                <!-- Main Content Start -->
                 <div class="main-content">
-                    <!-- Content Section -->
-                    <section>
-                        <!-- Centered Dashboard Widgets -->
-                        <div class="row justify-content-center">
-                            <!-- Widget 1: Payment Status -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Payment Status</h5>
+                    <div class="container">
+
+                        <!-- Payment Status Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="paymentStatusChart" width="400" height="400"></canvas>
                                     </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="paymentStatusChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 2: Quotation Status -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Quotation Status</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="quotationStatusChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 3: Total Price Per Month -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Total Price and Profit Per Month</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="totalPricePerMonthChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 4: Customer Notifications -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Notifications</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerNotificationChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 5: Customer Engagement -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Engagement</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerEngagementChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 6: Customer Satisfaction -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Satisfaction</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerSatisfactionChart" width="200" height="200"></canvas>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Payment Status</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of the payment statuses for the transactions processed by the system. It categorizes payments into three statuses:</p>
+                                            <ul>
+                                                <li><strong>Approved:</strong> Payments that have been successfully processed and approved.</li>
+                                                <li><strong>Rejected:</strong> Payments that have been declined due to various reasons such as insufficient funds or incorrect payment details.</li>
+                                                <li><strong>Pending:</strong> Payments that are still being processed and awaiting approval.</li>
+                                            </ul>
+                                            <p>The chart helps in understanding the distribution of payment statuses, allowing the admin to quickly identify and address any issues in the payment process.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Centered Dashboard Widgets -->
-                    </section>
+
+                        <!-- Quotation Status Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="quotationStatusChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Quotation Status</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of the quotation statuses in the system. It categorizes quotations into two statuses:</p>
+                                            <ul>
+                                                <li><strong>Solved:</strong> Quotations that have been processed and notifications sent or cover notes uploaded.</li>
+                                                <li><strong>Pending:</strong> Quotations that are still being processed and awaiting action.</li>
+                                            </ul>
+                                            <p>The chart helps in understanding the efficiency of the quotation process and highlights any bottlenecks that may need attention.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Price Per Month Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="totalPricePerMonthChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Total Price and Profit Per Month</h5><hr style="border: 1px solid">
+                                            <p>This chart displays the total price of transactions and the corresponding profit for each month. The data is represented in two bars:</p>
+                                            <ul>
+                                                <li><strong>Total Price:</strong> The total amount of money from all transactions in a given month.</li>
+                                                <li><strong>Total Profit:</strong> The profit calculated as 10% of the total price for each month.</li>
+                                            </ul>
+                                            <p>This chart helps in understanding the financial performance over time, allowing the admin to make informed decisions based on revenue and profit trends.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Notifications Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerNotificationChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Notifications</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of the notification statuses sent to customers. It categorizes notifications into two statuses:</p>
+                                            <ul>
+                                                <li><strong>Notified:</strong> Customers who have received notifications.</li>
+                                                <li><strong>Not Yet Notified:</strong> Customers who have not yet received notifications.</li>
+                                            </ul>
+                                            <p>This chart helps in understanding the reach of notifications and identifying customers who may need follow-up actions.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Engagement Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerEngagementChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Engagement</h5><hr style="border: 1px solid">
+                                            <p>This chart displays the number of customer registrations per month, helping in understanding the engagement and growth of the customer base over time.</p>
+                                            <ul>
+                                                <li><strong>Monthly Registrations:</strong> The number of new customer registrations in each month.</li>
+                                            </ul>
+                                            <p>This chart helps in tracking the effectiveness of marketing campaigns and customer acquisition strategies.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Satisfaction Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerSatisfactionChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Satisfaction</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of customer satisfaction based on feedback ratings. The ratings are categorized into five levels:</p>
+                                            <ul>
+                                                <li><strong>Very Satisfied:</strong> Customers who rated their experience as very satisfied.</li>
+                                                <li><strong>Satisfied:</strong> Customers who rated their experience as satisfied.</li>
+                                                <li><strong>Neutral:</strong> Customers who rated their experience as neutral.</li>
+                                                <li><strong>Dissatisfied:</strong> Customers who rated their experience as dissatisfied.</li>
+                                                <li><strong>Very Dissatisfied:</strong> Customers who rated their experience as very dissatisfied.</li>
+                                            </ul>
+                                            <p>This chart helps in understanding customer sentiment and identifying areas for improvement in customer service and experience.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!----main-content-end--->
+                <!-- Main Content End -->
                 <!----footer-design------------->
                 <footer class="footer">
                     <div class="container-fluid">

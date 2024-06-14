@@ -258,8 +258,30 @@
             <div class="container py-5">
                 <h2 class="text-center mb-4">Company Insurance Covered</h2><br>
                 <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <canvas id="insuranceChart"></canvas>
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between contact-container">
+                            <!-- Left column for the chart -->
+                            <div class="col-md-6 chart-container">
+                                <canvas id="insuranceChart"></canvas>
+                            </div>
+                            <!-- Right column for the elaboration -->
+                            <div class="col-md-6">
+                                <div class="chart-elaboration">
+                                    <h3>Elaboration of Chart</h3>
+                                    <p>This chart provides an overview of the number of customers covered by different insurance companies. Each segment represents a company, with the size of the segment indicating the proportion of customers they cover. Below is a summary of the advantages offered by each company:</p>
+                                    <ul class="small-text">
+                                        <li><strong>Takaful Ikhlas:</strong> Known for its comprehensive Shariah-compliant insurance plans, Takaful Ikhlas offers peace of mind for those seeking ethical coverage.</li>
+                                        <li><strong>Takaful Malaysia:</strong> Offers competitive rates and a range of products tailored to meet various customer needs, particularly in the Islamic insurance market.</li>
+                                        <li><strong>Etiqa:</strong> Renowned for its excellent customer service and wide range of insurance products, including motor, health, and life insurance.</li>
+                                        <li><strong>Allianz:</strong> A global leader in insurance and financial services, Allianz provides robust coverage options and financial stability.</li>
+                                        <li><strong>Liberty:</strong> Known for its innovative insurance solutions and strong customer support, Liberty ensures reliable coverage for various needs.</li>
+                                        <li><strong>Pacific:</strong> Offers flexible insurance plans with a focus on customer-centric solutions, making it a preferred choice for many.</li>
+                                        <li><strong>Zurich:</strong> Provides a wide range of insurance products with a focus on sustainability and customer satisfaction.</li>
+                                        <li><strong>Generali:</strong> A leading global insurer, Generali is known for its comprehensive coverage options and financial strength.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,14 +374,14 @@
                             label: '# of Customers',
                             data: Object.values(insuranceData),
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(199, 199, 199, 0.2)',
-                                'rgba(83, 102, 255, 0.2)'
+                                'rgba(255, 99, 132, 1)', // Solid color without transparency
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(199, 199, 199, 1)',
+                                'rgba(83, 102, 255, 1)'
                             ],
                             borderColor: [
                                 'rgba(255, 99, 132, 1)',
@@ -379,6 +401,9 @@
                     plugins: {
                         legend: {
                             position: 'top',
+                            labels: {
+                                color: 'white' // Set the legend labels color to white
+                            }
                         },
                         tooltip: {
                             callbacks: {

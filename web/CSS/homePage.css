@@ -100,10 +100,7 @@ h2 {
 }
 
 #insurance {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    z-index: 2;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("bg4.jpg");
 }
 
 #insurance .container {
@@ -114,6 +111,26 @@ h2 {
     max-width: 100%;
     height: 400px;
     margin: auto;
+}
+
+.chart-elaboration {
+    color: white;
+    padding: 20px;
+}
+
+.chart-elaboration h3 {
+    color: var(--main-color);
+}
+
+.chart-elaboration p,
+.chart-elaboration ul {
+    color: white;
+}
+
+#insurance h2,
+#insurance p,
+#insurance form textarea {
+    color: white; /* Ensure all relevant text elements are white */
 }
 
 /* Slideshow container */
@@ -278,6 +295,7 @@ footer {
     width: 100%; /* Ensure the images take full width of the card */
     border-radius: 20px;
 }
+
 .custom-card {
     min-height: 500px; /* Adjust the minimum height to make the cards taller */
     border-radius: 20px;

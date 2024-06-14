@@ -28,7 +28,7 @@
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost/irs", "root", "admin");
-            
+
             // Check if user has uploaded an image
             PreparedStatement psImage = con.prepareStatement("SELECT profileIMG FROM manager WHERE userID = ?");
             psImage.setString(1, userID);
@@ -197,46 +197,75 @@
                 <!------top-navbar-end----------->
                 <!----main-content--->
                 <div class="main-content">
-                    <!-- Content Section -->
-                    <section>
-                        <!-- Dashboard Widgets -->
-                        <div class="row">
-                            <!-- Widget 1: Customer Notifications -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Notifications</h5>
+                    <div class="container">
+                        <!-- Customer Notifications Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerNotificationChart" width="400" height="400"></canvas>
                                     </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerNotificationChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 2: Customer Engagement -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Engagement</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerEngagementChart" width="200" height="200"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Widget 3: Customer Satisfaction -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title text-center">Customer Satisfaction</h5>
-                                    </div>
-                                    <div class="card-body text-center">
-                                        <canvas id="customerSatisfactionChart" width="200" height="200"></canvas>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Notifications</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of the notification statuses sent to customers. It categorizes notifications into two statuses:</p>
+                                            <ul>
+                                                <li><strong>Notified:</strong> Customers who have received notifications.</li>
+                                                <li><strong>Not Yet Notified:</strong> Customers who have not yet received notifications.</li>
+                                            </ul>
+                                            <p>This chart helps in understanding the reach of notifications and identifying customers who may need follow-up actions.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Dashboard Widgets -->
-                    </section>
+
+                        <!-- Customer Engagement Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerEngagementChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Engagement</h5><hr style="border: 1px solid">
+                                            <p>This chart displays the number of customer registrations per month, helping in understanding the engagement and growth of the customer base over time.</p>
+                                            <ul>
+                                                <li><strong>Monthly Registrations:</strong> The number of new customer registrations in each month.</li>
+                                            </ul>
+                                            <p>This chart helps in tracking the effectiveness of marketing campaigns and customer acquisition strategies.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Satisfaction Section -->
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                        <canvas id="customerSatisfactionChart" width="400" height="400"></canvas>
+                                    </div>
+                                    <div class="col-md-8 d-flex text-lg-left align-items-center">
+                                        <div>
+                                            <h5>Customer Satisfaction</h5><hr style="border: 1px solid">
+                                            <p>This chart provides an overview of customer satisfaction based on feedback ratings. The ratings are categorized into five levels:</p>
+                                            <ul>
+                                                <li><strong>Very Satisfied:</strong> Customers who rated their experience as very satisfied.</li>
+                                                <li><strong>Satisfied:</strong> Customers who rated their experience as satisfied.</li>
+                                                <li><strong>Neutral:</strong> Customers who rated their experience as neutral.</li>
+                                                <li><strong>Dissatisfied:</strong> Customers who rated their experience as dissatisfied.</li>
+                                                <li><strong>Very Dissatisfied:</strong> Customers who rated their experience as very dissatisfied.</li>
+                                            </ul>
+                                            <p>This chart helps in understanding customer sentiment and identifying areas for improvement in customer service and experience.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!----main-content-end--->
                 <!----footer-design------------->

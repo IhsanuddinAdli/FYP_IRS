@@ -428,9 +428,9 @@
                                         // Check if the year of manufacture meets the conditions for Takaful Ikhlas and other companies
                                         boolean vehicleEligible = false;
                                         if ("Takaful Ikhlas".equals(companyName)) {
-                                            vehicleEligible = Integer.parseInt(manufactureYear) >= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 15);
+                                            vehicleEligible = Integer.parseInt(manufactureYear) <= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 15);
                                         } else {
-                                            vehicleEligible = Integer.parseInt(manufactureYear) >= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10);
+                                            vehicleEligible = Integer.parseInt(manufactureYear) <= (Integer.parseInt(policyCommencementDate.substring(0, 4)) - 10);
                                         }
 
                                         if (!vehicleEligible) {
