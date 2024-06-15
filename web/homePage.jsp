@@ -268,17 +268,10 @@
                             <div class="col-md-6">
                                 <div class="chart-elaboration">
                                     <h3>Elaboration of Chart</h3>
-                                    <p>This chart provides an overview of the number of customers covered by different insurance companies. Each segment represents a company, with the size of the segment indicating the proportion of customers they cover. Below is a summary of the advantages offered by each company:</p>
-                                    <ul class="small-text">
-                                        <li><strong>Takaful Ikhlas:</strong> Known for its comprehensive Shariah-compliant insurance plans, Takaful Ikhlas offers peace of mind for those seeking ethical coverage.</li>
-                                        <li><strong>Takaful Malaysia:</strong> Offers competitive rates and a range of products tailored to meet various customer needs, particularly in the Islamic insurance market.</li>
-                                        <li><strong>Etiqa:</strong> Renowned for its excellent customer service and wide range of insurance products, including motor, health, and life insurance.</li>
-                                        <li><strong>Allianz:</strong> A global leader in insurance and financial services, Allianz provides robust coverage options and financial stability.</li>
-                                        <li><strong>Liberty:</strong> Known for its innovative insurance solutions and strong customer support, Liberty ensures reliable coverage for various needs.</li>
-                                        <li><strong>Pacific:</strong> Offers flexible insurance plans with a focus on customer-centric solutions, making it a preferred choice for many.</li>
-                                        <li><strong>Zurich:</strong> Provides a wide range of insurance products with a focus on sustainability and customer satisfaction.</li>
-                                        <li><strong>Generali:</strong> A leading global insurer, Generali is known for its comprehensive coverage options and financial strength.</li>
-                                    </ul>
+                                    <p>This chart provides an insight into the distribution of customers among different insurance companies based on their choice of the most cost-effective plans for the year. Each segment represents an insurance company, with the size of the segment indicating the proportion of customers who opted for their plans. Below is a summary of the customer preferences and the key advantages offered by each company:</p>
+                                    <p class="small-text"  style="color: yellow">(Takaful Ikhlas, Takaful Malaysia, Pasific, Liberty, Allianz, Etiqa, Generally, Zurich)</p>
+                                    <h3>Aim of the Chart</h3>
+                                    <p>The aim of this chart is to provide a visual representation of customer preferences for insurance companies based on the affordability of their plans. It highlights the competitive landscape and helps identify which companies are leading in terms of customer acquisition through cost-effective insurance solutions. This information is valuable for understanding market trends and making informed decisions regarding insurance coverage.</p>
                                 </div>
                             </div>
                         </div>
