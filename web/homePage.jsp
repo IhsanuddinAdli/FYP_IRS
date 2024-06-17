@@ -183,7 +183,7 @@
                 <div class="slideshow-container">
                     <!-- Iterate over feedback data and display -->
                     <%
-                        // Retrieve feedback data from the database
+                        // Iterate over feedback data and display
                         FeedbackDAO feedbackDAO = new FeedbackDAO();
                         List<Feedback> feedbackList = feedbackDAO.getAllFeedback();
 
@@ -198,17 +198,18 @@
                             <% for (int j = i * 3; j < Math.min((i + 1) * 3, feedbackList.size()); j++) {
                                     Feedback feedback = feedbackList.get(j);
                                     Profile profile = ProfileDAO.getCustomerByID(feedback.getUserID());
+                                    String encodedProfileImage = "IMG/avatar.jpg"; // Default image
                                     if (profile != null) {
                                         InputStream profileImageStream = profile.getProfileImage();
                                         if (profileImageStream != null) {
                                             byte[] profileImageBytes = profileImageStream.readAllBytes();
-                                            String encodedProfileImage = Base64.getEncoder().encodeToString(profileImageBytes);
+                                            encodedProfileImage = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(profileImageBytes);
+                                        }
                             %>
                             <div class="col-md-4">
                                 <div class="review-box shadow-sm p-4 mb-4 bg-white rounded">
                                     <div class="review-header d-flex align-items-center">
-                                        <img src="data:image/jpeg;base64, <%= encodedProfileImage%>"
-                                             alt="Profile Picture" class="review-profile-img">
+                                        <img src="<%= encodedProfileImage%>" alt="Profile Picture" class="review-profile-img">
                                         <div>
                                             <h4 class="review-name mb-0"><%= profile.getFirstname() + " " + profile.getLastname()%></h4>
                                             <small class="text-muted">Customer</small>
@@ -225,7 +226,29 @@
                                 </div>
                             </div>
                             <%
-                                        }
+                            } else {
+                                // Display default image and feedback
+%>
+                            <div class="col-md-4">
+                                <div class="review-box shadow-sm p-4 mb-4 bg-white rounded">
+                                    <div class="review-header d-flex align-items-center">
+                                        <img src="IMG/avatar.jpg" alt="Profile Picture" class="review-profile-img">
+                                        <div>
+                                            <h4 class="review-name mb-0">Anonymous</h4>
+                                            <small class="text-muted">Customer</small>
+                                        </div>
+                                    </div>
+                                    <p class="review-content mt-3">
+                                        <%= feedback.getFeedback()%>
+                                    </p>
+                                    <div class="review-stars">
+                                        <% for (int k = 0; k < feedback.getRating(); k++) { %>
+                                        <span class="star">&#9733;</span>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            <%
                                     }
                                 } %>
                         </div>
