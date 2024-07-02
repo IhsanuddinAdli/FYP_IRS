@@ -139,7 +139,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-4 text-center">
                         <div class="manager-container">
-                            <img src="IMG/profile1.jpg" class="manager-img img-fluid rounded" alt="Manager Image">
+                            <img src="IMG/admin.jpeg" class="manager-img img-fluid rounded" alt="Manager Image">
                             <div class="manager-details mt-3">
                                 <h5 class="manager-name">Adli Yong</h5>
                                 <p class="manager-position">Manager</p>
