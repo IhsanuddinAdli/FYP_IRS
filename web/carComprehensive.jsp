@@ -789,7 +789,8 @@
                                 <%
                                         } else {
                                             // If percentage not found for the selected make, display a message
-                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header bg-color-" + colorIndex + "'>" + companyName + "</div><div class='card-body'><p>No insurance price available for selected vehicle make.</p></div><div class='card-footer bg-color-" + colorIndex + "'></div></div></div>");
+                                            out.println("<div class='col-md-6 mb-4'><div class='card'><div class='card-header bg-color-" + colorIndex + "'>" + companyName +
+                                            "</div><div class='card-body'><p>No insurance price available for selected vehicle make.</p></div><div class='card-footer bg-color-" + colorIndex + "'></div></div></div>");
                                         }
 
                                         // Increment the color index and reset if it exceeds the number of defined colors
